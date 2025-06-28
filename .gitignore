@@ -1,0 +1,64 @@
+# 🚀 Python'un otomatik oluşturduğu gereksiz dosyalar
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.swp
+*.swo
+*.DS_Store
+*.egg-info/
+*.eggs/
+*.coverage
+.coverage.*
+*.cache
+*.pytest_cache/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# 🚀 Sanal ortam klasörleri
+venv/
+.venv/
+
+# 🚀 PyCharm Proje Ayarları
+.idea/
+
+# 🚀 Git Tarafından İzlenmemesi Gereken Python Paketleri
+Pipfile
+Pipfile.lock
+poetry.lock
+
+# 🚀 Çevresel Değişkenler (API anahtarları, veritabanı bilgileri)
+.env
+*.env
+*.secrets
+
+# 🚀 SQLite ve Diğer Veritabanı Dosyaları
+*.sqlite3
+*.db
+*.db-journal
+instance/
+
+# 🚀 Flask Cache ve Logs
+*.log
+logs/
+flask_session/
+flask_cache/
+*.pid
+nohup.out
+
+# 🚀 Debug ve Temp Dosyalar
+debug.log
+*.tmp
+*.bak
+
+# 🚀 Node.js ve Frontend Kullanıyorsan
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# 🚀 Docker Kullanıyorsan (Eğer yoksa, eklemene gerek yok)
+docker-compose.override.yml
+.dockerignore
+
+
