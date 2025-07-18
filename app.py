@@ -36,6 +36,20 @@ class Base(DeclarativeBase):
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
+# Many-to-many table
+post_categories = db.Table(
+    "post_categories",
+    db.Column("post_id", db.Integer, db.ForeignKey("blog_posts.id")),
+    db.Column("category_id", db.Integer, db.ForeignKey("categories.id"))
+)
+
+# Category table
+class Category(db.Model):
+    __tablename__ = "categories"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)
+    posts = relationship("BlogPost", secondary=post_categories, back_populates="categories")
+
 # BlogPost table
 class BlogPost(db.Model):
     __tablename__ = "blog_posts"
@@ -48,8 +62,9 @@ class BlogPost(db.Model):
     body: Mapped[str] = mapped_column(Text, nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
     slug: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
+    categories = relationship("Category", secondary=post_categories, back_populates="posts")
 
-# Admin User table (only id=1 is valid)
+# Admin User table
 class User(UserMixin, db.Model):
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
@@ -94,6 +109,14 @@ def show_post(slug):
 
 from forms import CreatePostForm
 
+@app.route("/filter-posts/<int:category_id>")
+def filter_posts(category_id):
+    if category_id == 0:
+        posts = BlogPost.query.all()
+    else:
+        posts = BlogPost.query.join(BlogPost.categories).filter(Category.id == category_id).all()
+    return render_template("partials/post-list.html", posts=posts)
+
 @app.route("/secret-login", methods=["GET", "POST"])
 def secret_login():
     if request.method == "POST":
@@ -115,7 +138,11 @@ def secret_login():
 @admin_only
 def add_new_post():
     form = CreatePostForm()
+    form.categories.choices = [(cat.id, cat.name) for cat in db.session.query(Category).all()]
+
     if form.validate_on_submit():
+        selected_categories = db.session.query(Category).filter(Category.id.in_(form.categories.data)).all()
+
         new_post = BlogPost(
             title=form.title.data,
             subtitle=form.subtitle.data,
@@ -123,11 +150,13 @@ def add_new_post():
             img_url=form.img_url.data,
             author=current_user,
             date=date.today().strftime("%B %d, %Y"),
-            slug = generate_slug(form.title.data)
+            slug=generate_slug(form.title.data),
+            categories=selected_categories
         )
         db.session.add(new_post)
         db.session.commit()
         return redirect(url_for("get_all_posts"))
+
     return render_template("make-post.html", form=form, current_user=current_user)
 
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
@@ -138,15 +167,20 @@ def edit_post(post_id):
         title=post.title,
         subtitle=post.subtitle,
         img_url=post.img_url,
-        body=post.body
+        body=post.body,
+        categories=[cat.id for cat in post.categories]
     )
+    form.categories.choices = [(cat.id, cat.name) for cat in db.session.query(Category).all()]
+
     if form.validate_on_submit():
         post.title = form.title.data
         post.subtitle = form.subtitle.data
         post.img_url = form.img_url.data
         post.body = form.body.data
+        post.categories = db.session.query(Category).filter(Category.id.in_(form.categories.data)).all()
         db.session.commit()
-        return redirect(url_for("show_post", post_id=post.id))
+        return redirect(url_for("show_post", slug=post.slug))
+
     return render_template("make-post.html", form=form, is_edit=True, current_user=current_user)
 
 @app.route("/delete/<int:post_id>")

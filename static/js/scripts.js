@@ -28,3 +28,25 @@ window.addEventListener('DOMContentLoaded', () => {
     scrollPos = currentTop;
   });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+  const buttons = document.querySelectorAll('#category-buttons button');
+  const postList = document.getElementById('post-list');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const categoryId = btn.dataset.category;
+
+      // Görsel olarak aktif butonu değiştir
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Postları çek
+      fetch(`/filter-posts/${categoryId}`)
+        .then(res => res.text())
+        .then(html => {
+          postList.innerHTML = html;
+        });
+    });
+  });
+});

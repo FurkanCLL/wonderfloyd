@@ -10853,3 +10853,31 @@ header.masthead .post-heading .meta a {
     color: #ee6f57;
     text-align: center;
 }
+
+@media (max-width: 576px) {
+  #category-buttons button {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+  }
+}
+
+#category-buttons button {
+  border-color: #444;       /* Çerçeve rengi koyulaştırıldı */
+  color: #333;              /* Yazı rengi koyu gri */
+  background-color: transparent;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+/* Hover efekti */
+#category-buttons button:hover {
+  background-color: #f2f2f2;
+  color: #111;
+}
+
+/* Seçili buton */
+#category-buttons button.active {
+  background-color: #e0e0e0;  /* soft gri arka plan */
+  color: #111;                /* yazı koyu */
+  border-color: #333;
+}
