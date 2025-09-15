@@ -92,7 +92,9 @@ def generate_slug(title):
 # ROUTES
 @app.route('/')
 def get_all_posts():
-    result = db.session.execute(db.select(BlogPost))
+    result = db.session.execute(
+        db.select(BlogPost).order_by(BlogPost.id.desc())
+    )
     posts = result.scalars().all()
     return render_template("index.html", all_posts=posts, current_user=current_user)
 
@@ -112,9 +114,15 @@ from forms import CreatePostForm
 @app.route("/filter-posts/<int:category_id>")
 def filter_posts(category_id):
     if category_id == 0:
-        posts = BlogPost.query.all()
+        posts = BlogPost.query.order_by(BlogPost.id.desc()).all()
     else:
-        posts = BlogPost.query.join(BlogPost.categories).filter(Category.id == category_id).all()
+        posts = (
+            BlogPost.query
+            .join(BlogPost.categories)
+            .filter(Category.id == category_id)
+            .order_by(BlogPost.id.desc())
+            .all()
+        )
     return render_template("partials/post-list.html", posts=posts)
 
 @app.route("/secret-login", methods=["GET", "POST"])

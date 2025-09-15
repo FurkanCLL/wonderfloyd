@@ -10854,30 +10854,51 @@ header.masthead .post-heading .meta a {
     text-align: center;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 575.98px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  html {
+    overflow-x: hidden;
+  }
+
+  .container,
+  #category-buttons-wrapper,
+  #category-buttons {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  #category-buttons {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
   #category-buttons button {
-    font-size: 0.8rem;
-    padding: 4px 10px;
+    font-size: 0.85rem;
+    padding: 6px 12px;
   }
 }
 
 #category-buttons button {
-  border-color: #444;       /* Çerçeve rengi koyulaştırıldı */
-  color: #333;              /* Yazı rengi koyu gri */
+  border-color: #444;
+  color: #333;
   background-color: transparent;
   transition: all 0.2s ease;
   font-weight: 500;
 }
 
-/* Hover efekti */
+/* Hover effect */
 #category-buttons button:hover {
   background-color: #f2f2f2;
   color: #111;
 }
 
-/* Seçili buton */
+/* Selected button */
 #category-buttons button.active {
-  background-color: #e0e0e0;  /* soft gri arka plan */
-  color: #111;                /* yazı koyu */
+  background-color: #e0e0e0;
+  color: #111;
   border-color: #333;
 }
