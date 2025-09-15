@@ -3,7 +3,7 @@ from flask import Flask, render_template, redirect, url_for, abort, request, fla
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column, joinedload
 from sqlalchemy import Integer, String, Text, func
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 from functools import wraps
@@ -93,12 +93,21 @@ def generate_slug(title):
 @app.route('/')
 def get_all_posts():
     LIMIT = 10
-    base_query = db.session.query(BlogPost)
+    base_query = (
+        db.session.query(BlogPost)
+        .options(
+            joinedload(BlogPost.author),
+            joinedload(BlogPost.categories)
+        )
+    )
     total_count = base_query.count()
-    posts = base_query.order_by(BlogPost.id.desc()).limit(LIMIT).all()
+    posts = (
+        base_query
+        .order_by(BlogPost.id.desc())
+        .limit(LIMIT)
+        .all()
+    )
     initial_has_more = LIMIT < total_count
-
-    # ⬇️ burada 'posts=posts' olarak gönder
     return render_template(
         "index.html",
         posts=posts,
@@ -121,18 +130,23 @@ from forms import CreatePostForm
 
 @app.route("/filter-posts/<int:category_id>")
 def filter_posts(category_id):
-    # query params: ?offset=0&limit=10
     try:
         offset = int(request.args.get("offset", 0))
         limit = int(request.args.get("limit", 10))
     except ValueError:
         offset, limit = 0, 10
 
-    if category_id == 0:
-        base_query = db.session.query(BlogPost)
-    else:
+    base_query = (
+        db.session.query(BlogPost)
+        .options(
+            joinedload(BlogPost.author),
+            joinedload(BlogPost.categories)
+        )
+    )
+
+    if category_id != 0:
         base_query = (
-            db.session.query(BlogPost)
+            base_query
             .join(BlogPost.categories)
             .filter(Category.id == category_id)
         )
@@ -147,9 +161,8 @@ def filter_posts(category_id):
     )
 
     has_more = (offset + limit) < total_count
-
     html = render_template("partials/post-list.html", posts=posts)
-    return jsonify({"html": html, "has_more": has_more})
+    return {"html": html, "has_more": has_more}
 
 @app.route("/secret-login", methods=["GET", "POST"])
 def secret_login():
