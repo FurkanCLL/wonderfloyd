@@ -1,8 +1,3 @@
-/*!
-* Start Bootstrap - Clean Blog v6.0.9 (https://startbootstrap.com/theme/clean-blog)
-* Copyright 2013-2023 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-clean-blog/blob/master/LICENSE)
-*/
 window.addEventListener('DOMContentLoaded', () => {
   let scrollPos = 0;
   const mainNav = document.getElementById('mainNav');
@@ -12,14 +7,12 @@ window.addEventListener('DOMContentLoaded', () => {
     const currentTop = document.body.getBoundingClientRect().top * -1;
 
     if (currentTop < scrollPos) {
-      // Scrolling Up
       if (currentTop > 0 && mainNav.classList.contains('is-fixed')) {
         mainNav.classList.add('is-visible');
       } else {
         mainNav.classList.remove('is-visible', 'is-fixed');
       }
     } else {
-      // Scrolling Down
       mainNav.classList.remove('is-visible');
       if (currentTop > headerHeight && !mainNav.classList.contains('is-fixed')) {
         mainNav.classList.add('is-fixed');
@@ -32,21 +25,58 @@ window.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', function () {
   const buttons = document.querySelectorAll('#category-buttons button');
   const postList = document.getElementById('post-list');
+  const loadMoreBtn = document.getElementById('load-more');
 
+  const PAGE_SIZE = 10;
+  let currentCategory = 0;   // 0 = All
+  let currentOffset = PAGE_SIZE;
+
+  // Kategori seçiminde ilk sayfayı çek
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
-      const categoryId = btn.dataset.category;
+      const categoryId = parseInt(btn.dataset.category, 10);
 
-      // Görsel olarak aktif butonu değiştir
+      // aktif görsel değişim
       buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      // Postları çek
-      fetch(`/filter-posts/${categoryId}`)
-        .then(res => res.text())
-        .then(html => {
-          postList.innerHTML = html;
+      currentCategory = categoryId;
+      currentOffset = 0; // reset
+
+      fetch(`/filter-posts/${currentCategory}?offset=${currentOffset}&limit=${PAGE_SIZE}`)
+        .then(res => res.json())
+        .then(data => {
+          postList.innerHTML = data.html;
+          currentOffset += PAGE_SIZE;
+          if (data.has_more) {
+            loadMoreBtn.style.display = 'inline-block';
+          } else {
+            loadMoreBtn.style.display = 'none';
+          }
         });
     });
   });
+
+  // Load more
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', () => {
+      fetch(`/filter-posts/${currentCategory}?offset=${currentOffset}&limit=${PAGE_SIZE}`)
+        .then(res => res.json())
+        .then(data => {
+          // ekle (append)
+          const tmp = document.createElement('div');
+          tmp.innerHTML = data.html;
+          // child'ları teker teker taşı
+          while (tmp.firstChild) {
+            postList.appendChild(tmp.firstChild);
+          }
+
+          currentOffset += PAGE_SIZE;
+
+          if (!data.has_more) {
+            loadMoreBtn.style.display = 'none';
+          }
+        });
+    });
+  }
 });

@@ -13,9 +13,10 @@
   </div>
 </header>
 
-<!-- 🔘 Category Filter Buttons (Responsive) -->
+<!-- 🔘 Category Filter Buttons -->
 <div class="container my-4 text-center">
   <div id="category-buttons" class="d-flex flex-wrap justify-content-center gap-2">
+    <!-- 0 = All -->
     <button class="btn btn-outline-primary active" data-category="0">All</button>
     <button class="btn btn-outline-primary" data-category="1">Wonders</button>
     <button class="btn btn-outline-primary" data-category="2">Science & Tech</button>
@@ -28,36 +29,25 @@
   <div class="row gx-4 gx-lg-5 justify-content-center">
     <div class="col-md-10 col-lg-8 col-xl-7">
 
-      <!-- 🔄 Dynamic Post List -->
+      <!-- 🔄 Dynamic Post List (ilk 10 sunucu tarafında) -->
       <div id="post-list">
-        {% for post in all_posts %}
-        <div class="post-preview">
-          <a href="{{ url_for('show_post', slug=post.slug) }}">
-            <h2 class="post-title">{{ post.title }}</h2>
-            <h3 class="post-subtitle">{{ post.subtitle }}</h3>
-          </a>
-          <p class="post-meta">
-            Posted by <a href="#">{{ post.author.name }}</a> on {{ post.date }}
-            {% if current_user.is_authenticated and current_user.id == 1 %}
-            <a href="{{ url_for('delete_post', post_id=post.id) }}" class="text-danger ms-2">✘</a>
-            {% endif %}
-          </p>
-        </div>
-        <hr class="my-4" />
-        {% endfor %}
+        {% include "partials/post-list.html" with context %}
       </div>
 
-      <!-- ➕ Add New Post Button -->
+      <!-- ➕ Add New Post Button (admin) -->
       {% if current_user.is_authenticated and current_user.id == 1 %}
         <div class="d-flex justify-content-end mb-4">
           <a class="btn btn-primary float-right" href="{{ url_for('add_new_post') }}">Create New Post</a>
         </div>
       {% endif %}
 
-      <!-- 🚧 (Optional) Pager Placeholder -->
-      <!-- <div class="d-flex justify-content-end mb-4">
-        <a class="btn btn-secondary text-uppercase" href="#!">Older Posts →</a>
-      </div> -->
+      <!-- ⬇️ Load More (10’dan azsa gizli) -->
+      <div class="d-flex justify-content-center my-4">
+        <button id="load-more" class="btn btn-outline-primary"
+                style="display: {{ 'inline-block' if initial_has_more else 'none' }};">
+          Load More Posts
+        </button>
+      </div>
 
     </div>
   </div>

@@ -1,10 +1,10 @@
 from datetime import date, datetime
-from flask import Flask, render_template, redirect, url_for, abort, request, flash
+from flask import Flask, render_template, redirect, url_for, abort, request, flash, jsonify
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column
-from sqlalchemy import Integer, String, Text
+from sqlalchemy import Integer, String, Text, func
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 from functools import wraps
 from dotenv import load_dotenv
@@ -92,11 +92,19 @@ def generate_slug(title):
 # ROUTES
 @app.route('/')
 def get_all_posts():
-    result = db.session.execute(
-        db.select(BlogPost).order_by(BlogPost.id.desc())
+    LIMIT = 10
+    base_query = db.session.query(BlogPost)
+    total_count = base_query.count()
+    posts = base_query.order_by(BlogPost.id.desc()).limit(LIMIT).all()
+    initial_has_more = LIMIT < total_count
+
+    # ⬇️ burada 'posts=posts' olarak gönder
+    return render_template(
+        "index.html",
+        posts=posts,
+        current_user=current_user,
+        initial_has_more=initial_has_more
     )
-    posts = result.scalars().all()
-    return render_template("index.html", all_posts=posts, current_user=current_user)
 
 @app.route("/<string:slug>")
 def show_post(slug):
@@ -113,17 +121,35 @@ from forms import CreatePostForm
 
 @app.route("/filter-posts/<int:category_id>")
 def filter_posts(category_id):
+    # query params: ?offset=0&limit=10
+    try:
+        offset = int(request.args.get("offset", 0))
+        limit = int(request.args.get("limit", 10))
+    except ValueError:
+        offset, limit = 0, 10
+
     if category_id == 0:
-        posts = BlogPost.query.order_by(BlogPost.id.desc()).all()
+        base_query = db.session.query(BlogPost)
     else:
-        posts = (
-            BlogPost.query
+        base_query = (
+            db.session.query(BlogPost)
             .join(BlogPost.categories)
             .filter(Category.id == category_id)
-            .order_by(BlogPost.id.desc())
-            .all()
         )
-    return render_template("partials/post-list.html", posts=posts)
+
+    total_count = base_query.count()
+    posts = (
+        base_query
+        .order_by(BlogPost.id.desc())
+        .offset(offset)
+        .limit(limit)
+        .all()
+    )
+
+    has_more = (offset + limit) < total_count
+
+    html = render_template("partials/post-list.html", posts=posts)
+    return jsonify({"html": html, "has_more": has_more})
 
 @app.route("/secret-login", methods=["GET", "POST"])
 def secret_login():

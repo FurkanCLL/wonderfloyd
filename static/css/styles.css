@@ -10902,3 +10902,16 @@ header.masthead .post-heading .meta a {
   color: #111;
   border-color: #333;
 }
+
+#load-more {
+  border-color: #444;
+  color: #333;
+  background-color: transparent;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+#load-more button:hover {
+  background-color: #f2f2f2;
+  color: #111;
+}
