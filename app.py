@@ -27,7 +27,7 @@ ckeditor = CKEditor(app)
 Bootstrap5(app)
 
 # Image Upload Config
-app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10 MB limit
+app.config['MAX_CONTENT_LENGTH'] = 12 * 1024 * 1024  # 12 MB limit
 UPLOADS_DIR = os.path.join(app.root_path, 'static', 'uploads')
 os.makedirs(UPLOADS_DIR, exist_ok=True)
 

@@ -10921,27 +10921,27 @@ header.masthead .post-heading .meta a {
 
 /* ===== WonderFloyd — List Card Polish v2 ===== */
 
-/* Kart ölçüsü ve aralıklar (desktop'ta biraz daha “büyük” görünüm) */
+/* Card size and spacing (slightly larger look on desktop) */
 .wf-post{
   display:flex; gap:20px; align-items:flex-start;
   padding:.75rem 0 1.25rem;
 }
 
-/* Thumb: sabit oran + cover */
+/* Thumbnail: fixed ratio + cover */
 .wf-thumb-link{ display:block; flex:0 0 200px; width:200px; }
 .wf-thumb-box{ overflow:hidden; border-radius:14px; box-shadow:0 10px 24px rgba(0,0,0,.06); }
 .wf-thumb-img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .25s ease; }
-.wf-thumb-link:hover .wf-thumb-img{ transform:scale(1.01); } /* hafif canlılık */
+.wf-thumb-link:hover .wf-thumb-img{ transform:scale(1.01); } /* subtle hover effect */
 
-/* İçerik alanı */
+/* Content area */
 .wf-content{ flex:1 1 auto; min-width:0; }
 
-/* Başlık/link davranışı: altı ÇİZİLMEYECEK */
+/* Title/link behavior: no underline */
 .wf-titlelink{ color:inherit; text-decoration:none; display:block; }
 .wf-titlelink:hover { text-decoration:none; }
-.wf-titlelink:hover .wf-title{ color:#0f7a88; } /* alt çizgi yerine hafif renk değişimi */
+.wf-titlelink:hover .wf-title{ color:#0f7a88; } /* slight color change instead of underline */
 
-/* Title / Subtitle dengesi */
+/* Title / Subtitle balance */
 .wf-title{
   margin:0 0 .25rem;
   font-weight: 750;
@@ -10952,14 +10952,14 @@ header.masthead .post-heading .meta a {
 }
 .wf-subtitle{
   margin:0 0 .6rem;
-  color:#5c6670;                 /* biraz koyu, daha modern gri */
+  color:#5c6670;                 /* darker, more modern gray */
   font-weight:550;
   font-size: clamp(.95rem, .85rem + .4vw, 1.08rem);
   line-height:1.4;
   text-transform:none !important;
 }
 
-/* Meta satırı: daha temiz, underline yok, yumuşak renk */
+/* Meta row: cleaner, no underline, softer color */
 .wf-meta{
   margin:.15rem 0 0;
   color:#8a9097;
@@ -10970,19 +10970,19 @@ header.masthead .post-heading .meta a {
 }
 .wf-meta a:hover{ opacity:.85; text-decoration:none; }
 
-/* Desktop büyütmeleri */
+/* Desktop enlargements */
 @media (min-width:992px){
-  .wf-thumb-link{ flex-basis:240px; width:240px; }     /* kartı “büyük” hissettirir */
+  .wf-thumb-link{ flex-basis:240px; width:240px; }     /* makes the card feel "bigger" */
   .wf-title{ font-size:1.7rem; }
   .wf-subtitle{ font-size:1.12rem; }
 }
 
-/* Tablet ayarı */
+/* Tablet adjustment */
 @media (min-width:768px) and (max-width:991.98px){
   .wf-thumb-link{ flex-basis:210px; width:210px; }
 }
 
-/* Mobil: orantıyı düzelt, yazı-boyut dengesini toparla, dikey hizayı ortala */
+/* Mobile: fix proportions, adjust text sizes, center vertically */
 @media (max-width:575.98px){
   .wf-post{ gap:12px; align-items:center; }
   .wf-thumb-link{ flex-basis:140px; width:140px; }
@@ -10991,22 +10991,22 @@ header.masthead .post-heading .meta a {
   .wf-meta{ font-size:.9rem; }
 }
 
-/* Bölücü çizgi çok sıkı olmasın */
+/* Divider line more relaxed */
 hr.my-4{ margin:1.1rem 0 !important; }
 
 
 /* ===== WonderFloyd — Accent + Mobile Balance patch ===== */
 
-/* Marka vurgusu (teal yerine kozmik mor) */
+/* Brand accent (cosmic purple instead of teal) */
 :root{
   --wf-accent:#4f5559;
-  --wf-accent-hover:#415766;
+  --wf-accent-hover:#6305a6;
 }
 .wf-titlelink:hover .wf-title{ color: var(--wf-accent-hover); }
 .wf-meta a{ color: var(--wf-accent); }
 .wf-meta a:hover{ color: var(--wf-accent-hover); }
 
-/* Meta'daki admin ismi rengi */
+/* Meta admin name color */
 .wf-meta a{
   color: var(--wf-accent);
   text-decoration:none;
@@ -11014,36 +11014,36 @@ hr.my-4{ margin:1.1rem 0 !important; }
 }
 .wf-meta a:hover{ color: var(--wf-accent-hover); text-decoration:none; }
 
-/* — Mobile dengeleme — */
+/* — Mobile balancing — */
 @media (max-width: 575.98px){
-  /* Görseli bir tık küçült: yazı ile oran dengesi */
+  /* Slightly smaller thumbnail: balance with text */
   .wf-thumb-link{ flex-basis:130px; width:130px; }
 
-  /* Başlığı %8 kadar küçült, satır aralığını sıkı tut */
+  /* Reduce title ~8%, tighter line height */
   .wf-title{
     font-size: 1.08rem;
     line-height: 1.25;
     margin-bottom: .2rem;
   }
-  /* Alt başlık da ufak dokunuş */
+  /* Subtitle minor tweak */
   .wf-subtitle{
     font-size: .92rem;
     margin-bottom: .4rem;
   }
-  /* Meta satırını da hafif küçült */
+  /* Meta row also slightly smaller */
   .wf-meta{ font-size: .88rem; }
-  /* Kart içi boşluk/gap’i azalt */
+  /* Card inner spacing reduced */
   .wf-post{ gap: 10px; padding: .5rem 0 1rem; align-items: center; }
 }
 
-/* — Tablet: yazıyı bir tık büyüt, görseli orta boy bırak — */
+/* — Tablet: text slightly bigger, medium-sized thumbnail — */
 @media (min-width:576px) and (max-width: 767.98px){
   .wf-thumb-link{ flex-basis:160px; width:160px; }
   .wf-title{ font-size: 1.25rem; }
   .wf-subtitle{ font-size: 1rem; }
 }
 
-/* Post header okunurluk */
+/* Post header readability */
 .masthead {
   position: relative;
 }
@@ -11055,8 +11055,87 @@ hr.my-4{ margin:1.1rem 0 !important; }
 }
 .post-heading h1, .post-heading .subheading, .post-heading .meta { text-shadow: 0 2px 12px rgba(0,0,0,.35); }
 
-/* Kart dikey ritim */
+/* Card vertical rhythm */
 .wf-post{ padding: .9rem 0 1.35rem; }
 hr.my-4{ opacity:.25; }
+
+
+/* ===== WonderFloyd — Mobile Layout Fix (Updated) ===== */
+
+/* Mobile layout: thumbnail on top, text below */
+@media (max-width: 575.98px){
+  .wf-post {
+    flex-direction: column;   /* vertical alignment */
+    align-items: flex-start;  /* align left */
+    text-align: left;         /* text aligned left */
+    gap: 8px;
+    padding: .6rem 0 1rem;
+  }
+
+  .wf-thumb-link {
+    flex-basis: auto;
+    width: 90%;
+    margin: 0 auto;          /* center thumbnail */
+  }
+
+  .wf-thumb-box {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .wf-content {
+    width: 90%;              /* text block same width as thumbnail */
+    margin: 0 auto;          /* same centering */
+  }
+
+  /* Title sizes on mobile */
+  .wf-title {
+    font-size: 1.2rem;
+    line-height: 1.25;
+    margin-bottom: .25rem;
+  }
+
+  .wf-subtitle {
+    font-size: .90rem;
+    margin-bottom: .3rem;
+  }
+
+  .wf-meta {
+    font-size: .75rem;
+    color:#6c757d;
+  }
+}
+
+/* ===== Post Header Image Adjustment ===== */
+.masthead {
+  background-position: center top;
+  background-size: cover;
+}
+
+@media (max-width: 575.98px){
+  .masthead {
+    background-position: center top;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: #000;
+    min-height: 240px;
+  }
+}
+
+/* ===== Divider Line Between Posts ===== */
+hr.my-4 {
+  border: none;
+  border-top: 1px solid rgba(0,0,0,0.15);
+  margin: 1.2rem 0;
+  opacity: 1 !important;
+}
+
+/* Hide divider after the last post */
+.wf-post:last-of-type + hr {
+  display: none;
+}
+
+
+
 
 
