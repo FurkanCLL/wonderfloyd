@@ -10850,38 +10850,20 @@ header.masthead .post-heading .meta a {
 
 /* Flash Message Styling */
 .flash {
-    color: #ee6f57;
-    text-align: center;
+  color: #ee6f57;
+  text-align: center;
 }
 
+/* Global mobile overflow fix */
 @media (max-width: 575.98px) {
-  body {
-    overflow-x: hidden;
-  }
-
-  html {
-    overflow-x: hidden;
-  }
-
-  .container,
-  #category-buttons-wrapper,
-  #category-buttons {
+  body, html { overflow-x: hidden; }
+  .container, #category-buttons-wrapper, #category-buttons {
     max-width: 100%;
     overflow-x: hidden;
   }
-
-  #category-buttons {
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-  }
-
-  #category-buttons button {
-    font-size: 0.85rem;
-    padding: 6px 12px;
-  }
 }
 
+/* Category buttons (base) */
 #category-buttons button {
   border-color: #444;
   color: #333;
@@ -10889,20 +10871,17 @@ header.masthead .post-heading .meta a {
   transition: all 0.2s ease;
   font-weight: 500;
 }
-
-/* Hover effect */
 #category-buttons button:hover {
   background-color: #f2f2f2;
   color: #111;
 }
-
-/* Selected button */
 #category-buttons button.active {
   background-color: #e0e0e0;
   color: #111;
   border-color: #333;
 }
 
+/* Load more (button container may wrap an inner button) */
 #load-more {
   border-color: #444;
   color: #333;
@@ -10910,41 +10889,40 @@ header.masthead .post-heading .meta a {
   transition: all 0.2s ease;
   font-weight: 500;
 }
-
 #load-more button:hover {
   background-color: #f2f2f2;
   color: #111;
 }
 
+/* Basic post bits */
 .post-preview img { display:block; width:100%; height:auto; object-fit:cover; }
 .post-title { line-height:1.2; }
 
-/* ===== WonderFloyd — List Card Polish v2 ===== */
-
-/* Card size and spacing (slightly larger look on desktop) */
+/* ===== WonderFloyd — List Card (clean) ===== */
 .wf-post{
-  display:flex; gap:20px; align-items:flex-start;
-  padding:.75rem 0 1.25rem;
+  display:flex;
+  gap:20px;
+  align-items:flex-start;
+  padding:.9rem 0 1.35rem; /* last-wins padding */
 }
 
-/* Thumbnail: fixed ratio + cover */
+/* Thumbnail */
 .wf-thumb-link{ display:block; flex:0 0 200px; width:200px; }
 .wf-thumb-box{ overflow:hidden; border-radius:14px; box-shadow:0 10px 24px rgba(0,0,0,.06); }
 .wf-thumb-img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .25s ease; }
-.wf-thumb-link:hover .wf-thumb-img{ transform:scale(1.01); } /* subtle hover effect */
+.wf-thumb-link:hover .wf-thumb-img{ transform:scale(1.01); }
 
-/* Content area */
+/* Content */
 .wf-content{ flex:1 1 auto; min-width:0; }
 
-/* Title/link behavior: no underline */
+/* Title/link behavior */
 .wf-titlelink{ color:inherit; text-decoration:none; display:block; }
-.wf-titlelink:hover { text-decoration:none; }
-.wf-titlelink:hover .wf-title{ color:#0f7a88; } /* slight color change instead of underline */
+.wf-titlelink:hover{ text-decoration:none; }
 
-/* Title / Subtitle balance */
+/* Title / Subtitle */
 .wf-title{
   margin:0 0 .25rem;
-  font-weight: 750;
+  font-weight:750;
   font-size: clamp(1.1rem, .9rem + 1vw, 1.6rem);
   line-height:1.25;
   letter-spacing:-0.015em;
@@ -10952,75 +10930,40 @@ header.masthead .post-heading .meta a {
 }
 .wf-subtitle{
   margin:0 0 .6rem;
-  color:#5c6670;                 /* darker, more modern gray */
+  color:#5c6670;
   font-weight:550;
   font-size: clamp(.95rem, .85rem + .4vw, 1.08rem);
   line-height:1.4;
   text-transform:none !important;
 }
 
-/* Meta row: cleaner, no underline, softer color */
+/* Meta row */
 .wf-meta{
   margin:.15rem 0 0;
   color:#8a9097;
   font-size:.92rem;
 }
-.wf-meta a{
-  color:#0f7a88; text-decoration:none; font-weight:600;
-}
-.wf-meta a:hover{ opacity:.85; text-decoration:none; }
 
 /* Desktop enlargements */
 @media (min-width:992px){
-  .wf-post {
-    gap: 28px;                 /* a little more spacing between image and text */
-    padding: 1.2rem 0 1.6rem;  /* taller padding for posts */
-  }
-
-  .wf-thumb-link{
-    flex-basis:280px;
-    width:280px;
-  }     /* makes the card feel "bigger" */
-
+  .wf-post { gap:28px; padding:1.2rem 0 1.6rem; }
+  .wf-thumb-link{ flex-basis:280px; width:280px; }
   .wf-title{ font-size:1.85rem; }
-
   .wf-subtitle{ font-size:1.18rem; }
-
-  .wf-meta {
-    font-size: 1rem;           /* slightly larger meta */
-  }
+  .wf-meta{ font-size:1rem; }
 }
 
-/* Tablet adjustment */
+/* Tablet */
 @media (min-width:768px) and (max-width:991.98px){
   .wf-thumb-link{ flex-basis:210px; width:210px; }
 }
 
-/* Mobile: fix proportions, adjust text sizes, center vertically */
-@media (max-width:575.98px){
-  .wf-post{ gap:12px; align-items:center; }
-  .wf-thumb-link{ flex-basis:140px; width:140px; }
-  .wf-title{ font-size:1.15rem; }
-  .wf-subtitle{ font-size:.96rem; margin-bottom:.45rem; }
-  .wf-meta{ font-size:.9rem; }
-}
-
-/* Divider line more relaxed */
-hr.my-4{ margin:1.1rem 0 !important; }
-
-
-/* ===== WonderFloyd — Accent + Mobile Balance patch ===== */
-
-/* Brand accent (cosmic purple instead of teal) */
+/* ===== Brand Accent (variables) ===== */
 :root{
   --wf-accent:#4f5559;
   --wf-accent-hover:#6305a6;
 }
 .wf-titlelink:hover .wf-title{ color: var(--wf-accent-hover); }
-.wf-meta a{ color: var(--wf-accent); }
-.wf-meta a:hover{ color: var(--wf-accent-hover); }
-
-/* Meta admin name color */
 .wf-meta a{
   color: var(--wf-accent);
   text-decoration:none;
@@ -11028,96 +10971,18 @@ hr.my-4{ margin:1.1rem 0 !important; }
 }
 .wf-meta a:hover{ color: var(--wf-accent-hover); text-decoration:none; }
 
-/* — Mobile balancing — */
-@media (max-width: 575.98px){
-  /* Slightly smaller thumbnail: balance with text */
-  .wf-thumb-link{ flex-basis:130px; width:130px; }
-
-  /* Reduce title ~8%, tighter line height */
-  .wf-title{
-    font-size: 1.08rem;
-    line-height: 1.25;
-    margin-bottom: .2rem;
-  }
-  /* Subtitle minor tweak */
-  .wf-subtitle{
-    font-size: .92rem;
-    margin-bottom: .4rem;
-  }
-  /* Meta row also slightly smaller */
-  .wf-meta{ font-size: .88rem; }
-  /* Card inner spacing reduced */
-  .wf-post{ gap: 10px; padding: .5rem 0 1rem; align-items: center; }
-}
-
-/* — Tablet: text slightly bigger, medium-sized thumbnail — */
-@media (min-width:576px) and (max-width: 767.98px){
-  .wf-thumb-link{ flex-basis:160px; width:160px; }
-  .wf-title{ font-size: 1.25rem; }
-  .wf-subtitle{ font-size: 1rem; }
-}
-
-/* Post header readability */
-.masthead {
-  position: relative;
-}
+/* ===== Post header readability ===== */
+.masthead { position: relative; }
 .masthead::before{
   content:"";
   position:absolute; inset:0;
   background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.15) 35%, rgba(0,0,0,.40));
   pointer-events:none;
 }
-.post-heading h1, .post-heading .subheading, .post-heading .meta { text-shadow: 0 2px 12px rgba(0,0,0,.35); }
-
-/* Card vertical rhythm */
-.wf-post{ padding: .9rem 0 1.35rem; }
-hr.my-4{ opacity:.25; }
-
-
-/* ===== WonderFloyd — Mobile Layout Fix (Updated) ===== */
-
-/* Mobile layout: thumbnail on top, text below */
-@media (max-width: 575.98px){
-  .wf-post {
-    flex-direction: column;   /* vertical alignment */
-    align-items: flex-start;  /* align left */
-    text-align: left;         /* text aligned left */
-    gap: 8px;
-    padding: .6rem 0 1rem;
-  }
-
-  .wf-thumb-link {
-    flex-basis: auto;
-    width: 90%;
-    margin: 0 auto;          /* center thumbnail */
-  }
-
-  .wf-thumb-box {
-    border-radius: 12px;
-    overflow: hidden;
-  }
-
-  .wf-content {
-    width: 90%;              /* text block same width as thumbnail */
-    margin: 0 auto;          /* same centering */
-  }
-
-  /* Title sizes on mobile */
-  .wf-title {
-    font-size: 1.2rem;
-    line-height: 1.25;
-    margin-bottom: .25rem;
-  }
-
-  .wf-subtitle {
-    font-size: .90rem;
-    margin-bottom: .3rem;
-  }
-
-  .wf-meta {
-    font-size: .75rem;
-    color:#6c757d;
-  }
+.post-heading h1,
+.post-heading .subheading,
+.post-heading .meta {
+  text-shadow: 0 2px 12px rgba(0,0,0,.35);
 }
 
 /* ===== Post Header Image Adjustment ===== */
@@ -11125,7 +10990,6 @@ hr.my-4{ opacity:.25; }
   background-position: center top;
   background-size: cover;
 }
-
 @media (max-width: 575.98px){
   .masthead {
     background-position: center top;
@@ -11136,21 +11000,17 @@ hr.my-4{ opacity:.25; }
   }
 }
 
-/* ===== Divider Line Between Posts ===== */
+/* ===== Divider Line Between Posts (final) ===== */
 hr.my-4 {
   border: none;
   border-top: 1px solid rgba(0,0,0,0.15);
   margin: 1.2rem 0;
   opacity: 1 !important;
 }
-
 /* Hide divider after the last post */
-.wf-post:last-of-type + hr {
-  display: none;
-}
+.wf-post:last-of-type + hr { display:none; }
 
-
-/* ===== Mobile: force categories to fit in one line (no scroll) ===== */
+/* ===== Mobile: force categories to fit in one line ===== */
 @media (max-width: 575.98px){
   #category-buttons{
     display: flex !important;
@@ -11159,7 +11019,6 @@ hr.my-4 {
     gap: .3rem;
     width: 100%;
   }
-
   #category-buttons > button{
     flex: 1 1 auto;
     font-size: .85rem;
@@ -11172,23 +11031,42 @@ hr.my-4 {
 
 /* ===== Mobile: adjust post body text size ===== */
 @media (max-width: 575.98px){
-  .post-heading h1 {
-    font-size: 1.6rem;
-  }
-  .post-heading .subheading {
-    font-size: 1rem;
-  }
-  .post-heading .meta {
-    font-size: .8rem;
-  }
+  .post-heading h1 { font-size:1.6rem; }
+  .post-heading .subheading { font-size:.8rem; }
+  .post-heading .meta { font-size:.8rem; }
 
-  article p {
-    font-size: 1rem;
-    line-height: 1.5;
-  }
+  article p { font-size:1rem; line-height:1.5; }
+  article h2, article h3 { font-size:1.05rem; }
 
-  article h2, article h3 {
-    font-size: 1.05rem;
+  /* Mobile layout: thumbnail on top, text below (final mobile) */
+  .wf-post {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 8px;
+    padding: .6rem 0 1rem;
+  }
+  .wf-thumb-link {
+    flex-basis: auto;
+    width: 90%;
+    margin: 0 auto;
+  }
+  .wf-thumb-box { border-radius:12px; overflow:hidden; }
+  .wf-content {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .wf-title {
+    font-size: 1.2rem;
+    line-height: 1.25;
+    margin-bottom: .25rem;
+  }
+  .wf-subtitle {
+    font-size: .90rem;
+    margin-bottom: .3rem;
+  }
+  .wf-meta {
+    font-size: .75rem;
+    color:#6c757d;
   }
 }
-
