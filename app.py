@@ -287,7 +287,7 @@ def add_new_post():
             body=form.body.data,
             img_url=img_url_value if img_url_value else "/static/assets/img/placeholder-hero.jpg",
             author=current_user,
-            date=date.today().strftime("%B %d, %Y"),
+            date=date.today().strftime("%b %d, %Y"),
             slug=post_slug,
             categories=selected_categories
         )

@@ -10972,9 +10972,23 @@ header.masthead .post-heading .meta a {
 
 /* Desktop enlargements */
 @media (min-width:992px){
-  .wf-thumb-link{ flex-basis:240px; width:240px; }     /* makes the card feel "bigger" */
-  .wf-title{ font-size:1.7rem; }
-  .wf-subtitle{ font-size:1.12rem; }
+  .wf-post {
+    gap: 28px;                 /* a little more spacing between image and text */
+    padding: 1.2rem 0 1.6rem;  /* taller padding for posts */
+  }
+
+  .wf-thumb-link{
+    flex-basis:280px;
+    width:280px;
+  }     /* makes the card feel "bigger" */
+
+  .wf-title{ font-size:1.85rem; }
+
+  .wf-subtitle{ font-size:1.18rem; }
+
+  .wf-meta {
+    font-size: 1rem;           /* slightly larger meta */
+  }
 }
 
 /* Tablet adjustment */
@@ -11136,6 +11150,45 @@ hr.my-4 {
 }
 
 
+/* ===== Mobile: force categories to fit in one line (no scroll) ===== */
+@media (max-width: 575.98px){
+  #category-buttons{
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between;
+    gap: .3rem;
+    width: 100%;
+  }
 
+  #category-buttons > button{
+    flex: 1 1 auto;
+    font-size: .85rem;
+    padding: .35rem .4rem;
+    border-radius: 10rem;
+    white-space: nowrap;
+    text-align: center;
+  }
+}
 
+/* ===== Mobile: adjust post body text size ===== */
+@media (max-width: 575.98px){
+  .post-heading h1 {
+    font-size: 1.6rem;
+  }
+  .post-heading .subheading {
+    font-size: 1rem;
+  }
+  .post-heading .meta {
+    font-size: .8rem;
+  }
+
+  article p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  article h2, article h3 {
+    font-size: 1.05rem;
+  }
+}
 
