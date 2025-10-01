@@ -10915,3 +10915,148 @@ header.masthead .post-heading .meta a {
   background-color: #f2f2f2;
   color: #111;
 }
+
+.post-preview img { display:block; width:100%; height:auto; object-fit:cover; }
+.post-title { line-height:1.2; }
+
+/* ===== WonderFloyd — List Card Polish v2 ===== */
+
+/* Kart ölçüsü ve aralıklar (desktop'ta biraz daha “büyük” görünüm) */
+.wf-post{
+  display:flex; gap:20px; align-items:flex-start;
+  padding:.75rem 0 1.25rem;
+}
+
+/* Thumb: sabit oran + cover */
+.wf-thumb-link{ display:block; flex:0 0 200px; width:200px; }
+.wf-thumb-box{ overflow:hidden; border-radius:14px; box-shadow:0 10px 24px rgba(0,0,0,.06); }
+.wf-thumb-img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .25s ease; }
+.wf-thumb-link:hover .wf-thumb-img{ transform:scale(1.01); } /* hafif canlılık */
+
+/* İçerik alanı */
+.wf-content{ flex:1 1 auto; min-width:0; }
+
+/* Başlık/link davranışı: altı ÇİZİLMEYECEK */
+.wf-titlelink{ color:inherit; text-decoration:none; display:block; }
+.wf-titlelink:hover { text-decoration:none; }
+.wf-titlelink:hover .wf-title{ color:#0f7a88; } /* alt çizgi yerine hafif renk değişimi */
+
+/* Title / Subtitle dengesi */
+.wf-title{
+  margin:0 0 .25rem;
+  font-weight: 750;
+  font-size: clamp(1.1rem, .9rem + 1vw, 1.6rem);
+  line-height:1.25;
+  letter-spacing:-0.015em;
+  text-transform:none !important;
+}
+.wf-subtitle{
+  margin:0 0 .6rem;
+  color:#5c6670;                 /* biraz koyu, daha modern gri */
+  font-weight:550;
+  font-size: clamp(.95rem, .85rem + .4vw, 1.08rem);
+  line-height:1.4;
+  text-transform:none !important;
+}
+
+/* Meta satırı: daha temiz, underline yok, yumuşak renk */
+.wf-meta{
+  margin:.15rem 0 0;
+  color:#8a9097;
+  font-size:.92rem;
+}
+.wf-meta a{
+  color:#0f7a88; text-decoration:none; font-weight:600;
+}
+.wf-meta a:hover{ opacity:.85; text-decoration:none; }
+
+/* Desktop büyütmeleri */
+@media (min-width:992px){
+  .wf-thumb-link{ flex-basis:240px; width:240px; }     /* kartı “büyük” hissettirir */
+  .wf-title{ font-size:1.7rem; }
+  .wf-subtitle{ font-size:1.12rem; }
+}
+
+/* Tablet ayarı */
+@media (min-width:768px) and (max-width:991.98px){
+  .wf-thumb-link{ flex-basis:210px; width:210px; }
+}
+
+/* Mobil: orantıyı düzelt, yazı-boyut dengesini toparla, dikey hizayı ortala */
+@media (max-width:575.98px){
+  .wf-post{ gap:12px; align-items:center; }
+  .wf-thumb-link{ flex-basis:140px; width:140px; }
+  .wf-title{ font-size:1.15rem; }
+  .wf-subtitle{ font-size:.96rem; margin-bottom:.45rem; }
+  .wf-meta{ font-size:.9rem; }
+}
+
+/* Bölücü çizgi çok sıkı olmasın */
+hr.my-4{ margin:1.1rem 0 !important; }
+
+
+/* ===== WonderFloyd — Accent + Mobile Balance patch ===== */
+
+/* Marka vurgusu (teal yerine kozmik mor) */
+:root{
+  --wf-accent:#4f5559;
+  --wf-accent-hover:#415766;
+}
+.wf-titlelink:hover .wf-title{ color: var(--wf-accent-hover); }
+.wf-meta a{ color: var(--wf-accent); }
+.wf-meta a:hover{ color: var(--wf-accent-hover); }
+
+/* Meta'daki admin ismi rengi */
+.wf-meta a{
+  color: var(--wf-accent);
+  text-decoration:none;
+  font-weight:600;
+}
+.wf-meta a:hover{ color: var(--wf-accent-hover); text-decoration:none; }
+
+/* — Mobile dengeleme — */
+@media (max-width: 575.98px){
+  /* Görseli bir tık küçült: yazı ile oran dengesi */
+  .wf-thumb-link{ flex-basis:130px; width:130px; }
+
+  /* Başlığı %8 kadar küçült, satır aralığını sıkı tut */
+  .wf-title{
+    font-size: 1.08rem;
+    line-height: 1.25;
+    margin-bottom: .2rem;
+  }
+  /* Alt başlık da ufak dokunuş */
+  .wf-subtitle{
+    font-size: .92rem;
+    margin-bottom: .4rem;
+  }
+  /* Meta satırını da hafif küçült */
+  .wf-meta{ font-size: .88rem; }
+  /* Kart içi boşluk/gap’i azalt */
+  .wf-post{ gap: 10px; padding: .5rem 0 1rem; align-items: center; }
+}
+
+/* — Tablet: yazıyı bir tık büyüt, görseli orta boy bırak — */
+@media (min-width:576px) and (max-width: 767.98px){
+  .wf-thumb-link{ flex-basis:160px; width:160px; }
+  .wf-title{ font-size: 1.25rem; }
+  .wf-subtitle{ font-size: 1rem; }
+}
+
+/* Post header okunurluk */
+.masthead {
+  position: relative;
+}
+.masthead::before{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.15) 35%, rgba(0,0,0,.40));
+  pointer-events:none;
+}
+.post-heading h1, .post-heading .subheading, .post-heading .meta { text-shadow: 0 2px 12px rgba(0,0,0,.35); }
+
+/* Kart dikey ritim */
+.wf-post{ padding: .9rem 0 1.35rem; }
+hr.my-4{ opacity:.25; }
+
+

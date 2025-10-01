@@ -1,18 +1,31 @@
 {% if posts and posts|length > 0 %}
   {% for post in posts %}
-    <div class="post-preview">
-      <a href="{{ url_for('show_post', slug=post.slug) }}">
-        <h2 class="post-title">{{ post.title }}</h2>
-        <h3 class="post-subtitle">{{ post.subtitle }}</h3>
+    {% set thumb_guess = post.img_url.replace('hero.webp', 'thumb.webp') if post.img_url else '/static/assets/img/placeholder-thumb.jpg' %}
+
+    <article class="wf-post mb-4">
+      <!-- Thumb -->
+      <a href="{{ url_for('show_post', slug=post.slug) }}" class="wf-thumb-link" aria-label="{{ post.title }}">
+        <div class="ratio ratio-16x9 wf-thumb-box">
+          <img src="{{ thumb_guess }}" alt="{{ post.title }}" class="wf-thumb-img" loading="lazy">
+        </div>
       </a>
-      <p class="post-meta">
-        Posted by <a href="#">{{ post.author.name }}</a> on {{ post.date }}
-        {% if current_user.is_authenticated and current_user.id == 1 %}
-          <a href="{{ url_for('delete_post', post_id=post.id) }}" class="text-danger ms-2">✘</a>
-        {% endif %}
-      </p>
-    </div>
-    <hr class="my-4" />
+
+      <!-- Content -->
+      <div class="wf-content">
+        <a href="{{ url_for('show_post', slug=post.slug) }}" class="wf-titlelink">
+          <h2 class="wf-title">{{ post.title }}</h2>
+          <p class="wf-subtitle">{{ post.subtitle }}</p>
+        </a>
+        <p class="wf-meta mb-0">
+          Posted by <a href="#">{{ post.author.name }}</a> on {{ post.date }}
+          {% if current_user.is_authenticated and current_user.id == 1 %}
+            <a href="{{ url_for('delete_post', post_id=post.id) }}" class="text-danger ms-2">✘</a>
+          {% endif %}
+        </p>
+      </div>
+    </article>
+
+    <hr class="my-4">
   {% endfor %}
 {% else %}
   <div class="alert alert-secondary text-center my-4" role="status">

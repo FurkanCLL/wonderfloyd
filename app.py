@@ -9,8 +9,13 @@ from flask_login import UserMixin, login_user, LoginManager, current_user, logou
 from functools import wraps
 from dotenv import load_dotenv
 from werkzeug.security import check_password_hash
+from werkzeug.utils import secure_filename
+from werkzeug.datastructures import FileStorage
+from PIL import Image
+from io import BytesIO
 import os
 import re
+import uuid
 
 # Load environment variables
 load_dotenv()
@@ -20,6 +25,11 @@ app.config['SECRET_KEY'] = os.environ.get('FLASK_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI", "sqlite:///posts.db")
 ckeditor = CKEditor(app)
 Bootstrap5(app)
+
+# Image Upload Config
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10 MB limit
+UPLOADS_DIR = os.path.join(app.root_path, 'static', 'uploads')
+os.makedirs(UPLOADS_DIR, exist_ok=True)
 
 # Configure Login
 login_manager = LoginManager()
@@ -75,6 +85,74 @@ class User(UserMixin, db.Model):
 
 with app.app_context():
     db.create_all()
+
+ALLOWED_EXTS = {'jpg', 'jpeg', 'png', 'webp'}
+
+def _allowed(filename: str) -> bool:
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTS
+
+def _to_webp_bytes(pil_img: Image.Image, quality=82) -> bytes:
+    out = BytesIO()
+    pil_img.save(out, format='WEBP', quality=quality, method=6)
+    out.seek(0)
+    return out.read()
+
+def _resize_cover(pil_img: Image.Image, target_w=1920, target_h=1080) -> Image.Image:
+    img = pil_img.convert('RGB')
+    ratio = max(target_w / img.width, target_h / img.height)
+    new_size = (int(img.width * ratio), int(img.height * ratio))
+    img = img.resize(new_size, Image.LANCZOS)
+    left = (img.width - target_w) // 2
+    top = (img.height - target_h) // 2
+    right = left + target_w
+    bottom = top + target_h
+    return img.crop((left, top, right, bottom))
+
+def _resize_thumb(pil_img: Image.Image, max_w=600, max_h=400) -> Image.Image:
+    img = pil_img.convert('RGB')
+    img.thumbnail((max_w, max_h), Image.LANCZOS)
+    return img
+
+def save_post_images(file_storage, slug: str) -> dict:
+    """
+    Verilen dosyadan hero.webp ve thumb.webp üretir.
+    Dönüş: {'hero': '/static/uploads/<slug>/hero.webp', 'thumb': '/static/uploads/<slug>/thumb.webp'}
+    """
+    if not file_storage or file_storage.filename == '':
+        return {}
+
+    if not _allowed(file_storage.filename):
+        raise ValueError("Unsupported file type")
+
+    base = secure_filename(slug or uuid.uuid4().hex)
+    folder = os.path.join(UPLOADS_DIR, base)
+    os.makedirs(folder, exist_ok=True)
+
+    file_storage.stream.seek(0)
+    img = Image.open(file_storage.stream)
+    img.verify()
+    file_storage.stream.seek(0)
+    img = Image.open(file_storage.stream).convert('RGB')
+
+    hero = _resize_cover(img, 1920, 1080)
+    thumb = _resize_thumb(img, 600, 400)
+
+    hero_bytes = _to_webp_bytes(hero, quality=82)
+    thumb_bytes = _to_webp_bytes(thumb, quality=80)
+
+    hero_path = os.path.join(folder, "hero.webp")
+    thumb_path = os.path.join(folder, "thumb.webp")
+
+    with open(hero_path, "wb") as f:
+        f.write(hero_bytes)
+    with open(thumb_path, "wb") as f:
+        f.write(thumb_bytes)
+
+    public_folder = f"/static/uploads/{base}"
+    return {
+        "hero": f"{public_folder}/hero.webp",
+        "thumb": f"{public_folder}/thumb.webp",
+    }
 
 # Admin-only decorator
 def admin_only(f):
@@ -190,14 +268,27 @@ def add_new_post():
     if form.validate_on_submit():
         selected_categories = db.session.query(Category).filter(Category.id.in_(form.categories.data)).all()
 
+        post_slug = generate_slug(form.title.data)
+
+        img_url_value = form.img_url.data or ""
+        file_storage: FileStorage = request.files.get('cover_image')
+        if file_storage and file_storage.filename:
+            try:
+                saved = save_post_images(file_storage, post_slug)
+                if saved.get("hero"):
+                    img_url_value = saved["hero"]
+            except Exception as e:
+                flash(f"Image upload failed: {e}")
+                return redirect(url_for("add_new_post"))
+
         new_post = BlogPost(
             title=form.title.data,
             subtitle=form.subtitle.data,
             body=form.body.data,
-            img_url=form.img_url.data,
+            img_url=img_url_value if img_url_value else "/static/assets/img/placeholder-hero.jpg",
             author=current_user,
             date=date.today().strftime("%B %d, %Y"),
-            slug=generate_slug(form.title.data),
+            slug=post_slug,
             categories=selected_categories
         )
         db.session.add(new_post)
@@ -222,9 +313,20 @@ def edit_post(post_id):
     if form.validate_on_submit():
         post.title = form.title.data
         post.subtitle = form.subtitle.data
-        post.img_url = form.img_url.data
+        post.img_url = form.img_url.data or post.img_url
         post.body = form.body.data
         post.categories = db.session.query(Category).filter(Category.id.in_(form.categories.data)).all()
+
+        file_storage: FileStorage = request.files.get('cover_image')
+        if file_storage and file_storage.filename:
+            try:
+                saved = save_post_images(file_storage, post.slug or generate_slug(post.title))
+                if saved.get("hero"):
+                    post.img_url = saved["hero"]
+            except Exception as e:
+                flash(f"Image upload failed: {e}")
+                return redirect(url_for("edit_post", post_id=post.id))
+
         db.session.commit()
         return redirect(url_for("show_post", slug=post.slug))
 
