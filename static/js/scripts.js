@@ -80,3 +80,35 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+
+// ===== Back to Top logic =====
+(function () {
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+
+  const SHOW_OFFSET = 600;
+  let lastY = window.scrollY;
+
+  function onScroll() {
+    const y = window.scrollY;
+
+    if (y < SHOW_OFFSET) {
+      btn.classList.remove('show');
+    } else {
+      if (y < lastY) {
+        btn.classList.add('show');
+      } else {
+        btn.classList.remove('show');
+      }
+    }
+    lastY = y;
+  }
+
+  btn.addEventListener('click', () => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+  });
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
