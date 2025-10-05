@@ -10958,18 +10958,39 @@ header.masthead .post-heading .meta a {
   .wf-thumb-link{ flex-basis:210px; width:210px; }
 }
 
-/* ===== Brand Accent (variables) ===== */
+/* ===== Accent (base + soft gradient hover) ===== */
 :root{
-  --wf-accent:#4f5559;
-  --wf-accent-hover:#6305a6;
+  --wf-accent: #5c6670;                   /* normal link rengi */
+  --wf-accent-hover-start: #8fa4ff;       /* soft mavi  */
+  --wf-accent-hover-end:   #6d36b5;       /* soft mor   */
 }
-.wf-titlelink:hover .wf-title{ color: var(--wf-accent-hover); }
+
+/* Meta link base */
 .wf-meta a{
   color: var(--wf-accent);
-  text-decoration:none;
-  font-weight:600;
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity .2s ease;
 }
-.wf-meta a:hover{ color: var(--wf-accent-hover); text-decoration:none; }
+
+/* Meta link hover: gradient text */
+.wf-meta a:hover{
+  background: linear-gradient(90deg, var(--wf-accent-hover-start), var(--wf-accent-hover-end));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent; /* non-webkit fallback */
+  text-decoration: none;
+}
+
+/* Post title hover: gradient text (mevcut efektin temiz hali) */
+.wf-titlelink:hover .wf-title{
+  background: linear-gradient(90deg, var(--wf-accent-hover-start), var(--wf-accent-hover-end));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
 
 /* ===== Post header readability ===== */
 .masthead { position: relative; }
@@ -11074,10 +11095,10 @@ hr.my-4 {
 /* ===== Back to Top (Floating) ===== */
 .wf-top{
   position: fixed;
-  right: 22px;
-  bottom: 22px;
-  width: 48px;
-  height: 48px;
+  right: 30px;
+  bottom: 30px;
+  width: 60px;
+  height: 60px;
   border: 0;
   border-radius: 999px;
   background: #111;
@@ -11087,6 +11108,7 @@ hr.my-4 {
   box-shadow: 0 10px 24px rgba(0,0,0,.18), 0 2px 6px rgba(0,0,0,.12);
   cursor: pointer;
   z-index: 1030;
+  font-size: 1.2rem;
 
   opacity: 0;
   visibility: hidden;
@@ -11124,3 +11146,73 @@ hr.my-4 {
     transition: none;
   }
 }
+
+/* ===== Shared gradient (mor ağırlıklı) ===== */
+:root{
+  --grad-start: #6aa9ff;
+  --grad-mid:   #7b5dff;
+  --grad-end:   #c86bff;
+}
+.wf-gradient-text{
+  background: linear-gradient(90deg, var(--grad-start), var(--grad-mid) 45%, var(--grad-end));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Navbar links & slogan aynı gradient */
+.navbar-nav .nav-link,
+.subheading{
+  background: linear-gradient(90deg, var(--grad-start), var(--grad-mid) 45%, var(--grad-end));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ===== Mobile toggle (MENU + 3 çizgi) ===== */
+.navbar-toggler{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:6px 10px;
+  border:0;
+  background: transparent;
+  line-height:1;
+}
+
+/* Bootstrap'in default hamburger'ını devre dışı bırak */
+.navbar-toggler .navbar-toggler-icon{ background: none !important; }
+
+/* Küçük ve orantılı hamburger ikon */
+.navbar-toggler .custom-toggler-icon{
+  position: relative;
+  display:inline-block;
+  width: 18px;   /* daha dar */
+  height: 14px;  /* daha kısa */
+  box-sizing: border-box;
+}
+
+.navbar-toggler .custom-toggler-icon span{
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--grad-start), var(--grad-mid) 45%, var(--grad-end));
+  display:block;
+  content:"";
+}
+
+/* üç çizgi */
+.navbar-toggler .custom-toggler-icon span:nth-child(1){ top: 0; }
+.navbar-toggler .custom-toggler-icon span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+.navbar-toggler .custom-toggler-icon span:nth-child(3){ bottom: 0; }
+
+
+/* Küçük ekranlarda ufak kıs */
+@media (max-width: 380px){
+  .navbar-toggler .custom-toggler-icon{ width:22px; height:16px; }
+}
+

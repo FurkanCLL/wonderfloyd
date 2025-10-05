@@ -18,10 +18,16 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
       <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="{{ url_for('get_all_posts') }}">WonderFloyd</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-          aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu <i class="fas fa-bars"></i>
+        <a class="navbar-brand wf-gradient-text" href="{{ url_for('get_all_posts') }}">WonderFloyd</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarResponsive" aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+          <span class="menu-label wf-gradient-text">MENU</span>
+          <span class="custom-toggler-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ms-auto py-4 py-lg-0">
