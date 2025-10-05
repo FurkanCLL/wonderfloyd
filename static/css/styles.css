@@ -11216,3 +11216,9 @@ hr.my-4 {
   .navbar-toggler .custom-toggler-icon{ width:22px; height:16px; }
 }
 
+/* ===== Post page subtitle color fix ===== */
+.post-heading .subheading {
+  background: none !important;
+  -webkit-text-fill-color: #fff !important;
+  color: #fff !important;
+}
