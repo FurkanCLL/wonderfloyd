@@ -11222,3 +11222,79 @@ hr.my-4 {
   -webkit-text-fill-color: #fff !important;
   color: #fff !important;
 }
+
+.post-body img, .ck-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+  border-radius: 10px;
+}
+
+/* ===== CKEditor content — responsive media ===== */
+.post-body {
+  line-height: 1.7;
+}
+
+/* Genel img davranışı */
+.post-body img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* CKEditor figure sarmalayıcı */
+.post-body figure.image {
+  margin: 1.25rem auto;
+}
+
+/* Editor içi resize edilmiş görseller:
+   figure.image.image_resized, width inline style ile gelir (örn: width:40%).
+   Biz sadece taşmasın diye max-width veriyoruz; genişlik inline style’dan okunur. */
+.post-body figure.image.image_resized {
+  max-width: 100%;
+}
+.post-body figure.image.image_resized img {
+  width: 100%;   /* figure’ın genişliğine uy */
+  height: auto;
+  display: block;
+}
+
+/* Resize edilmemiş görseller: container’a sığsın */
+.post-body figure.image:not(.image_resized) img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Caption vb. */
+.post-body figure.image figcaption {
+  font-size: .925rem;
+  color: #999;
+  text-align: center;
+  margin-top: .5rem;
+}
+
+.post-body .media-16x9 {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+.post-body .media-16x9 iframe,
+.post-body .media-16x9 video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: 0;
+}
+
+/* CKEditor image alignment */
+.post-body figure.image { margin: 1.25rem auto; }
+.post-body figure.image img { display:block; max-width:100%; height:auto; border-radius:10px; }
+
+/* Alignment */
+.post-body figure.image.image-style-align-left   { margin-left: 0;    margin-right: auto; text-align:left; }
+.post-body figure.image.image-style-align-center { margin-left: auto; margin-right: auto; text-align:center; }
+.post-body figure.image.image-style-align-right  { margin-left: auto; margin-right: 0;    text-align:right; }
+
+/* Resize edilmiş görsel figure genişliğine uysun */
+.post-body figure.image.image_resized { max-width:100%; }
+.post-body figure.image.image_resized img { width:100%; height:auto; }

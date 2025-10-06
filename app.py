@@ -154,6 +154,40 @@ def save_post_images(file_storage, slug: str) -> dict:
         "thumb": f"{public_folder}/thumb.webp",
     }
 
+def _resize_inline(img: Image.Image, max_w=1600, max_h=1600) -> Image.Image:
+    """Keep aspect ratio, fit into max box, no crop."""
+    im = img.convert("RGB")
+    im.thumbnail((max_w, max_h), Image.LANCZOS)
+    return im
+
+def save_inline_image(file_storage: FileStorage) -> str:
+    """Save an inline image as webp under /static/uploads/inline/ and return public URL."""
+    if not file_storage or file_storage.filename == '':
+        raise ValueError("No file provided")
+    if not _allowed(file_storage.filename):
+        raise ValueError("Unsupported file type")
+
+    # 1) Target folder: /static/uploads/inline
+    folder = os.path.join(UPLOADS_DIR, "inline")
+    os.makedirs(folder, exist_ok=True)
+
+    # 2) Read & validate
+    file_storage.stream.seek(0)
+    img = Image.open(file_storage.stream)
+    img.verify()
+    file_storage.stream.seek(0)
+    img = Image.open(file_storage.stream).convert("RGB")
+
+    # 3) Resize to fit (max 1600px longest edge) + save webp
+    out_img = _resize_inline(img, 1600, 1600)
+    fname = f"{uuid.uuid4().hex}.webp"
+    fpath = os.path.join(folder, fname)
+    with open(fpath, "wb") as f:
+        f.write(_to_webp_bytes(out_img, quality=82))
+
+    # 4) Return public URL
+    return f"/static/uploads/inline/{fname}"
+
 # Admin-only decorator
 def admin_only(f):
     @wraps(f)
@@ -331,6 +365,31 @@ def edit_post(post_id):
         return redirect(url_for("show_post", slug=post.slug))
 
     return render_template("make-post.html", form=form, is_edit=True, current_user=current_user)
+
+@app.route("/upload-image", methods=["POST"])
+@admin_only
+def upload_image():
+    """
+    CKEditor 5 Simple Upload endpoint.
+    Expected response:
+      success -> { "url": "/static/uploads/inline/..." }
+      error   -> { "error": { "message": "..." } }
+    """
+    try:
+        # CKEditor 5 may send under 'upload' (SimpleUpload) or 'file'
+        fs = request.files.get("upload") or request.files.get("file")
+        if not fs:
+            return jsonify({"error": {"message": "No file part"}}), 400
+
+        # Basic size check (uses app.config['MAX_CONTENT_LENGTH'] globally)
+        url = save_inline_image(fs)
+        return jsonify({"url": url}), 201
+
+    except ValueError as ve:
+        return jsonify({"error": {"message": str(ve)}}), 400
+    except Exception as e:
+        # Log e if you have logging
+        return jsonify({"error": {"message": "Upload failed"}}), 500
 
 @app.route("/delete/<int:post_id>")
 @admin_only

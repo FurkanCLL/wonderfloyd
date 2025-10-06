@@ -22,12 +22,72 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        {{ ckeditor.load() }}
-        {{ ckeditor.config(name='body') }}
         {{ render_form(form, novalidate=True, enctype="multipart/form-data", button_map={"submit": "primary"}) }}
       </div>
     </div>
   </div>
 </main>
+
+<script>
+  (function () {
+    const el = document.querySelector('textarea[name="body"]');
+    if (!el) return;
+
+    function initEditor() {
+      const Editor = (window.CKEDITOR && CKEDITOR.ClassicEditor) || window.ClassicEditor;
+      if (!Editor) { console.error('CKEditor not found after load'); return; }
+
+      Editor.create(el, {
+        removePlugins: [
+          'CloudServices','EasyImage','ExportPdf','ExportWord','WProofreader','AIAssistant',
+          'CKBox','CKBoxUtils','CKBoxImageEdit',
+          'CKFinder','CKFinderUploadAdapter',
+          'RealTimeCollaborativeComments','RealTimeCollaborativeTrackChanges',
+          'RealTimeCollaborativeRevisionHistory','PresenceList','Comments',
+          'TrackChanges','TrackChangesData','RevisionHistory',
+          'MultiLevelList','TableOfContents','FormatPainter','Template',
+          'SlashCommand','PasteFromOfficeEnhanced','CaseChange',
+          'Pagination','DocumentOutline'
+        ],
+        toolbar: {
+          items: [
+            'undo','redo','|',
+            'heading','|',
+            'bold','italic','link','|',
+            'bulletedList','numberedList','|',
+            'uploadImage','blockQuote','codeBlock'
+          ]
+        },
+        simpleUpload: {
+          uploadUrl: '/upload-image',
+          withCredentials: false
+        },
+        image: {
+          toolbar: [
+            'imageStyle:alignLeft','imageStyle:alignCenter','imageStyle:alignRight',
+            '|','toggleImageCaption','linkImage','imageTextAlternative'
+          ],
+          styles: [ 'alignLeft','alignCenter','alignRight' ]
+        }
+      }).then(() => console.log('CKEditor ready ✅'))
+        .catch(err => console.error('CKEditor init error:', err));
+    }
+
+    // Lazy-load only on this page
+    if (!window.CKEDITOR && !window.ClassicEditor) {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js';
+      s.defer = true;
+      s.onload = initEditor;
+      document.head.appendChild(s);
+    } else {
+      initEditor();
+    }
+  })();
+</script>
+
+
+
+
 
 {% include "footer.html" %}
