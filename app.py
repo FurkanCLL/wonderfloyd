@@ -16,6 +16,7 @@ from io import BytesIO
 import os
 import re
 import uuid
+import base64
 
 # Load environment variables
 load_dotenv()
@@ -178,7 +179,7 @@ def save_inline_image(file_storage: FileStorage) -> str:
     file_storage.stream.seek(0)
     img = Image.open(file_storage.stream).convert("RGB")
 
-    # 3) Resize to fit (max 1600px longest edge) + save webp
+    # 3) Resize to fit (max 1600px edge) + save webp
     out_img = _resize_inline(img, 1600, 1600)
     fname = f"{uuid.uuid4().hex}.webp"
     fpath = os.path.join(folder, fname)
@@ -187,6 +188,43 @@ def save_inline_image(file_storage: FileStorage) -> str:
 
     # 4) Return public URL
     return f"/static/uploads/inline/{fname}"
+
+def replace_base64_images_with_files(html: str) -> str:
+    """Convert <img src="data:image/...;base64, ..."> to files under /static/uploads/inline/ and replace src."""
+    if not html:
+        return html
+
+    # png|jpg|jpeg|webp|gif  (+ whitespace tolerant base64)
+    pattern = re.compile(
+        r'src=["\']data:image/(png|jpe?g|webp|gif);base64,([A-Za-z0-9+/=\s]+)["\']',
+        re.IGNORECASE | re.DOTALL
+    )
+
+    def _save_and_replace(m: re.Match) -> str:
+        b64 = m.group(2).replace('\n', '').replace('\r', '').replace(' ', '')
+        try:
+            raw = base64.b64decode(b64)
+        except Exception:
+            return m.group(0)
+
+        try:
+            img = Image.open(BytesIO(raw))
+            if img.mode != "RGB":
+                img = img.convert("RGB")
+        except Exception:
+            return m.group(0)
+
+        out = _resize_inline(img, 1600, 1600)
+        folder = os.path.join(UPLOADS_DIR, "inline")
+        os.makedirs(folder, exist_ok=True)
+        fname = f"{uuid.uuid4().hex}.webp"
+        with open(os.path.join(folder, fname), "wb") as f:
+            f.write(_to_webp_bytes(out, quality=82))
+
+        url = f"/static/uploads/inline/{fname}"
+        return f'src="{url}"'
+
+    return pattern.sub(_save_and_replace, html)
 
 # Admin-only decorator
 def admin_only(f):
@@ -300,10 +338,15 @@ def add_new_post():
     form.categories.choices = [(cat.id, cat.name) for cat in db.session.query(Category).all()]
 
     if form.validate_on_submit():
-        selected_categories = db.session.query(Category).filter(Category.id.in_(form.categories.data)).all()
+        selected_categories = (
+            db.session.query(Category)
+            .filter(Category.id.in_(form.categories.data))
+            .all()
+        )
 
         post_slug = generate_slug(form.title.data)
 
+        # Cover image (hero/thumb)
         img_url_value = form.img_url.data or ""
         file_storage: FileStorage = request.files.get('cover_image')
         if file_storage and file_storage.filename:
@@ -315,10 +358,13 @@ def add_new_post():
                 flash(f"Image upload failed: {e}")
                 return redirect(url_for("add_new_post"))
 
+        # Convert any base64 inline images to files
+        cleaned_body = replace_base64_images_with_files(form.body.data)
+
         new_post = BlogPost(
             title=form.title.data,
             subtitle=form.subtitle.data,
-            body=form.body.data,
+            body=cleaned_body,
             img_url=img_url_value if img_url_value else "/static/assets/img/placeholder-hero.jpg",
             author=current_user,
             date=date.today().strftime("%b %d, %Y"),
@@ -348,9 +394,17 @@ def edit_post(post_id):
         post.title = form.title.data
         post.subtitle = form.subtitle.data
         post.img_url = form.img_url.data or post.img_url
-        post.body = form.body.data
-        post.categories = db.session.query(Category).filter(Category.id.in_(form.categories.data)).all()
 
+        # Convert any base64 inline images to files on edit as well
+        post.body = replace_base64_images_with_files(form.body.data)
+
+        post.categories = (
+            db.session.query(Category)
+            .filter(Category.id.in_(form.categories.data))
+            .all()
+        )
+
+        # Optional: replace hero if a new cover uploaded
         file_storage: FileStorage = request.files.get('cover_image')
         if file_storage and file_storage.filename:
             try:
@@ -369,12 +423,6 @@ def edit_post(post_id):
 @app.route("/upload-image", methods=["POST"])
 @admin_only
 def upload_image():
-    """
-    CKEditor 5 Simple Upload endpoint.
-    Expected response:
-      success -> { "url": "/static/uploads/inline/..." }
-      error   -> { "error": { "message": "..." } }
-    """
     try:
         # CKEditor 5 may send under 'upload' (SimpleUpload) or 'file'
         fs = request.files.get("upload") or request.files.get("file")

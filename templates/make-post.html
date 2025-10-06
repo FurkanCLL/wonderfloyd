@@ -38,6 +38,7 @@
       if (!Editor) { console.error('CKEditor not found after load'); return; }
 
       Editor.create(el, {
+        // Keep Base64UploadAdapter (we convert on save in backend)
         removePlugins: [
           'CloudServices','EasyImage','ExportPdf','ExportWord','WProofreader','AIAssistant',
           'CKBox','CKBoxUtils','CKBoxImageEdit',
@@ -55,22 +56,20 @@
             'heading','|',
             'bold','italic','link','|',
             'bulletedList','numberedList','|',
-            'uploadImage','blockQuote','codeBlock'
+            'imageInsert','blockQuote','codeBlock'
           ]
         },
-        simpleUpload: {
-          uploadUrl: '/upload-image',
-          withCredentials: false
-        },
         image: {
+          insert: { integrations: ['upload', 'url'] },
           toolbar: [
             'imageStyle:alignLeft','imageStyle:alignCenter','imageStyle:alignRight',
             '|','toggleImageCaption','linkImage','imageTextAlternative'
           ],
           styles: [ 'alignLeft','alignCenter','alignRight' ]
         }
-      }).then(() => console.log('CKEditor ready ✅'))
-        .catch(err => console.error('CKEditor init error:', err));
+      })
+      .then(() => console.log('CKEditor ready ✅'))
+      .catch(err => console.error('CKEditor init error:', err));
     }
 
     // Lazy-load only on this page

@@ -11298,3 +11298,26 @@ hr.my-4 {
 /* Resize edilmiş görsel figure genişliğine uysun */
 .post-body figure.image.image_resized { max-width:100%; }
 .post-body figure.image.image_resized img { width:100%; height:auto; }
+
+/* === Mobile image sizing fix === */
+/* Varsayılan: CKEditor'un yüzde genişliğini koru (masaüstü için) */
+.post-body figure.image.image_resized { max-width: 100%; }
+.post-body figure.image.image_resized img { width: 100%; height: auto; display: block; }
+
+/* Küçük ekranlarda: yüzdeleri yok say, görseli tam genişliğe getir */
+@media (max-width: 576px) {
+  .post-body figure.image {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .post-body figure.image.image_resized {
+    width: 100% !important;   /* yüzde genişliği ez */
+    max-width: 100% !important;
+  }
+}
+
+/* İstersen tam genişlik yerine biraz nefes alan bir görünüm: %92 */
+@media (max-width: 576px) {
+  /* yukarıdaki 100% yerine bunu kullanabilirsin */
+  /* .post-body figure.image.image_resized { width: 92% !important; } */
+}
