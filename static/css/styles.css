@@ -11316,8 +11316,7 @@ hr.my-4 {
   }
 }
 
-/* İstersen tam genişlik yerine biraz nefes alan bir görünüm: %92 */
+/* İstersen tam genişlik yerine biraz nefes alan bir görünüm: %95 */
 @media (max-width: 576px) {
-  /* yukarıdaki 100% yerine bunu kullanabilirsin */
-  /* .post-body figure.image.image_resized { width: 92% !important; } */
+  .post-body figure.image.image_resized { width: 95% !important; } */
 }
