@@ -17,7 +17,7 @@
           <p class="wf-subtitle">{{ post.subtitle }}</p>
         </a>
         <p class="wf-meta mb-0">
-          Posted by <a href="#">{{ post.author.name }}</a> on {{ post.date }}
+          Posted by <a href="/about">{{ post.author.name }}</a> on {{ post.date }}
           {% if current_user.is_authenticated and current_user.id == 1 %}
             <a href="{{ url_for('delete_post', post_id=post.id) }}" class="text-danger ms-2">✘</a>
           {% endif %}
