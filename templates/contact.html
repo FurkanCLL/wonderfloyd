@@ -52,7 +52,7 @@
 
           <div class="mb-3">
             <label class="form-label">{{ form.subject.label }}</label>
-            {{ form.subject(class="form-control", placeholder="Subject (optional)") }}
+            {{ form.subject(class="form-control", placeholder="Subject") }}
             {% for e in form.subject.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
           </div>
 

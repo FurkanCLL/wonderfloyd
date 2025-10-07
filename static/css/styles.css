@@ -11399,3 +11399,75 @@ hr.my-4 {
   margin-bottom: 0;        /* fazla boşluk oluşmasın */
   overflow: visible;
 }
+
+/* Brand: logo-only polish */
+.wf-brand{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width: auto;
+  min-width: 44px;            /* rahat tıklama */
+  min-height: 44px;
+  padding: 7px 8px;           /* dokunma alanı */
+  border-radius: 10px;
+  text-decoration:none;
+}
+
+.wf-brand .wf-seed{
+  width: 2.4em;               /* desktop boyutu (senin ayarın) */
+  height: 2.4em;
+  flex: 0 0 auto;
+  transform: translateY(0.02em);   /* çok hafif aşağı — hizayı sakinleştirir */
+}
+
+/* Ölçekle kalınlaşmayı engelle ve çizgiyi incelt */
+.wf-brand .wf-seed circle{ vector-effect: non-scaling-stroke; }
+
+.wf-brand .wf-seed g{
+  stroke-width: .85;          /* daha ince (önceki .80’den düştük) */
+  stroke-opacity: .95;        /* keskin ama cam gibi */
+}
+
+/* Yüksek DPI’da bir tık daha incelt (retina’da mükemmel görünür) */
+@media (min-resolution: 2dppx){
+  .wf-brand .wf-seed g{ stroke-width: .60; }
+}
+
+/* Hover/Focus: yumuşak ışıma + çok hafif büyüme (motion-safe) */
+@media (prefers-reduced-motion: no-preference){
+  .wf-brand .wf-seed{
+    transition: transform .2s ease, filter .2s ease;
+  }
+  .wf-brand:hover .wf-seed,
+  .wf-brand:focus-visible .wf-seed{
+    transform: translateY(0.02em) scale(1.02);
+    filter: drop-shadow(0 0 7px rgba(143,164,255,.35));
+  }
+}
+
+/* Mobil: biraz küçült + mikro yukarı hizala */
+@media (max-width: 576px){
+  .wf-brand .wf-seed{
+    width: 2.0em;
+    height: 2.0em;
+    transform: translateY(-0.01em);
+  }
+}
+
+@media (max-width: 576px){
+  #mainNav{
+    padding-top: 0.35rem !important;
+    padding-bottom: 0.35rem !important;
+  }
+  #mainNav .navbar-brand{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+}
+
+@media (max-width: 576px){
+  .navbar-brand{
+    margin-left: -0.7rem;
+  }
+}
+

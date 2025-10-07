@@ -18,7 +18,28 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
       <div class="container px-4 px-lg-5">
-        <a class="navbar-brand wf-gradient-text" href="{{ url_for('get_all_posts') }}">WonderFloyd</a>
+        <a class="navbar-brand wf-brand" href="{{ url_for('get_all_posts') }}" aria-label="WonderFloyd home">
+          <svg class="wf-seed" viewBox="-22 -22 44 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="wfBrandGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"  stop-color="var(--wf-accent-hover-start, #8fa4ff)"/>
+                <stop offset="100%" stop-color="var(--wf-accent-hover-end,   #6d36b5)"/>
+              </linearGradient>
+            </defs>
+            <g fill="none" stroke="url(#wfBrandGrad)" stroke-linecap="round" stroke-linejoin="round">
+              <!-- r=9.25 => kenarda nefes payı -->
+              <circle r="9.25" cx="0"  cy="0"/>
+              <circle r="9.25" cx="9.25" cy="0"/>
+              <circle r="9.25" cx="-9.25" cy="0"/>
+              <circle r="9.25" cx="4.625"  cy="-8.006"/>
+              <circle r="9.25" cx="-4.625" cy="-8.006"/>
+              <circle r="9.25" cx="4.625"  cy="8.006"/>
+              <circle r="9.25" cx="-4.625" cy="8.006"/>
+            </g>
+          </svg>
+          <span class="wf-gradient-text"></span>
+        </a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarResponsive" aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">
