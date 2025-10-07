@@ -11320,3 +11320,82 @@ hr.my-4 {
 @media (max-width: 576px) {
   .post-body figure.image.image_resized { width: 95% !important; } */
 }
+
+/* ===== WonderFloyd Contact Button Style ===== */
+.btn-primary {
+  background: linear-gradient(90deg, #8fa4ff, #6d36b5);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  border-radius: 8px;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: linear-gradient(90deg, #aab9ff, #8240d3);
+  transform: translateY(-1px);
+  color: #fff;
+}
+
+/* ===== WonderFloyd — Contact (clean light version) ===== */
+.wf-contact .form-label{
+  font-weight:700;
+  margin-bottom:.45rem;
+  letter-spacing:.2px;
+}
+
+/* Inputs/textarea: always light (override globals) */
+.wf-contact .form-control{
+  background:#fff !important;
+  color:#202226;
+  border:1px solid rgba(0,0,0,.12);
+  border-radius:12px;
+  padding:.85rem 1rem;
+  line-height:1.4;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+  transition: box-shadow .18s ease, border-color .18s ease, transform .12s ease;
+}
+.wf-contact .form-control::placeholder{ color:rgba(0,0,0,.45); }
+.wf-contact .form-control:focus{
+  outline:0;
+  border-color:rgba(109,54,181,.45);
+  box-shadow:0 0 0 3px rgba(143,164,255,.25), 0 10px 22px rgba(109,54,181,.10);
+  background:#fff !important;
+}
+.wf-contact textarea.form-control{ min-height:180px; border-radius:14px; }
+
+/* Button: keep the pretty gradient */
+.wf-contact .btn-primary{
+  position:relative; overflow:hidden; border:none;
+  border-radius:12px; padding:.9rem 1.4rem;
+  font-weight:700; letter-spacing:.3px; color:#fff;
+  background:linear-gradient(90deg, var(--wf-accent-hover-start,#8fa4ff), var(--wf-accent-hover-end,#6d36b5));
+  box-shadow:0 6px 18px rgba(109,54,181,.35);
+  transition:transform .15s, box-shadow .2s, background .2s;
+}
+.wf-contact .btn-primary:hover,
+.wf-contact .btn-primary:focus{
+  transform:translateY(-1px);
+  box-shadow:0 10px 26px rgba(109,54,181,.45);
+  background:linear-gradient(90deg,#aab9ff,#8240d3);
+}
+.wf-contact .btn-primary::after{
+  content:""; position:absolute; top:0; left:-120%; width:60%; height:100%;
+  transform:skewX(-20deg);
+  background:linear-gradient(120deg,rgba(255,255,255,.35),rgba(255,255,255,0));
+  transition:left .6s ease;
+}
+.wf-contact .btn-primary:hover::after{ left:140%; }
+
+/* Action row spacing */
+.wf-contact .d-flex.justify-content-end{ gap:10px; }
+
+/* fix subtitle cut-off issue */
+.page-heading .subheading {
+  display: block;
+  padding-bottom: 0.25rem; /* biraz nefes payı */
+  line-height: 1.4;
+  margin-bottom: 0;        /* fazla boşluk oluşmasın */
+  overflow: visible;
+}

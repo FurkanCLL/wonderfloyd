@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectMultipleField
+from wtforms import StringField, SubmitField, SelectMultipleField, HiddenField, TextAreaField
 from wtforms.validators import DataRequired, URL, Optional
+from wtforms.validators import Email, Length
 from flask_ckeditor import CKEditorField
 from wtforms.widgets import ListWidget, CheckboxInput
 from flask_wtf.file import FileField, FileAllowed
@@ -22,3 +23,14 @@ class CreatePostForm(FlaskForm):
     body = CKEditorField("Blog Content", validators=[DataRequired()])
     categories = MultiCheckboxField("Categories", coerce=int)
     submit = SubmitField("Submit Post")
+
+class ContactForm(FlaskForm):
+    # Basic fields
+    name = StringField("Your Name", validators=[DataRequired(), Length(max=120)])
+    email = StringField("Your Email", validators=[DataRequired(), Email(), Length(max=254)])
+    subject = StringField("Subject", validators=[Optional(), Length(max=160)])
+    message = TextAreaField("Message", validators=[DataRequired(), Length(min=10, max=2000)])
+
+    website = HiddenField()
+
+    submit = SubmitField("Send Message")

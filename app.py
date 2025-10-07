@@ -11,6 +11,8 @@ from dotenv import load_dotenv
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
+import smtplib
+from email.message import EmailMessage
 from PIL import Image
 from io import BytesIO
 import os
@@ -226,6 +228,40 @@ def replace_base64_images_with_files(html: str) -> str:
 
     return pattern.sub(_save_and_replace, html)
 
+def send_contact_mail(name: str, email: str, subject: str, message: str):
+    """Send email via SMTP (TLS). Reply-To will be the sender's email."""
+    smtp_host = os.environ.get("SMTP_SERVER", "smtp.gmail.com")
+    smtp_port = int(os.environ.get("SMTP_PORT", "587"))
+    smtp_user = os.environ.get("SMTP_USER")
+    smtp_pass = os.environ.get("SMTP_PASSWORD")
+    admin_to = os.environ.get("ADMIN_EMAIL", smtp_user)
+
+    if not (smtp_user and smtp_pass and admin_to):
+        raise RuntimeError("SMTP configuration is missing. Check your .env variables.")
+
+    msg = EmailMessage()
+    title = subject.strip() if subject else f"New message from {name}"
+    msg["Subject"] = f"[WonderFloyd • Contact] {title}"
+    msg["From"] = smtp_user
+    msg["To"] = admin_to
+    msg["Reply-To"] = email
+
+    body = (
+        f"New contact message from WonderFloyd:\n\n"
+        f"Name   : {name}\n"
+        f"Email  : {email}\n"
+        f"Subject: {subject or '-'}\n"
+        f"Date   : {datetime.now().isoformat(timespec='seconds')}\n\n"
+        f"Message:\n{message}\n"
+    )
+    msg.set_content(body)
+
+    with smtplib.SMTP(smtp_host, smtp_port, timeout=20) as server:
+        server.ehlo()
+        server.starttls()
+        server.login(smtp_user, smtp_pass)
+        server.send_message(msg)
+
 # Admin-only decorator
 def admin_only(f):
     @wraps(f)
@@ -277,6 +313,8 @@ def show_post(slug):
     return render_template("post.html", post=requested_post, current_user=current_user)
 
 from forms import CreatePostForm
+from forms import ContactForm
+
 
 @app.route("/filter-posts/<int:category_id>")
 def filter_posts(category_id):
@@ -455,6 +493,30 @@ def logout():
 @app.route("/about")
 def about():
     return render_template("about.html", current_user=current_user)
+
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
+    form = ContactForm()
+
+    if form.validate_on_submit():
+        if form.website.data:
+            flash("Thanks! Your message has been received.", "success")
+            return redirect(url_for("contact"))
+
+        try:
+            send_contact_mail(
+                name=form.name.data.strip(),
+                email=form.email.data.strip(),
+                subject=(form.subject.data or "").strip(),
+                message=form.message.data.strip(),
+            )
+            flash("Message sent successfully. We’ll get back to you soon ✨", "success")
+            return redirect(url_for("contact"))  # PRG pattern
+        except Exception as e:
+            # Optionally log e
+            flash("Oops, message could not be sent. Please try again later.", "danger")
+
+    return render_template("contact.html", form=form, current_user=current_user)
 
 @app.context_processor
 def inject_year():

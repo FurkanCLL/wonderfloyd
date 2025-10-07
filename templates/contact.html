@@ -1,0 +1,75 @@
+{% include "header.html" %}
+
+<header class="masthead" style="background-image: url('../static/assets/img/wf-bg-v8.png')">
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="page-heading">
+          <h1 class="wf-gradient-text">Contact</h1>
+          <span class="subheading">Your words travel through light and wonder.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="mb-4">
+  <div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+
+        {# Flash messages #}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ 'success' if category=='success' else 'danger' }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" novalidate class="wf-contact">
+          {{ form.csrf_token }}
+
+          {# Honeypot: visually hidden but present in DOM #}
+          <div style="display:none;">
+            {{ form.website() }}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">{{ form.name.label }}</label>
+            {{ form.name(class="form-control", placeholder="Your name") }}
+            {% for e in form.name.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">{{ form.email.label }}</label>
+            {{ form.email(class="form-control", placeholder="you@example.com") }}
+            {% for e in form.email.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">{{ form.subject.label }}</label>
+            {{ form.subject(class="form-control", placeholder="Subject (optional)") }}
+            {% for e in form.subject.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">{{ form.message.label }}</label>
+            {{ form.message(class="form-control", rows="7", placeholder="Write your message...") }}
+            {% for e in form.message.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+          </div>
+
+          <div class="d-flex justify-content-end">
+            {{ form.submit(class="btn btn-primary") }}
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+{% include "footer.html" %}
