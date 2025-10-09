@@ -11471,3 +11471,106 @@ hr.my-4 {
   }
 }
 
+/* =============== WF Category Pills — neutral border, premium pressed =============== */
+
+/* Row */
+#category-buttons{
+  display:flex; flex-wrap:nowrap; gap:12px;
+  justify-content:center; align-items:center;
+  max-width:860px; margin:0 auto; padding:0 8px;
+}
+
+/* Tokens (neutral) */
+:root{
+  --pill-bg: #eef1f6;          /* base surface */
+  --pill-br: #d7dbe6;          /* base border (neutral) */
+  --pill-text: #2c3142;
+
+  --pill-active-bg1: #ccbbfc;  /* subtle purple tint */
+  --pill-active-bg2: #f0eef9;
+  --pill-active-br: #d2d7e6;   /* neutral border even when active */
+}
+
+/* Base pill (content-width) */
+#category-buttons .btn{
+  flex:0 0 auto; min-width:max-content;
+  border-radius:999px !important;
+  border:2px solid var(--pill-br) !important;
+  background:var(--pill-bg) !important;
+  color:var(--pill-text) !important;
+
+  font-weight:600; line-height:1;
+  /* restore bigger size */
+  padding:.78rem 1.25rem !important;
+  font-size:1.08rem;
+
+  box-shadow:
+    inset 4px 4px 10px rgba(0,0,0,.10),
+    inset -4px -4px 10px rgba(255,255,255,.85);
+  transition:transform .08s ease, box-shadow .2s ease, background-color .2s ease;
+}
+
+#category-buttons .btn:hover,
+#category-buttons .btn:focus-visible{
+  outline:none;
+  transform:translateY(-1px);
+  box-shadow:
+    inset 3px 3px 8px rgba(0,0,0,.10),
+    inset -3px -3px 8px rgba(255,255,255,.85),
+    0 8px 14px rgba(0,0,0,.05);
+}
+
+/* Active: neutral border, richer pressed fill */
+#category-buttons .btn.active{
+  background:linear-gradient(180deg,var(--pill-active-bg1),var(--pill-active-bg2)) !important;
+  border-color:var(--pill-active-br) !important;   /* stays NEUTRAL */
+  color:#1f2130 !important;
+  box-shadow:
+    inset 7px 7px 14px rgba(0,0,0,.12),
+    inset -7px -7px 14px rgba(255,255,255,.85);
+}
+
+/* Header altı boşluğu (hafif kısaltılmış) */
+.container.my-4.text-center{ margin-top:1rem !important; }
+
+/* Mobile */
+@media (max-width:575.98px){
+  #category-buttons{ padding:0 6px; gap:8px; }
+  #category-buttons .btn{
+    /* restore/bump size on mobile too */
+    font-size:clamp(13px,3.6vw,10px);
+    padding:.48rem .70rem !important;
+  }
+}
+@media (max-width:360px){
+  #category-buttons{ padding:0 4px; gap:6px; }
+  #category-buttons .btn{ font-size:12px; padding:.40rem .56rem !important; }
+}
+
+/* clip and mask to avoid mobile rounding artifacts */
+#category-buttons .btn{
+  border-radius: 9999px !important;
+  overflow: hidden;                                  /* clip everything to radius */
+  -webkit-background-clip: padding-box;              /* safari baseline */
+  -webkit-mask-image: -webkit-radial-gradient(white, black); /* iOS seam fix */
+}
+
+/* active: separate fill from border via layered backgrounds */
+#category-buttons .btn.active{
+  border: 2px solid transparent !important;
+  background:
+    /* inner fill */
+    linear-gradient(180deg, var(--pill-active-bg1), var(--pill-active-bg2)) padding-box,
+    /* neutral border layer */
+    linear-gradient(var(--pill-br), var(--pill-br)) border-box !important;
+
+  /* make sure both layers respect the radius */
+  -webkit-background-clip: padding-box, border-box;
+  background-clip: padding-box, border-box;
+
+  /* nudge GPU to remove the “flat top” on some devices */
+  transform: translateZ(0);
+  box-shadow:
+    inset 7px 7px 14px rgba(0,0,0,.12),
+    inset -7px -7px 14px rgba(255,255,255,.85);
+}
