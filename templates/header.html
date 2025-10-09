@@ -21,8 +21,11 @@
         <a class="navbar-brand wf-brand" href="{{ url_for('get_all_posts') }}" aria-label="WonderFloyd home">
           <svg class="wf-seed" viewBox="-22 -22 44 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
             <defs>
-              <linearGradient id="wfBrandGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%"  stop-color="var(--wf-accent-hover-start, #8fa4ff)"/>
+              <!-- Whole-logo gradient: one plane for all circles -->
+              <linearGradient id="wfBrandGrad"
+                              gradientUnits="userSpaceOnUse"
+                              x1="0" y1="-22"  x2="0" y2="22">
+                <stop offset="0%"   stop-color="var(--wf-accent-hover-start, #a5b9fa)"/>
                 <stop offset="100%" stop-color="var(--wf-accent-hover-end,   #6d36b5)"/>
               </linearGradient>
             </defs>
