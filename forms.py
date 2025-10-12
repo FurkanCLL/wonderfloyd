@@ -26,8 +26,8 @@ class CreatePostForm(FlaskForm):
 
 class ContactForm(FlaskForm):
     # Basic fields
-    name = StringField("Your Name", validators=[DataRequired(), Length(max=120)])
-    email = StringField("Your Email", validators=[DataRequired(), Email(), Length(max=254)])
+    name = StringField("Name", validators=[DataRequired(), Length(max=120)])
+    email = StringField("Email", validators=[DataRequired(), Email(), Length(max=254)])
     subject = StringField("Subject", validators=[Optional(), Length(max=160)])
     message = TextAreaField("Message", validators=[DataRequired(), Length(min=10, max=2000)])
 
