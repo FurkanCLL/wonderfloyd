@@ -19,7 +19,7 @@
         <p class="wf-meta mb-0">
           Posted by <a href="/about#author">{{ post.author.name }}</a> on {{ post.date }}
           {% if current_user.is_authenticated and current_user.id == 1 %}
-            <a href="{{ url_for('delete_post', post_id=post.id) }}" class="text-danger ms-2">✘</a>
+            <a href="{{ url_for('delete_post', post_id=post.id) }}" class="text-danger ms-2" aria-label="Delete post">✘</a>
           {% endif %}
         </p>
       </div>
@@ -28,7 +28,12 @@
     <hr class="my-4">
   {% endfor %}
 {% else %}
-  <div class="alert alert-secondary text-center my-4" role="status">
-    No posts yet.
+  <!-- WonderFloyd Empty State -->
+  <div class="wf-empty" role="status" aria-live="polite">
+    <span class="wf-empty-icon" aria-hidden="true">
+      <i class="fas fa-circle-info"></i>
+    </span>
+    <div class="wf-empty-title">No posts yet.</div>
+    <div class="wf-empty-sub">New posts are on the way.</div>
   </div>
 {% endif %}

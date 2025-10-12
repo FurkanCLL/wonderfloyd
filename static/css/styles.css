@@ -11925,5 +11925,85 @@ hr.my-4 {
   }
 }
 
+/* ===== WF Empty State (category with 0 posts) ===== */
+.wf-empty{
+  --card-bg1: rgba(255,255,255,.72);
+  --card-bg2: rgba(245,246,255,.70);
+
+  position: relative;
+  max-width: 860px;
+  margin: 16px auto 0;
+  padding: 26px 22px;
+  border-radius: 16px;
+
+  /* layered background: glassy fill + neutral border */
+  border: 2px solid transparent;
+  background:
+    linear-gradient(180deg, var(--card-bg1), var(--card-bg2)) padding-box,
+    linear-gradient(var(--pill-br,#d7dbe6), var(--pill-br,#d7dbe6)) border-box;
+
+  /* inner softness + subtle outer glow */
+  box-shadow:
+    inset -6px -8px 18px rgba(255,255,255,.65),
+    inset 6px 8px 16px rgba(0,0,0,.06),
+    0 14px 28px rgba(109,54,181,.08);
+
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  /* mobile shadow clipping fixes */
+  overflow: visible;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+
+  animation: wfEmptyIn .35s ease-out both;
+}
+
+@keyframes wfEmptyIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.wf-empty-icon{
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  color:#fff;
+  background: linear-gradient(180deg,
+             var(--wf-accent-hover-start,#8fa4ff),
+             var(--wf-accent-hover-end,#6d36b5));
+  box-shadow:
+    0 10px 22px rgba(109,54,181,.22),
+    inset 3px 3px 8px rgba(255,255,255,.45);
+}
+.wf-empty-icon i{ font-size: 1.05rem; line-height: 1; }
+
+/* Title: gradient text (brand) */
+.wf-empty-title{
+  font-weight: 700;
+  font-size: 1.05rem;
+  background: linear-gradient(90deg,
+              var(--wf-accent-hover-start,#8fa4ff),
+              var(--wf-accent-hover-end,#6d36b5));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; text-fill-color: transparent;
+  text-shadow: 0 1px 6px rgba(109,54,181,.18);
+}
+
+/* Sub text: soft neutral */
+.wf-empty-sub{
+  color: #5e6575;
+  font-size: .95rem;
+}
+
+/* Compact on small screens */
+@media (max-width:575.98px){
+  .wf-empty{ padding: 20px 16px; border-radius: 14px; }
+  .wf-empty-icon{ width: 40px; height: 40px; }
+}
+
 
 
