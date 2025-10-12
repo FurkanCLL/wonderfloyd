@@ -11538,7 +11538,7 @@ hr.my-4 {
   #category-buttons{ padding:0 6px; gap:8px; }
   #category-buttons .btn{
     /* restore/bump size on mobile too */
-    font-size:clamp(13px,3.6vw,10px);
+    font-size:clamp(10px,4.6vw,12px);
     padding:.48rem .70rem !important;
   }
 }
@@ -11574,3 +11574,40 @@ hr.my-4 {
     inset 7px 7px 14px rgba(0,0,0,.12),
     inset -7px -7px 14px rgba(255,255,255,.85);
 }
+
+#category-buttons .btn.active{ color:#1a1f2b !important; }
+#category-buttons .btn:hover{
+  box-shadow:
+    inset 3px 3px 8px rgba(0,0,0,.10),
+    inset -3px -3px 8px rgba(255,255,255,.85),
+    0 6px 10px rgba(0,0,0,.05); /* slightly less halo */
+}
+
+@media (max-width: 575.98px) {
+  #wonderfloyd p,
+  #author p {
+    font-size: 0.92rem; /* varsayılan genelde 1rem = 16px civarı */
+    line-height: 1.55;  /* satır aralığını biraz sıkılaştır */
+  }
+
+  #wonderfloyd h2,
+  #author h2 {
+    font-size: 1.25rem; /* başlıklar da çok büyükse biraz küçülür */
+  }
+}
+
+.page-heading .subheading{
+  color: rgba(235, 225, 255, 0.92);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+}
+
+#author strong {
+  background: linear-gradient(90deg, var(--wf-accent-hover-start), var(--wf-accent-hover-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  font-weight: 600;
+}
+
+#wonderfloyd, #author{ scroll-margin-top: 96px; } /* header yüksekliğine göre ayarla */
