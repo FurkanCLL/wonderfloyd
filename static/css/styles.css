@@ -11611,3 +11611,49 @@ hr.my-4 {
 }
 
 #wonderfloyd, #author{ scroll-margin-top: 96px; } /* header yüksekliğine göre ayarla */
+
+/* 💜 WF Contact Submit Button — soft external purple aura restored */
+.wf-contact .btn-primary {
+  border-radius: 9999px !important;
+  border: 2px solid var(--pill-br) !important;
+  background: linear-gradient(180deg, #ece9fb 0%, #e3ddfb 100%) !important;
+  color: var(--pill-text) !important;
+
+  /* İç gölge + dış mor aura birlikte */
+  box-shadow:
+    0 0 28px 10px rgba(135, 80, 230, 0.35),   /* dışa yayılan mor parıltı 💜 */
+    inset 4px 4px 10px rgba(0,0,0,.08),
+    inset -4px -4px 10px rgba(255,255,255,.85);
+
+  transition: transform .08s ease, box-shadow .25s ease, background .25s ease;
+  overflow: visible !important;
+  -webkit-transform: translateZ(0);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+
+/* Hover: ışıma biraz daha artar */
+.wf-contact .btn-primary:hover,
+.wf-contact .btn-primary:focus-visible {
+  outline: none;
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, #e0dbf8 0%, #d9d3f5 100%) !important;
+  box-shadow:
+    0 0 36px 14px rgba(145, 85, 240, 0.42),   /* daha belirgin auratik ışık */
+    inset 3px 3px 8px rgba(0,0,0,.10),
+    inset -3px -3px 8px rgba(255,255,255,.85);
+}
+
+/* Active: tıklanınca ışık biraz azalır, 3D görünüm kalır */
+.wf-contact .btn-primary:active {
+  background:
+    linear-gradient(180deg, var(--pill-active-bg1), var(--pill-active-bg2)) padding-box,
+    linear-gradient(var(--pill-br), var(--pill-br)) border-box !important;
+  -webkit-background-clip: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    inset 7px 7px 14px rgba(0,0,0,.12),
+    inset -7px -7px 14px rgba(255,255,255,.85),
+    0 0 25px 8px rgba(135, 80, 230, 0.35);
+  color: #1a1f2b !important;
+}
+
