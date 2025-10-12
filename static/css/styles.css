@@ -11657,3 +11657,273 @@ hr.my-4 {
   color: #1a1f2b !important;
 }
 
+/* ===== WF Footer Socials — perfect purple hover ===== */
+.wf-socials { gap: 12px; }
+
+.wf-social{
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 50%;
+  text-decoration: none;
+  /* neutral base */
+  border: 2px solid var(--pill-br, #d7dbe6);
+  background: var(--pill-bg, #eef1f6);
+  color: var(--pill-text, #2c3142);
+  box-shadow:
+    inset 4px 4px 10px rgba(0,0,0,.10),
+    inset -4px -4px 10px rgba(255,255,255,.85);
+  transition: transform .16s ease, box-shadow .28s ease, background .28s ease, color .2s ease, border-color .2s ease;
+  /* iOS/Android shadow seam fix */
+  overflow: visible;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+
+.wf-social i{ font-size: 1.1rem; line-height: 1; }
+
+/* Soft, even purple aura layer (keeps glow perfectly round) */
+.wf-social::after{
+  content: "";
+  position: absolute; inset: -10px;       /* glow spread */
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(50% 50% at 50% 55%,
+      rgba(143,164,255,.28) 0%,
+      rgba(125,90,220,.22) 45%,
+      rgba(125,90,220,0) 72%);
+  filter: blur(6px);                       /* soft edge */
+  transition: opacity .25s ease;
+}
+
+/* Hover: layered background (fill + neutral border), plus aura */
+.wf-social:hover,
+.wf-social:focus-visible{
+  outline: none;
+  transform: translateY(-1px);
+  border: 2px solid transparent; /* separate border via layers */
+  background:
+    /* glossy highlight layer (very subtle) */
+    radial-gradient(120% 120% at 30% 8%, rgba(255,255,255,.55) 0%, rgba(255,255,255,.10) 40%, rgba(255,255,255,0) 65%) padding-box,
+    /* purple fill */
+    linear-gradient(180deg, var(--wf-accent-hover-start, #8fa4ff), var(--wf-accent-hover-end, #6d36b5)) padding-box,
+    /* neutral border */
+    linear-gradient(var(--pill-br, #d7dbe6), var(--pill-br, #d7dbe6)) border-box !important;
+  -webkit-background-clip: padding-box, padding-box, border-box;
+  background-clip: padding-box, padding-box, border-box;
+
+  color:#fff;
+  box-shadow:
+    inset 3px 3px 8px rgba(0,0,0,.10),
+    inset -3px -3px 8px rgba(255,255,255,.85);
+}
+
+.wf-social:hover::after,
+.wf-social:focus-visible::after{ opacity: 1; }
+
+/* Keyboard focus ring (a11y) */
+.wf-social:focus-visible{
+  box-shadow: 0 0 0 3px rgba(143,164,255,.32);
+}
+
+/* ===== WF Post Page — soft glow typography ===== */
+
+/* Başlık (primary glow) */
+.post-heading h1 {
+  color: #fff;
+  text-shadow:
+    0 0 6px rgba(143,164,255,0.35),
+    0 0 18px rgba(109,54,181,0.25);
+}
+
+/* Subtitle (daha yumuşak mor ton, nazik parıltı) */
+.post-heading .subheading {
+  color: rgba(235,225,255,0.95);
+  text-shadow:
+    0 0 5px rgba(143,164,255,0.28),
+    0 0 12px rgba(109,54,181,0.18);
+  font-weight: 500;
+}
+
+/* Author + date (ince glow + daha soluk ton) */
+.post-heading .meta {
+  color: rgba(240,235,255,0.92);
+  text-shadow:
+    0 0 4px rgba(143,164,255,0.25),
+    0 0 10px rgba(109,54,181,0.15);
+}
+
+/* Author link (gradient text) */
+.post-heading .meta a {
+  font-weight: 600;
+  background: linear-gradient(90deg, var(--wf-accent-hover-start, #8fa4ff), var(--wf-accent-hover-end, #6d36b5));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  text-decoration: none;
+  transition: opacity 0.25s ease, filter 0.25s ease;
+}
+
+.post-heading .meta a:hover {
+  opacity: 0.9;
+  filter: drop-shadow(0 0 6px rgba(125,90,220,0.4));
+}
+
+/* ===== Author Name (Nemere) — radiant gradient + subtle outline ===== */
+.post-heading .meta a {
+  font-weight: 600;
+  background: linear-gradient(90deg, var(--wf-accent-hover-start, #8fa4ff), var(--wf-accent-hover-end, #6d36b5));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  text-decoration: none;
+  position: relative;
+  transition: opacity 0.25s ease, filter 0.25s ease;
+}
+
+/* 🔮 subtle outer glow — helps readability on busy backgrounds */
+.post-heading .meta a::after {
+  content: "Nemere";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  color: rgba(255,255,255,0.25); /* faint white halo */
+  filter: blur(2px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* hover: deepen the radiant effect */
+.post-heading .meta a:hover {
+  opacity: 0.95;
+  filter: drop-shadow(0 0 8px rgba(125,90,220,0.45));
+}
+
+
+/* ===== WF Masthead Titles — stronger cosmic glow ===== */
+/* Home (site-heading) + About/Contact (page-heading) */
+.masthead .site-heading h1,
+.masthead .page-heading h1 {
+  color: #fff;
+  text-shadow:
+    0 2px 6px rgba(143,164,255,0.35),
+    0 6px 22px rgba(109,54,181,0.28);
+}
+
+/* Subtitles on masthead */
+.masthead .site-heading .subheading,
+.masthead .page-heading .subheading {
+  color: rgba(235,225,255,0.96);
+  text-shadow:
+    0 1px 5px rgba(143,164,255,0.32),
+    0 4px 16px rgba(109,54,181,0.22);
+  font-weight: 500;
+}
+
+/* Bir tık daha “radiant” isteyenler için alternatif (opsiyonel) */
+.masthead .site-heading h1.wf-radiant,
+.masthead .page-heading h1.wf-radiant {
+  background: linear-gradient(90deg, var(--wf-accent-hover-start,#8fa4ff), var(--wf-accent-hover-end,#6d36b5));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  /* radiant + soft glow birlikte */
+  text-shadow:
+    0 2px 6px rgba(143,164,255,0.25),
+    0 6px 18px rgba(109,54,181,0.22);
+}
+
+/* Küçük ekranlarda glow’u hafiflet (okunurluk için) */
+@media (max-width: 575.98px){
+  .masthead .site-heading h1,
+  .masthead .page-heading h1 {
+    text-shadow:
+      0 1px 4px rgba(143,164,255,0.28),
+      0 4px 14px rgba(109,54,181,0.20);
+  }
+  .masthead .site-heading .subheading,
+  .masthead .page-heading .subheading {
+    text-shadow:
+      0 1px 4px rgba(143,164,255,0.26),
+      0 3px 12px rgba(109,54,181,0.18);
+  }
+}
+
+/* ===== WonderFloyd Masthead Reveal (no JS) ===== */
+@keyframes wfTitleReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(1.5px);
+    text-shadow:
+      0 0 0 rgba(143,164,255,0),
+      0 0 0 rgba(109,54,181,0);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+    text-shadow:
+      0 2px 5px rgba(143,164,255,0.28),
+      0 6px 18px rgba(109,54,181,0.20);
+  }
+  100% {
+    text-shadow:
+      0 2px 6px rgba(143,164,255,0.35),
+      0 6px 22px rgba(109,54,181,0.28);
+  }
+}
+
+@keyframes wfSubReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+    filter: blur(1px);
+    text-shadow:
+      0 0 0 rgba(143,164,255,0),
+      0 0 0 rgba(109,54,181,0);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+    text-shadow:
+      0 1px 4px rgba(143,164,255,0.26),
+      0 4px 14px rgba(109,54,181,0.18);
+  }
+  100% {
+    text-shadow:
+      0 1px 5px rgba(143,164,255,0.32),
+      0 4px 16px rgba(109,54,181,0.22);
+  }
+}
+
+/* Apply to Home (site-heading) + About/Contact (page-heading) */
+.masthead .site-heading h1,
+.masthead .page-heading h1 {
+  animation: wfTitleReveal 0.9s cubic-bezier(.2,.65,.2,1) 120ms both;
+  will-change: transform, filter, opacity, text-shadow;
+}
+
+.masthead .site-heading .subheading,
+.masthead .page-heading .subheading {
+  animation: wfSubReveal 1.05s cubic-bezier(.2,.65,.2,1) 260ms both;
+  will-change: transform, filter, opacity, text-shadow;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .masthead .site-heading h1,
+  .masthead .page-heading h1,
+  .masthead .site-heading .subheading,
+  .masthead .page-heading .subheading {
+    animation: none;
+  }
+}
+
+
+
