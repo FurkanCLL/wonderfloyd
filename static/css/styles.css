@@ -12061,4 +12061,37 @@ hr.my-4 {
 }
 
 
+/* ===== WF About section titles ===== */
+.wf-section-title{
+  position: relative;
+  font-weight: 800;
+  line-height: 1.15;
+  /* brand gradient text */
+  background: linear-gradient(90deg,
+              var(--wf-accent-hover-start, #8fa4ff),
+              var(--wf-accent-hover-end,   #6d36b5));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+
+  /* soft cosmic glow */
+  text-shadow:
+    0 2px 6px rgba(143,164,255,.28),
+    0 8px 20px rgba(109,54,181,.20);
+}
+
+/* smaller screens: soften the glow a bit */
+@media (max-width: 575.98px){
+  .wf-section-title{
+    text-shadow:
+      0 1px 4px rgba(143,164,255,.22),
+      0 6px 16px rgba(109,54,181,.16);
+  }
+  .wf-section-title::after{
+    width: 110px; height: 3px; bottom:-8px;
+  }
+}
+
+
 
