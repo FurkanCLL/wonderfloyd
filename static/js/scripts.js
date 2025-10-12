@@ -1,3 +1,4 @@
+// ====================== NAVBAR SCROLL BEHAVIOR (UNCHANGED) ======================
 window.addEventListener('DOMContentLoaded', () => {
   let scrollPos = 0;
   const mainNav = document.getElementById('mainNav');
@@ -22,6 +23,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// ====================== CATEGORY FILTER + LOAD MORE (MINIMAL CHANGES) ======================
 document.addEventListener('DOMContentLoaded', function () {
   const buttons = document.querySelectorAll('#category-buttons button');
   const postList = document.getElementById('post-list');
@@ -47,6 +49,11 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(res => res.json())
         .then(data => {
           postList.innerHTML = data.html;
+
+          // ADDED: freshly swapped içeriklere soft reveal
+          wfRevealPosts(postList.querySelectorAll('article, .wf-empty'));
+          window._wfObservePosts(postList.querySelectorAll('article, .wf-empty'));
+
           currentOffset += PAGE_SIZE;
           if (data.has_more) {
             loadMoreBtn.style.display = 'inline-block';
@@ -66,10 +73,16 @@ document.addEventListener('DOMContentLoaded', function () {
           // ekle (append)
           const tmp = document.createElement('div');
           tmp.innerHTML = data.html;
-          // child'ları teker teker taşı
+
+          // ADDED: yeni gelen düğümleri topla -> sonra animasyon uygula
+          const newNodes = [];
           while (tmp.firstChild) {
-            postList.appendChild(tmp.firstChild);
+            const n = tmp.firstChild;
+            newNodes.push(n);
+            postList.appendChild(n);
           }
+          wfRevealPosts(newNodes);
+          window._wfObservePosts(newNodes);
 
           currentOffset += PAGE_SIZE;
 
@@ -81,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-// ===== Back to Top logic =====
+// ====================== BACK TO TOP (UNCHANGED) ======================
 (function () {
   const btn = document.getElementById('backToTop');
   if (!btn) return;
@@ -111,4 +124,74 @@ document.addEventListener('DOMContentLoaded', function () {
 
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+})();
+
+// ====================== WF POST REVEAL (MASTHEAD-LIKE, SOFTER) ======================
+// Soft, yumuşak blur + fade + çok hafif gecikme (stagger). Daha “patlamasın” diye easing yumuşak.
+function wfRevealPosts(nodeList) {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nodes = Array.from(nodeList || []);
+  nodes.forEach((el, i) => {
+    el.classList.remove('wf-reveal'); // reset
+    void el.offsetWidth;              // reflow to restart reliably
+    const delay = reduce ? 0 : i * 60; // daha soft için 60ms (önceden 70ms idi)
+    setTimeout(() => el.classList.add('wf-reveal'), delay);
+  });
+}
+
+// İlk yüklemede uygula
+document.addEventListener('DOMContentLoaded', () => {
+  const initial = document.querySelectorAll('#post-list article, #post-list .wf-empty');
+  wfRevealPosts(initial);
+});
+
+// ===== WF Post Reveal — scroll-triggered with IntersectionObserver =====
+(function () {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Create a single observer reused for all posts
+  const io = !reduce && 'IntersectionObserver' in window
+    ? new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry, idx) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            // gentle stagger within the same batch
+            setTimeout(() => {
+              el.classList.add('wf-reveal');
+              el.classList.remove('wf-observe');
+            }, idx * 60);
+            obs.unobserve(el);
+          }
+        });
+      }, {
+        root: null,
+        rootMargin: '0px 0px -10% 0px', // biraz erken tetikleme
+        threshold: 0.12
+      })
+    : null;
+
+  function wfObservePosts(nodeList) {
+    const nodes = Array.from(nodeList || []);
+    nodes.forEach(el => {
+      // reset state
+      el.classList.remove('wf-reveal');
+      el.classList.add('wf-observe');
+      if (io) {
+        io.observe(el);
+      } else {
+        // Fallback (no IO or reduced motion): görünür yap
+        el.classList.add('wf-reveal');
+        el.classList.remove('wf-observe');
+      }
+    });
+  }
+
+  // Initial attach on DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', () => {
+    const initial = document.querySelectorAll('#post-list article, #post-list .wf-empty');
+    wfObservePosts(initial);
+  });
+
+  // Expose for fetch handlers
+  window._wfObservePosts = wfObservePosts;
 })();

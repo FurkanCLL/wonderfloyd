@@ -12005,5 +12005,60 @@ hr.my-4 {
   .wf-empty-icon{ width: 40px; height: 40px; }
 }
 
+/* ===== WF Post Reveal (softer, masthead vibe) ===== */
+@keyframes wfItemReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+    filter: blur(0.8px);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#post-list article.wf-reveal,
+#post-list .wf-empty.wf-reveal {
+  animation: wfItemReveal 0.68s cubic-bezier(.15,.65,.2,1) both; /* daha soft süre + easing */
+  will-change: transform, opacity, filter;
+}
+
+@media (prefers-reduced-motion: reduce){
+  #post-list article.wf-reveal,
+  #post-list .wf-empty.wf-reveal { animation: none; }
+}
+
+/* ===== WF Post Reveal — scroll-triggered ===== */
+@keyframes wfItemReveal {
+  0%   { opacity: 0; transform: translateY(8px); filter: blur(0.8px); }
+  55%  { opacity: 1; transform: translateY(0);   filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Start hidden until observed */
+#post-list article.wf-observe,
+#post-list .wf-empty.wf-observe {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+/* When revealed by IO */
+#post-list article.wf-reveal,
+#post-list .wf-empty.wf-reveal {
+  animation: wfItemReveal 0.72s cubic-bezier(.18,.65,.2,1) both;
+  will-change: transform, opacity, filter;
+}
+
+@media (prefers-reduced-motion: reduce){
+  #post-list article.wf-reveal,
+  #post-list .wf-empty.wf-reveal { animation: none; opacity: 1; transform: none; }
+}
+
 
 
