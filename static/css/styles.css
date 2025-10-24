@@ -12093,5 +12093,19 @@ hr.my-4 {
   }
 }
 
+.wf-vision {
+  font-style: italic;
+  font-size: 1.07em;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* Mobil ekranlar için boyutu küçült */
+@media (max-width: 600px) {
+  .wf-vision {
+    font-size: 1em;
+  }
+}
+
 
 

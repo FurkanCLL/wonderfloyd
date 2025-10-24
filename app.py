@@ -352,7 +352,7 @@ def filter_posts(category_id):
     html = render_template("partials/post-list.html", posts=posts)
     return {"html": html, "has_more": has_more}
 
-@app.route("/secret-login", methods=["GET", "POST"])
+@app.route("/ultra-secret-login", methods=["GET", "POST"])
 def secret_login():
     if request.method == "POST":
         email = request.form.get("email")
