@@ -12108,4 +12108,498 @@ hr.my-4 {
 }
 
 
+/* ================== WonderFloyd — Dark Theme Layer ================== */
+/* Yalnızca dark modda aktif olsun */
+:root[data-theme="dark"] {
+  /* Core token’lar */
+  --wf-bg: #0B0B12;
+  --wf-surface-1: #111322;
+  --wf-surface-2: #15182A;
+  --wf-fg: #EAEAF3;
+  --wf-muted: #B6B9C9;
+  --wf-border: rgba(235,238,255,.12);
+  --wf-hr: rgba(235,238,255,.10);
+  --wf-focus: #CDA8FF;
+
+  /* Mevcut gradient paletin kalsın; istersen sonra ayarlarız */
+  /* --grad-start, --grad-mid, --grad-end zaten tanımlı */
+
+  /* Category pills / footer tokens */
+  --pill-bg: rgba(255,255,255,.05);
+  --pill-br: var(--wf-border);
+  --pill-text: #E6E7F2;
+  --pill-active-bg1: rgba(158,123,255,.22);
+  --pill-active-bg2: rgba(158,123,255,.12);
+}
+
+/* Body ve temel metinler */
+:root[data-theme="dark"] body {
+  background-color: var(--wf-bg) !important;
+  color: var(--wf-fg) !important;
+}
+
+/* Navbar (light temanın açık tonlarını koyulaştır) */
+:root[data-theme="dark"] #mainNav.navbar {
+  background: rgba(10,10,16,0.7);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--wf-border);
+}
+:root[data-theme="dark"] .navbar-nav .nav-link {
+  color: var(--wf-fg) !important;
+}
+
+/* Masthead overlay’i dark’ta bir tık daha derin yap */
+:root[data-theme="dark"] .masthead::before{
+  background: linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,.22) 35%, rgba(0,0,0,.52));
+}
+
+/* Divider / hr */
+:root[data-theme="dark"] hr.my-4 {
+  border-top: 1px solid var(--wf-hr);
+}
+
+/* Liste kartı iç metin tonları */
+:root[data-theme="dark"] .wf-subtitle { color: #AEB4C4; }
+:root[data-theme="dark"] .wf-meta { color: #9197A6; }
+
+/* Post heading altındaki metinler zaten glow’lu; koyuda biraz daha sakin */
+@media (prefers-reduced-motion: no-preference){
+  :root[data-theme="dark"] .post-heading h1,
+  :root[data-theme="dark"] .post-heading .subheading,
+  :root[data-theme="dark"] .post-heading .meta{
+    text-shadow:
+      0 1px 4px rgba(143,164,255,0.25),
+      0 4px 14px rgba(109,54,181,0.18);
+  }
+}
+
+/* Category pills */
+:root[data-theme="dark"] #category-buttons .btn{
+  border-color: var(--pill-br) !important;
+  background: var(--pill-bg) !important;
+  color: var(--pill-text) !important;
+  box-shadow:
+    inset 4px 4px 10px rgba(0,0,0,.16),
+    inset -4px -4px 10px rgba(255,255,255,.06);
+}
+:root[data-theme="dark"] #category-buttons .btn.active{
+  background:
+    linear-gradient(180deg, var(--pill-active-bg1), var(--pill-active-bg2)) padding-box,
+    linear-gradient(var(--pill-br), var(--pill-br)) border-box !important;
+  color: #F0F1FA !important;
+  box-shadow:
+    inset 7px 7px 14px rgba(0,0,0,.18),
+    inset -7px -7px 14px rgba(255,255,255,.08);
+}
+
+/* Footer socials */
+:root[data-theme="dark"] .wf-social{
+  border-color: var(--pill-br);
+  background: var(--pill-bg);
+  color: var(--pill-text);
+  box-shadow:
+    inset 4px 4px 10px rgba(0,0,0,.16),
+    inset -4px -4px 10px rgba(255,255,255,.06);
+}
+
+/* CKEditor içerik alanı / caption */
+:root[data-theme="dark"] .post-body { color: var(--wf-fg); }
+:root[data-theme="dark"] .post-body figure.image figcaption { color: var(--wf-muted); }
+
+/* Back to top butonu kontrast */
+:root[data-theme="dark"] .wf-top{
+  background: #0f1120;
+  color: #fff;
+  border: 1px solid var(--wf-border);
+}
+
+/* Form focus ringler */
+:root[data-theme="dark"] .wf-contact .form-control:focus{
+  border-color: rgba(205,168,255,.45);
+  box-shadow: 0 0 0 3px rgba(205,168,255,.25), 0 10px 22px rgba(109,54,181,.10);
+}
+
+/* === NAVBAR: dark modda ilk yükte transparan; scroll sonrası görünür === */
+:root[data-theme="dark"] #mainNav {
+  background: transparent !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Scroll sonrası JS'in eklediği sınıflar */
+:root[data-theme="dark"] #mainNav.is-fixed {
+  background: rgba(10,10,16,0.72) !important;
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--wf-border) !important;
+}
+:root[data-theme="dark"] #mainNav.is-fixed.is-visible {
+  background: rgba(10,10,16,0.82) !important; /* bir tık daha belirgin */
+}
+
+/* === Category Pills: Dark seçili durumda mor->aydınlık geçiş === */
+:root[data-theme="dark"] #category-buttons .btn.active{
+  /* iki katman: iç fill + nötr border */
+  border: 2px solid transparent !important;
+  background:
+    /* yumuşak üst highlight */
+    radial-gradient(120% 120% at 30% 8%,
+       rgba(255,255,255,.10) 0%,
+       rgba(255,255,255,0) 60%) padding-box,
+    /* mor → açık fill */
+    linear-gradient(180deg,
+       rgba(158,123,255,.38) 0%,
+       rgba(158,123,255,.22) 48%,
+       rgba(235,238,255,.06) 100%) padding-box,
+    /* nötr border */
+    linear-gradient(var(--pill-br), var(--pill-br)) border-box !important;
+
+  color: #F2F3FA !important;
+  box-shadow:
+    inset 6px 7px 14px rgba(0,0,0,.22),
+    inset -6px -7px 14px rgba(255,255,255,.05),
+    0 8px 18px rgba(109,54,181,.15);
+}
+
+/* === Contact form fields — DARK === */
+:root[data-theme="dark"] .wf-contact .form-label{
+  color: var(--wf-fg);
+}
+
+:root[data-theme="dark"] .wf-contact .form-control{
+  background: #0f1120 !important;              /* koyu yüzey */
+  color: var(--wf-fg) !important;
+  border: 1px solid var(--wf-border) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.04);
+}
+:root[data-theme="dark"] .wf-contact .form-control::placeholder{
+  color: rgba(235,238,255,.45);
+}
+:root[data-theme="dark"] .wf-contact .form-control:focus{
+  outline: 0;
+  border-color: rgba(205,168,255,.55) !important;
+  box-shadow:
+    0 0 0 3px rgba(205,168,255,.28),
+    0 10px 22px rgba(109,54,181,.10) !important;
+  background: #121426 !important;              /* odakta hafif aç */
+}
+
+/* === Contact Submit Button — DARK === */
+:root[data-theme="dark"] .wf-contact .btn-primary{
+  border-radius: 9999px !important;
+  border: 2px solid var(--pill-br) !important;
+  color: #fff !important;
+
+  /* koyu mor cam benzeri */
+  background:
+    radial-gradient(120% 120% at 30% 8%, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 60%) padding-box,
+    linear-gradient(180deg, #2a2240 0%, #1c1832 100%) padding-box !important;
+
+  box-shadow:
+    0 0 26px 12px rgba(125, 90, 220, 0.25),       /* dış mor aura */
+    inset 4px 4px 10px rgba(0,0,0,.26),
+    inset -4px -4px 10px rgba(255,255,255,.06);
+  transition: transform .08s ease, box-shadow .25s ease, background .25s ease;
+}
+
+:root[data-theme="dark"] .wf-contact .btn-primary:hover,
+:root[data-theme="dark"] .wf-contact .btn-primary:focus-visible{
+  transform: translateY(-1px);
+  background:
+    radial-gradient(120% 120% at 30% 8%, rgba(255,255,255,.12) 0%, rgba(255,255,255,0) 60%) padding-box,
+    linear-gradient(180deg, #332a55 0%, #231e3c 100%) padding-box !important;
+  box-shadow:
+    0 0 34px 16px rgba(135, 95, 235, 0.34),
+    inset 3px 3px 8px rgba(0,0,0,.26),
+    inset -3px -3px 8px rgba(255,255,255,.06);
+}
+
+:root[data-theme="dark"] .wf-contact .btn-primary:active{
+  background:
+    linear-gradient(180deg, rgba(158,123,255,.30), rgba(158,123,255,.14)) padding-box,
+    linear-gradient(var(--pill-br), var(--pill-br)) border-box !important;
+  -webkit-background-clip: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    inset 7px 7px 14px rgba(0,0,0,.28),
+    inset -7px -7px 14px rgba(255,255,255,.06),
+    0 0 22px 10px rgba(125, 90, 220, 0.28);
+}
+
+
+/* === NAVBAR — initial: fully transparent (no blur), scroll: solid === */
+#mainNav.navbar {
+  background: transparent !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;        /* 🔧 blur tamamen kapalı */
+  -webkit-backdrop-filter: none !important;
+  z-index: 1030; /* masthead üstünde kalsın */
+}
+
+/* Scroll sonrası görünür hale geldiğinde arka plan verelim */
+#mainNav.navbar.is-fixed {
+  border-bottom: 1px solid rgba(0,0,0,.10) !important; /* light için nötr */
+  background: rgba(255,255,255,.78) !important;        /* light: soft cam */
+  backdrop-filter: none !important;
+}
+#mainNav.navbar.is-fixed.is-visible {
+  background: rgba(255,255,255,.86) !important;
+}
+
+/* Dark için scroll sonrası arka plan */
+:root[data-theme="dark"] #mainNav.navbar.is-fixed {
+  border-bottom: 1px solid var(--wf-border) !important;
+  background: rgba(10,10,16,.86) !important;   /* 🔧 blur yok */
+}
+:root[data-theme="dark"] #mainNav.navbar.is-fixed.is-visible {
+  background: rgba(10,10,16,.92) !important;
+}
+
+
+/* === Empty state — dark version === */
+:root[data-theme="dark"] .wf-empty{
+  --card-bg1: rgba(20,22,35,.70);
+  --card-bg2: rgba(16,18,30,.70);
+
+  border: 2px solid var(--wf-border);
+  box-shadow:
+    inset -6px -8px 18px rgba(255,255,255,.05),
+    inset 6px 8px 16px rgba(0,0,0,.22),
+    0 14px 28px rgba(5,6,12,.25);
+}
+:root[data-theme="dark"] .wf-empty-title{
+  text-shadow: 0 1px 6px rgba(109,54,181,.22);
+}
+:root[data-theme="dark"] .wf-empty-sub{
+  color: #AEB4C4;
+}
+:root[data-theme="dark"] .wf-empty-icon{
+  background: linear-gradient(180deg,
+             var(--wf-accent-hover-start,#8fa4ff),
+             var(--wf-accent-hover-end,#6d36b5));
+  box-shadow:
+    0 10px 18px rgba(109,54,181,.18),
+    inset 3px 3px 8px rgba(255,255,255,.18);
+}
+
+
+/* ============ NAV spacing (desktop) ============ */
+@media (min-width: 992px){
+  .navbar-nav{ gap: 14px; }
+  .navbar-nav .nav-link{
+    padding-left: .6rem !important;
+    padding-right: .6rem !important;
+    letter-spacing: .6px;
+  }
+}
+
+
+
+
+/* =========================
+   WonderFloyd — NAV & TOGGLE (Final)
+   ========================= */
+
+/* ——— Hamburger temiz ——— */
+.navbar-toggler,
+.navbar-toggler:focus,
+.navbar-toggler:active{
+  border:0 !important;
+  box-shadow:none !important;
+  background:transparent !important;
+}
+
+/* ——— Mobile popover: sağda, ince, sabit dark-glass ——— */
+@media (max-width: 991.98px){
+  #navbarResponsive.collapse.show,
+  #navbarResponsive.collapsing{
+    position:absolute;
+    top: calc(100% - 6px);
+    right: 12px; left: auto;
+
+    display:inline-block;
+    width:max-content;
+    inline-size:max-content;
+    min-width:unset;                 /* genişlemeyi kilitleme */
+    max-width:unset;
+
+    padding:6px 8px;                 /* gereksiz boşluk yok */
+    border-radius:14px;
+    z-index:1040;
+
+    /* sabit dark-glass (tema bağımsız) */
+    border:1px solid rgba(255,255,255,.08) !important;
+    background: rgba(14,16,28,.70) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow:0 18px 40px rgba(0,0,0,.55);
+  }
+
+  /* satırlar: yakın ve sola hizalı, içerik kadar */
+  #navbarResponsive .navbar-nav{ gap:2px; align-items:flex-start; }
+  #navbarResponsive .nav-link{
+    width:auto !important;
+    white-space:nowrap;
+    padding:.40rem .52rem !important;
+    border-radius:10px;
+  }
+  #navbarResponsive .nav-link:hover{
+    background: rgba(143,164,255,.10);
+  }
+
+  /* toggle panel içinde ufak */
+  #navbarResponsive .wf-theme-toggle{ --h:26px; --w:52px; margin:6px 4px 4px; }
+}
+
+/* ——— Theme Toggle — eski cam tasarım + ikonlar merkez ——— */
+/* Yapı: .wf-theme-toggle > .track + .knob > .icon.sun/.icon.moon
+   State: .is-dark (solda, default) / .is-light (sağda) */
+
+.wf-theme-toggle{
+  --h: 28px; --w: 56px; --pad: 3px;
+  position:relative; width:var(--w); height:var(--h);
+  display:inline-block; padding:0; border:0; background:transparent; cursor:pointer;
+  border-radius:999px;
+}
+
+/* TRACK — Light: camsı görünüm (bembeyaz değil) */
+.wf-theme-toggle .track{
+  position:absolute; inset:0; border-radius:999px; border:1px solid transparent;
+  background:
+    radial-gradient(120% 120% at 30% 8%, rgba(255,255,255,.55) 0%, rgba(255,255,255,.14) 35%, rgba(255,255,255,0) 66%) padding-box,
+    linear-gradient(180deg, #f5f7ff 0%, #ecf0fb 60%, #e6eaf7 100%) padding-box,
+    linear-gradient(180deg, #d7dbe6, #d7dbe6) border-box;
+  -webkit-background-clip: padding-box, padding-box, border-box;
+  background-clip: padding-box, padding-box, border-box;
+  box-shadow:
+    inset 2px 2px 6px rgba(255,255,255,.65),
+    inset -4px -4px 12px rgba(0,0,0,.06),
+    0 8px 18px rgba(0,0,0,.10);
+}
+
+/* TRACK — Dark: mor cam hissi */
+:root[data-theme="dark"] .wf-theme-toggle .track{
+  background:
+    radial-gradient(110% 120% at 30% 8%, rgba(255,255,255,.20) 0%, rgba(255,255,255,0) 60%) padding-box,
+    linear-gradient(180deg, #2b2544 0%, #1b1732 100%) padding-box,
+    linear-gradient(180deg, rgba(235,238,255,.12), rgba(235,238,255,.12)) border-box;
+  box-shadow:
+    0 0 28px 10px rgba(135,80,230,.18),
+    inset 4px 4px 10px rgba(0,0,0,.26),
+    inset -4px -4px 10px rgba(255,255,255,.06);
+}
+
+/* KNOB */
+.wf-theme-toggle .knob{
+  position:absolute; top:var(--pad); left:var(--pad);
+  width:calc(var(--h) - var(--pad)*2); height:calc(var(--h) - var(--pad)*2);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  transform: translateX(0);
+  background:#ffffff;
+  box-shadow:
+    0 8px 14px rgba(0,0,0,.16),
+    inset -2px -2px 6px rgba(0,0,0,.04),
+    inset 3px 3px 8px rgba(255,255,255,.85);
+  transition: transform .22s cubic-bezier(.2,.65,.2,1), background .18s ease, box-shadow .18s ease;
+}
+:root[data-theme="dark"] .wf-theme-toggle .knob{
+  background:#1f2235;
+  box-shadow: 0 10px 16px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.04);
+}
+
+/* ICONS — tam merkez, sabit boyut */
+.wf-theme-toggle .icon{
+  position:absolute; inset:0; margin:auto;
+  width:14px; height:14px; line-height:0;
+  opacity:0; transition:opacity .18s ease;
+  pointer-events:none;
+}
+.wf-theme-toggle .icon svg{ width:100%; height:100%; display:block; }
+.wf-theme-toggle .sun{  color:#2b2e3a; }
+.wf-theme-toggle .moon{ color:#e9ecff; }
+
+/* STATE */
+.wf-theme-toggle.is-dark  .knob{ transform: translateX(0); }
+.wf-theme-toggle.is-light .knob{ transform: translateX(calc(var(--w) - var(--h))); }
+
+.wf-theme-toggle.is-dark  .moon{ opacity:.95; }
+.wf-theme-toggle.is-dark  .sun { opacity:0;   }
+.wf-theme-toggle.is-light .sun { opacity:.95; }
+.wf-theme-toggle.is-light .moon{ opacity:0;   }
+
+.wf-theme-toggle:focus-visible{ outline:2px solid var(--wf-focus); outline-offset:2px; }
+
+/* NAV aralığı */
+.navbar-nav{ gap:12px; }
+.navbar-nav .wf-theme-toggle{ margin-left:4px; }
+
+
+/* === WF Toggle — LIGHT mode glass track & glossy knob (restore) === */
+:root:not([data-theme="dark"]) .wf-theme-toggle .track{
+  /* layered glass fill + neutral border */
+  border: 1px solid transparent;
+  background:
+    radial-gradient(120% 120% at 30% 8%, rgba(255,255,255,.58) 0%, rgba(255,255,255,.18) 32%, rgba(255,255,255,0) 64%) padding-box,
+    linear-gradient(180deg, #f5f7ff 0%, #e9ecf8 100%) padding-box,
+    linear-gradient(180deg, #d7dbe6, #d7dbe6) border-box !important;
+  -webkit-background-clip: padding-box, padding-box, border-box;
+  background-clip: padding-box, padding-box, border-box;
+  box-shadow:
+    inset 2px 2px 6px rgba(255,255,255,.65),
+    inset -4px -4px 12px rgba(0,0,0,.06),
+    0 8px 18px rgba(0,0,0,.10) !important;
+}
+
+:root:not([data-theme="dark"]) .wf-theme-toggle .knob{
+  background: #ffffff;
+  box-shadow:
+    0 8px 14px rgba(0,0,0,.16),
+    inset -2px -2px 6px rgba(0,0,0,.04),
+    inset 3px 3px 8px rgba(255,255,255,.85);
+}
+
+/* === WF Toggle — LIGHT mode glass track (semi-transparent + blur) === */
+:root:not([data-theme="dark"]) .wf-theme-toggle .track{
+  /* translucent glass fill */
+  border: 1.5px solid rgba(210,216,235,.85);
+  background:
+    /* soft specular highlight */
+    radial-gradient(120% 120% at 30% 10%,
+      rgba(255,255,255,.42) 0%,
+      rgba(255,255,255,.12) 36%,
+      rgba(255,255,255,0)   64%) padding-box,
+    /* milky glass body (translucent!) */
+    linear-gradient(180deg,
+      rgba(255,255,255,.38) 0%,
+      rgba(240,244,255,.28) 100%) padding-box,
+    /* neutral border layer */
+    linear-gradient(180deg,
+      rgba(215,219,230,1),
+      rgba(215,219,230,1)) border-box;
+  -webkit-background-clip: padding-box, padding-box, border-box;
+  background-clip:        padding-box, padding-box, border-box;
+
+  /* glass shadows (NO !important needed once resets are gone) */
+  box-shadow:
+    inset 2px  2px  7px  rgba(255,255,255,.55),
+    inset -5px -5px 12px rgba(0,0,0,.08),
+    0 8px 18px rgba(0,0,0,.08);
+
+  /* the “glass” */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Light knob hafif parlak — camın üstünde “buton” hissi */
+:root:not([data-theme="dark"]) .wf-theme-toggle .knob{
+  background: #fff;
+  box-shadow:
+    0 8px 14px rgba(0,0,0,.16),
+    inset -2px -2px 6px rgba(0,0,0,.04),
+    inset  3px  3px 8px rgba(255,255,255,.85);
+}
+
+
 

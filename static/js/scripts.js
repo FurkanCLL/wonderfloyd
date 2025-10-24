@@ -195,3 +195,86 @@ document.addEventListener('DOMContentLoaded', () => {
   // Expose for fetch handlers
   window._wfObservePosts = wfObservePosts;
 })();
+
+
+// ===== WonderFloyd Theme Toggle (switch UI + persist) =====
+(function () {
+  const btn = document.getElementById('wfThemeToggle');
+  if (!btn) return;
+  const root = document.documentElement;
+
+  function applyTheme(mode) {
+    // set attributes
+    root.setAttribute('data-theme', mode);
+    if (mode === 'dark') root.setAttribute('data-bs-theme', 'dark');
+    else root.removeAttribute('data-bs-theme');
+    localStorage.setItem('wf-theme', mode);
+
+    // switch UI
+    btn.classList.toggle('is-dark', mode === 'dark');
+    btn.classList.toggle('is-light', mode === 'light');
+    btn.setAttribute('aria-checked', mode === 'dark' ? 'true' : 'false');
+  }
+
+  // initial from storage (default dark)
+  applyTheme(localStorage.getItem('wf-theme') || 'dark');
+
+  btn.addEventListener('click', () => {
+    const current = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+  });
+
+  // resync on bfcache/back
+  window.addEventListener('pageshow', () => {
+    applyTheme(localStorage.getItem('wf-theme') || 'dark');
+  });
+})();
+
+
+
+// ===== WonderFloyd Theme Resync (back/forward navigation) =====
+(function () {
+  function syncThemeFromStorage(updateButtonUI = false) {
+    var root = document.documentElement;
+    var saved = localStorage.getItem('wf-theme') || 'dark';
+    var current = root.getAttribute('data-theme');
+
+    if (current !== saved) {
+      root.setAttribute('data-theme', saved);
+      if (saved === 'dark') {
+        root.setAttribute('data-bs-theme', 'dark');
+      } else {
+        root.removeAttribute('data-bs-theme');
+      }
+    }
+
+    // update toggle button label/icon if present (optional)
+    if (updateButtonUI) {
+      var btn = document.getElementById('wfThemeToggle');
+      if (btn) {
+        var icon = btn.querySelector('.wf-theme-icon');
+        var text = btn.querySelector('.wf-theme-text');
+        if (saved === 'dark') {
+          if (icon) icon.textContent = '🌙';
+          if (text) text.textContent = 'Dark';
+          btn.setAttribute('aria-pressed', 'true');
+        } else {
+          if (icon) icon.textContent = '☀️';
+          if (text) text.textContent = 'Light';
+          btn.setAttribute('aria-pressed', 'false');
+        }
+      }
+    }
+  }
+
+  // bfcache'den dönerken tetiklenir
+  window.addEventListener('pageshow', function (evt) {
+    // evt.persisted: true ise bfcache; ama her durumda senkronize etmek güvenli
+    syncThemeFromStorage(true);
+  });
+
+  // Bazı tarayıcılarda popstate ile de güvenceye alalım
+  window.addEventListener('popstate', function () {
+    syncThemeFromStorage(true);
+  });
+})();

@@ -6,6 +6,20 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>WonderFloyd</title>
+    <script>
+      (function () {
+        // Default = dark.
+        var saved = localStorage.getItem('wf-theme') || 'dark';
+        var root = document.documentElement;
+        root.setAttribute('data-theme', saved);
+        // Bootstrap 5.3 rengi için
+        if (saved === 'dark') {
+          root.setAttribute('data-bs-theme', 'dark');
+        } else {
+          root.removeAttribute('data-bs-theme');
+        }
+      })();
+    </script>
     {% block styles %}
     {{ bootstrap.load_css() }}
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/favicon.ico') }}" />
@@ -64,7 +78,35 @@
             <li class="nav-item">
               <a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ url_for('contact') }}">Contact</a>
             </li>
+            <li class="nav-item d-flex align-items-center">
+              <button id="wfThemeToggle"
+                      class="wf-theme-toggle"
+                      type="button"
+                      role="switch"
+                      aria-checked="true"
+                      aria-label="Toggle dark/light">
+                <span class="track"></span>
+                <span class="knob">
+                  <span class="icon sun" aria-hidden="true">
+                    <!-- Minimal Sun (no emoji) -->
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+                      <circle cx="12" cy="12" r="4" fill="currentColor"/>
+                      <g stroke="currentColor" stroke-linecap="round" stroke-width="1.6">
+                        <path d="M12 2.5v3.2M12 18.3v3.2M21.5 12h-3.2M5.7 12H2.5M17.8 6.2l-2.3 2.3M8.5 15.5l-2.3 2.3M17.8 17.8l-2.3-2.3M8.5 8.5L6.2 6.2"/>
+                      </g>
+                    </svg>
+                  </span>
+                  <span class="icon moon" aria-hidden="true">
+                    <!-- Minimal Moon (cutout crescent) -->
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+                      <path d="M15.2 3.8a7.8 7.8 0 1 0 5 11.2a7 7 0 1 1-5-11.2Z" fill="currentColor"/>
+                    </svg>
+                  </span>
+                </span>
+              </button>
+            </li>
           </ul>
+
         </div>
       </div>
     </nav>
