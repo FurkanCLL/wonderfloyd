@@ -12678,6 +12678,46 @@ hr.my-4 {
   box-shadow:0 0 6px rgba(255,255,255,.8);
 }
 
+/* === Fix: draw from [data-theme] to avoid flash; enable motion only after .wf-ready === */
 
+/* State derived from root attribute (paint-safe from <head> inline script) */
+:root[data-theme="dark"]  .wf-theme-toggle .knob { transform: translateX(0); }
+:root[data-theme="light"] .wf-theme-toggle .knob { transform: translateX(calc(var(--w) - var(--h))); }
+
+:root[data-theme="dark"]  .wf-theme-toggle .icon.moon{ opacity:.96; }
+:root[data-theme="dark"]  .wf-theme-toggle .icon.sun { opacity:0;   }
+:root[data-theme="light"] .wf-theme-toggle .icon.sun { opacity:.96; }
+:root[data-theme="light"] .wf-theme-toggle .icon.moon{ opacity:0;   }
+
+/* Prevent the initial jump: disable transitions until .wf-ready is on <html> */
+:root:not(.wf-ready) .wf-theme-toggle .knob,
+:root:not(.wf-ready) .wf-theme-toggle .icon,
+:root:not(.wf-ready) .wf-theme-toggle .track{
+  transition: none !important;
+}
+
+/* === Fix: dark-mode knob white flash on navigation === */
+/* Drive knob paint from [data-theme] variables so first paint is correct */
+
+:root[data-theme="dark"]{
+  --wf-toggle-knob-bg: #1f2235;
+  --wf-toggle-knob-shadow:
+    0 12px 18px rgba(0,0,0,.35),
+    inset 0 0 0 1px rgba(255,255,255,.05);
+}
+
+:root[data-theme="light"]{
+  --wf-toggle-knob-bg: #ffffff;
+  --wf-toggle-knob-shadow:
+    0 10px 16px rgba(0,0,0,.18),
+    inset -2px -2px 6px rgba(0,0,0,.05),
+    inset  3px  3px 8px rgba(255,255,255,.85);
+}
+
+/* Force knob to use the theme-driven variables (overrides base knob style) */
+.wf-theme-toggle .knob{
+  background: var(--wf-toggle-knob-bg) !important;
+  box-shadow: var(--wf-toggle-knob-shadow) !important;
+}
 
 

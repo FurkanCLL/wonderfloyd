@@ -272,3 +272,8 @@ document.addEventListener('DOMContentLoaded', () => {
     syncThemeFromStorage(true);
   });
 })();
+
+// Enable transitions after first render to avoid initial knob jump
+document.addEventListener('DOMContentLoaded', () => {
+  document.documentElement.classList.add('wf-ready');
+});
