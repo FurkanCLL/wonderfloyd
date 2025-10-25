@@ -10960,9 +10960,9 @@ header.masthead .post-heading .meta a {
 
 /* ===== Accent (base + soft gradient hover) ===== */
 :root{
-  --wf-accent: #5c6670;                   /* normal link rengi */
-  --wf-accent-hover-start: #8fa4ff;       /* soft mavi  */
-  --wf-accent-hover-end:   #6d36b5;       /* soft mor   */
+  --wf-accent: #5c6670;                   /* base link color */
+  --wf-accent-hover-start: #8fa4ff;       /* soft blue  */
+  --wf-accent-hover-end:   #6d36b5;       /* soft purple */
 }
 
 /* Meta link base */
@@ -10983,7 +10983,7 @@ header.masthead .post-heading .meta a {
   text-decoration: none;
 }
 
-/* Post title hover: gradient text (mevcut efektin temiz hali) */
+/* Post title hover: gradient text */
 .wf-titlelink:hover .wf-title{
   background: linear-gradient(90deg, var(--wf-accent-hover-start), var(--wf-accent-hover-end));
   -webkit-background-clip: text;
@@ -11059,7 +11059,7 @@ hr.my-4 {
   article p { font-size:1rem; line-height:1.5; }
   article h2, article h3 { font-size:1.05rem; }
 
-  /* Mobile layout: thumbnail on top, text below (final mobile) */
+  /* Mobile layout: thumbnail on top, text below */
   .wf-post {
     flex-direction: column;
     align-items: flex-start;
@@ -11073,23 +11073,10 @@ hr.my-4 {
     margin: 0 auto;
   }
   .wf-thumb-box { border-radius:12px; overflow:hidden; }
-  .wf-content {
-    width: 90%;
-    margin: 0 auto;
-  }
-  .wf-title {
-    font-size: 1.2rem;
-    line-height: 1.25;
-    margin-bottom: .25rem;
-  }
-  .wf-subtitle {
-    font-size: .90rem;
-    margin-bottom: .3rem;
-  }
-  .wf-meta {
-    font-size: .75rem;
-    color:#6c757d;
-  }
+  .wf-content { width: 90%; margin: 0 auto; }
+  .wf-title { font-size: 1.2rem; line-height: 1.25; margin-bottom: .25rem; }
+  .wf-subtitle { font-size: .90rem; margin-bottom: .3rem; }
+  .wf-meta { font-size: .75rem; color:#6c757d; }
 }
 
 /* ===== Back to Top (Floating) ===== */
@@ -11115,22 +11102,17 @@ hr.my-4 {
   transform: translateY(10px);
   transition: opacity .25s ease, transform .25s ease, visibility 0s linear .25s;
 }
-
 .wf-top.show{
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
   transition: opacity .25s ease, transform .25s ease;
 }
-
 .wf-top:focus{
   outline: 2px solid #a78bfa; /* soft focus ring */
   outline-offset: 3px;
 }
-
-.wf-top:hover{
-  filter: brightness(1.1);
-}
+.wf-top:hover{ filter: brightness(1.1); }
 
 @media (max-width: 575.98px){
   .wf-top{
@@ -11140,14 +11122,11 @@ hr.my-4 {
     bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   }
 }
-
 @media (prefers-reduced-motion: reduce){
-  .wf-top{
-    transition: none;
-  }
+  .wf-top{ transition: none; }
 }
 
-/* ===== Shared gradient (mor ağırlıklı) ===== */
+/* ===== Shared gradient (purple-focused) ===== */
 :root{
   --grad-start: #6aa9ff;
   --grad-mid:   #7b5dff;
@@ -11161,7 +11140,7 @@ hr.my-4 {
   color: transparent;
 }
 
-/* Navbar links & slogan aynı gradient */
+/* Navbar links & slogan share the same gradient */
 .navbar-nav .nav-link,
 .subheading{
   background: linear-gradient(90deg, var(--grad-start), var(--grad-mid) 45%, var(--grad-end));
@@ -11171,7 +11150,7 @@ hr.my-4 {
   color: transparent;
 }
 
-/* ===== Mobile toggle (MENU + 3 çizgi) ===== */
+/* ===== Mobile toggle (MENU + 3 bars) ===== */
 .navbar-toggler{
   display:inline-flex;
   align-items:center;
@@ -11182,18 +11161,17 @@ hr.my-4 {
   line-height:1;
 }
 
-/* Bootstrap'in default hamburger'ını devre dışı bırak */
+/* Disable Bootstrap default hamburger */
 .navbar-toggler .navbar-toggler-icon{ background: none !important; }
 
-/* Küçük ve orantılı hamburger ikon */
+/* Compact, proportional hamburger icon */
 .navbar-toggler .custom-toggler-icon{
   position: relative;
   display:inline-block;
-  width: 18px;   /* daha dar */
-  height: 14px;  /* daha kısa */
+  width: 18px;
+  height: 14px;
   box-sizing: border-box;
 }
-
 .navbar-toggler .custom-toggler-icon span{
   position: absolute;
   left: 0;
@@ -11204,14 +11182,11 @@ hr.my-4 {
   display:block;
   content:"";
 }
-
-/* üç çizgi */
 .navbar-toggler .custom-toggler-icon span:nth-child(1){ top: 0; }
 .navbar-toggler .custom-toggler-icon span:nth-child(2) { top: 50%; transform: translateY(-50%); }
 .navbar-toggler .custom-toggler-icon span:nth-child(3){ bottom: 0; }
 
-
-/* Küçük ekranlarda ufak kıs */
+/* Slightly larger on very small screens */
 @media (max-width: 380px){
   .navbar-toggler .custom-toggler-icon{ width:22px; height:16px; }
 }
@@ -11223,6 +11198,8 @@ hr.my-4 {
   color: #fff !important;
 }
 
+/* Post / CKEditor media */
+.post-body { line-height: 1.7; }
 .post-body img, .ck-content img {
   max-width: 100%;
   height: auto;
@@ -11231,42 +11208,21 @@ hr.my-4 {
   border-radius: 10px;
 }
 
-/* ===== CKEditor content — responsive media ===== */
-.post-body {
-  line-height: 1.7;
-}
+/* CKEditor figure wrapper */
+.post-body figure.image { margin: 1.25rem auto; }
+.post-body figure.image img { display:block; max-width:100%; height:auto; border-radius:10px; }
 
-/* Genel img davranışı */
-.post-body img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
+/* Resized images: keep within container; img follows figure width */
+.post-body figure.image.image_resized { max-width: 100%; }
+.post-body figure.image.image_resized img { width: 100%; height: auto; }
 
-/* CKEditor figure sarmalayıcı */
-.post-body figure.image {
-  margin: 1.25rem auto;
-}
-
-/* Editor içi resize edilmiş görseller:
-   figure.image.image_resized, width inline style ile gelir (örn: width:40%).
-   Biz sadece taşmasın diye max-width veriyoruz; genişlik inline style’dan okunur. */
-.post-body figure.image.image_resized {
-  max-width: 100%;
-}
-.post-body figure.image.image_resized img {
-  width: 100%;   /* figure’ın genişliğine uy */
-  height: auto;
-  display: block;
-}
-
-/* Resize edilmemiş görseller: container’a sığsın */
+/* Not resized: still responsive */
 .post-body figure.image:not(.image_resized) img {
   max-width: 100%;
   height: auto;
 }
 
-/* Caption vb. */
+/* Caption */
 .post-body figure.image figcaption {
   font-size: .925rem;
   color: #999;
@@ -11274,11 +11230,26 @@ hr.my-4 {
   margin-top: .5rem;
 }
 
-.post-body .media-16x9 {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
+/* Alignment helpers */
+.post-body figure.image.image-style-align-left   { margin-left: 0;    margin-right: auto; text-align:left; }
+.post-body figure.image.image-style-align-center { margin-left: auto; margin-right: auto; text-align:center; }
+.post-body figure.image.image-style-align-right  { margin-left: auto; margin-right: 0;    text-align:right; }
+
+/* Mobile: prefer full-width for resized figures */
+@media (max-width: 576px) {
+  .post-body figure.image { margin-left: auto; margin-right: auto; }
+  .post-body figure.image.image_resized {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
 }
+/* Optional breathing space: 95% instead of full width on small screens */
+@media (max-width: 576px) {
+  .post-body figure.image.image_resized { width: 95% !important; }
+}
+
+/* 16:9 media helpers */
+.post-body .media-16x9 { position: relative; padding-bottom: 56.25%; height: 0; }
 .post-body .media-16x9 iframe,
 .post-body .media-16x9 video {
   position: absolute; inset: 0;
@@ -11286,42 +11257,7 @@ hr.my-4 {
   border: 0;
 }
 
-/* CKEditor image alignment */
-.post-body figure.image { margin: 1.25rem auto; }
-.post-body figure.image img { display:block; max-width:100%; height:auto; border-radius:10px; }
-
-/* Alignment */
-.post-body figure.image.image-style-align-left   { margin-left: 0;    margin-right: auto; text-align:left; }
-.post-body figure.image.image-style-align-center { margin-left: auto; margin-right: auto; text-align:center; }
-.post-body figure.image.image-style-align-right  { margin-left: auto; margin-right: 0;    text-align:right; }
-
-/* Resize edilmiş görsel figure genişliğine uysun */
-.post-body figure.image.image_resized { max-width:100%; }
-.post-body figure.image.image_resized img { width:100%; height:auto; }
-
-/* === Mobile image sizing fix === */
-/* Varsayılan: CKEditor'un yüzde genişliğini koru (masaüstü için) */
-.post-body figure.image.image_resized { max-width: 100%; }
-.post-body figure.image.image_resized img { width: 100%; height: auto; display: block; }
-
-/* Küçük ekranlarda: yüzdeleri yok say, görseli tam genişliğe getir */
-@media (max-width: 576px) {
-  .post-body figure.image {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .post-body figure.image.image_resized {
-    width: 100% !important;   /* yüzde genişliği ez */
-    max-width: 100% !important;
-  }
-}
-
-/* İstersen tam genişlik yerine biraz nefes alan bir görünüm: %95 */
-@media (max-width: 576px) {
-  .post-body figure.image.image_resized { width: 95% !important; } */
-}
-
-/* ===== WonderFloyd Contact Button Style ===== */
+/* ===== WonderFloyd Contact Button (Bootstrap .btn-primary) ===== */
 .btn-primary {
   background: linear-gradient(90deg, #8fa4ff, #6d36b5);
   border: none;
@@ -11330,7 +11266,6 @@ hr.my-4 {
   transition: all 0.25s ease;
   border-radius: 8px;
 }
-
 .btn-primary:hover,
 .btn-primary:focus {
   background: linear-gradient(90deg, #aab9ff, #8240d3);
@@ -11344,7 +11279,6 @@ hr.my-4 {
   margin-bottom:.45rem;
   letter-spacing:.2px;
 }
-
 /* Inputs/textarea: always light (override globals) */
 .wf-contact .form-control{
   background:#fff !important;
@@ -11365,7 +11299,7 @@ hr.my-4 {
 }
 .wf-contact textarea.form-control{ min-height:180px; border-radius:14px; }
 
-/* Button: keep the pretty gradient */
+/* Contact button: pretty gradient */
 .wf-contact .btn-primary{
   position:relative; overflow:hidden; border:none;
   border-radius:12px; padding:.9rem 1.4rem;
@@ -11391,12 +11325,12 @@ hr.my-4 {
 /* Action row spacing */
 .wf-contact .d-flex.justify-content-end{ gap:10px; }
 
-/* fix subtitle cut-off issue */
+/* Page subheading cut-off fix */
 .page-heading .subheading {
   display: block;
-  padding-bottom: 0.25rem; /* biraz nefes payı */
+  padding-bottom: 0.25rem;
   line-height: 1.4;
-  margin-bottom: 0;        /* fazla boşluk oluşmasın */
+  margin-bottom: 0;
   overflow: visible;
 }
 
@@ -11406,34 +11340,27 @@ hr.my-4 {
   align-items:center;
   justify-content:center;
   width: auto;
-  min-width: 44px;            /* rahat tıklama */
+  min-width: 44px;  /* tap target */
   min-height: 44px;
-  padding: 7px 8px;           /* dokunma alanı */
+  padding: 7px 8px;
   border-radius: 10px;
   text-decoration:none;
 }
-
 .wf-brand .wf-seed{
-  width: 2.4em;               /* desktop boyutu (senin ayarın) */
-  height: 2.4em;
-  flex: 0 0 auto;
-  transform: translateY(0.02em);   /* çok hafif aşağı — hizayı sakinleştirir */
+  width: 2.4em; height: 2.4em; flex: 0 0 auto;
+  transform: translateY(0.02em);
 }
-
-/* Ölçekle kalınlaşmayı engelle ve çizgiyi incelt */
+/* Prevent stroke thickness on scale; lighten lines a touch */
 .wf-brand .wf-seed circle{ vector-effect: non-scaling-stroke; }
-
 .wf-brand .wf-seed g{
-  stroke-width: .85;          /* daha ince (önceki .80’den düştük) */
-  stroke-opacity: .95;        /* keskin ama cam gibi */
+  stroke-width: .85;
+  stroke-opacity: .95;
 }
-
-/* Yüksek DPI’da bir tık daha incelt (retina’da mükemmel görünür) */
+/* Thinner on high-DPI */
 @media (min-resolution: 2dppx){
   .wf-brand .wf-seed g{ stroke-width: .60; }
 }
-
-/* Hover/Focus: yumuşak ışıma + çok hafif büyüme (motion-safe) */
+/* Hover/Focus: soft glow + slight scale (motion-safe) */
 @media (prefers-reduced-motion: no-preference){
   .wf-brand .wf-seed{
     transition: transform .2s ease, filter .2s ease;
@@ -11444,8 +11371,7 @@ hr.my-4 {
     filter: drop-shadow(0 0 7px rgba(143,164,255,.35));
   }
 }
-
-/* Mobil: biraz küçült + mikro yukarı hizala */
+/* Mobile: slightly smaller, micro shift up */
 @media (max-width: 576px){
   .wf-brand .wf-seed{
     width: 2.0em;
@@ -11453,22 +11379,12 @@ hr.my-4 {
     transform: translateY(-0.01em);
   }
 }
-
 @media (max-width: 576px){
-  #mainNav{
-    padding-top: 0.35rem !important;
-    padding-bottom: 0.35rem !important;
-  }
-  #mainNav .navbar-brand{
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
+  #mainNav{ padding-top: 0.35rem !important; padding-bottom: 0.35rem !important; }
+  #mainNav .navbar-brand{ padding-top: 0 !important; padding-bottom: 0 !important; }
 }
-
 @media (max-width: 576px){
-  .navbar-brand{
-    margin-left: -0.7rem;
-  }
+  .navbar-brand{ margin-left: -0.7rem; }
 }
 
 /* =============== WF Category Pills — neutral border, premium pressed =============== */
@@ -11482,13 +11398,12 @@ hr.my-4 {
 
 /* Tokens (neutral) */
 :root{
-  --pill-bg: #eef1f6;          /* base surface */
-  --pill-br: #d7dbe6;          /* base border (neutral) */
+  --pill-bg: #eef1f6;
+  --pill-br: #d7dbe6;
   --pill-text: #2c3142;
-
-  --pill-active-bg1: #ccbbfc;  /* subtle purple tint */
+  --pill-active-bg1: #ccbbfc;
   --pill-active-bg2: #f0eef9;
-  --pill-active-br: #d2d7e6;   /* neutral border even when active */
+  --pill-active-br: #d2d7e6;
 }
 
 /* Base pill (content-width) */
@@ -11500,7 +11415,6 @@ hr.my-4 {
   color:var(--pill-text) !important;
 
   font-weight:600; line-height:1;
-  /* restore bigger size */
   padding:.78rem 1.25rem !important;
   font-size:1.08rem;
 
@@ -11509,7 +11423,6 @@ hr.my-4 {
     inset -4px -4px 10px rgba(255,255,255,.85);
   transition:transform .08s ease, box-shadow .2s ease, background-color .2s ease;
 }
-
 #category-buttons .btn:hover,
 #category-buttons .btn:focus-visible{
   outline:none;
@@ -11519,25 +11432,22 @@ hr.my-4 {
     inset -3px -3px 8px rgba(255,255,255,.85),
     0 8px 14px rgba(0,0,0,.05);
 }
-
 /* Active: neutral border, richer pressed fill */
 #category-buttons .btn.active{
   background:linear-gradient(180deg,var(--pill-active-bg1),var(--pill-active-bg2)) !important;
-  border-color:var(--pill-active-br) !important;   /* stays NEUTRAL */
+  border-color:var(--pill-active-br) !important;
   color:#1f2130 !important;
   box-shadow:
     inset 7px 7px 14px rgba(0,0,0,.12),
     inset -7px -7px 14px rgba(255,255,255,.85);
 }
-
-/* Header altı boşluğu (hafif kısaltılmış) */
+/* Spacing under header */
 .container.my-4.text-center{ margin-top:1rem !important; }
 
-/* Mobile */
+/* Mobile sizing */
 @media (max-width:575.98px){
   #category-buttons{ padding:0 6px; gap:8px; }
   #category-buttons .btn{
-    /* restore/bump size on mobile too */
     font-size:clamp(10px,4.6vw,12px);
     padding:.48rem .70rem !important;
   }
@@ -11547,60 +11457,51 @@ hr.my-4 {
   #category-buttons .btn{ font-size:12px; padding:.40rem .56rem !important; }
 }
 
-/* clip and mask to avoid mobile rounding artifacts */
+/* Clip/mask to avoid mobile rounding artifacts */
 #category-buttons .btn{
   border-radius: 9999px !important;
-  overflow: hidden;                                  /* clip everything to radius */
-  -webkit-background-clip: padding-box;              /* safari baseline */
-  -webkit-mask-image: -webkit-radial-gradient(white, black); /* iOS seam fix */
+  overflow: hidden;
+  -webkit-background-clip: padding-box;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
-/* active: separate fill from border via layered backgrounds */
+/* Active: separate fill from border via layered backgrounds */
 #category-buttons .btn.active{
   border: 2px solid transparent !important;
   background:
-    /* inner fill */
     linear-gradient(180deg, var(--pill-active-bg1), var(--pill-active-bg2)) padding-box,
-    /* neutral border layer */
     linear-gradient(var(--pill-br), var(--pill-br)) border-box !important;
-
-  /* make sure both layers respect the radius */
   -webkit-background-clip: padding-box, border-box;
   background-clip: padding-box, border-box;
-
-  /* nudge GPU to remove the “flat top” on some devices */
   transform: translateZ(0);
   box-shadow:
     inset 7px 7px 14px rgba(0,0,0,.12),
     inset -7px -7px 14px rgba(255,255,255,.85);
 }
-
 #category-buttons .btn.active{ color:#1a1f2b !important; }
 #category-buttons .btn:hover{
   box-shadow:
     inset 3px 3px 8px rgba(0,0,0,.10),
     inset -3px -3px 8px rgba(255,255,255,.85),
-    0 6px 10px rgba(0,0,0,.05); /* slightly less halo */
+    0 6px 10px rgba(0,0,0,.05);
 }
 
+/* About/Author typography tweaks on mobile */
 @media (max-width: 575.98px) {
   #wonderfloyd p,
   #author p {
-    font-size: 0.92rem; /* varsayılan genelde 1rem = 16px civarı */
-    line-height: 1.55;  /* satır aralığını biraz sıkılaştır */
+    font-size: 0.92rem;
+    line-height: 1.55;
   }
-
   #wonderfloyd h2,
   #author h2 {
-    font-size: 1.25rem; /* başlıklar da çok büyükse biraz küçülür */
+    font-size: 1.25rem;
   }
 }
-
 .page-heading .subheading{
   color: rgba(235, 225, 255, 0.92);
   text-shadow: 0 1px 2px rgba(0,0,0,0.35);
 }
-
 #author strong {
   background: linear-gradient(90deg, var(--wf-accent-hover-start), var(--wf-accent-hover-end));
   -webkit-background-clip: text;
@@ -11609,41 +11510,33 @@ hr.my-4 {
   text-fill-color: transparent;
   font-weight: 600;
 }
+#wonderfloyd, #author{ scroll-margin-top: 96px; } /* tune to header height */
 
-#wonderfloyd, #author{ scroll-margin-top: 96px; } /* header yüksekliğine göre ayarla */
-
-/* 💜 WF Contact Submit Button — soft external purple aura restored */
+/* 💜 WF Contact Submit Button — soft external purple aura */
 .wf-contact .btn-primary {
   border-radius: 9999px !important;
   border: 2px solid var(--pill-br) !important;
   background: linear-gradient(180deg, #ece9fb 0%, #e3ddfb 100%) !important;
   color: var(--pill-text) !important;
-
-  /* İç gölge + dış mor aura birlikte */
   box-shadow:
-    0 0 28px 10px rgba(135, 80, 230, 0.35),   /* dışa yayılan mor parıltı 💜 */
+    0 0 28px 10px rgba(135, 80, 230, 0.35),
     inset 4px 4px 10px rgba(0,0,0,.08),
     inset -4px -4px 10px rgba(255,255,255,.85);
-
   transition: transform .08s ease, box-shadow .25s ease, background .25s ease;
   overflow: visible !important;
   -webkit-transform: translateZ(0);
   -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
-
-/* Hover: ışıma biraz daha artar */
 .wf-contact .btn-primary:hover,
 .wf-contact .btn-primary:focus-visible {
   outline: none;
   transform: translateY(-1px);
   background: linear-gradient(180deg, #e0dbf8 0%, #d9d3f5 100%) !important;
   box-shadow:
-    0 0 36px 14px rgba(145, 85, 240, 0.42),   /* daha belirgin auratik ışık */
+    0 0 36px 14px rgba(145, 85, 240, 0.42),
     inset 3px 3px 8px rgba(0,0,0,.10),
     inset -3px -3px 8px rgba(255,255,255,.85);
 }
-
-/* Active: tıklanınca ışık biraz azalır, 3D görünüm kalır */
 .wf-contact .btn-primary:active {
   background:
     linear-gradient(180deg, var(--pill-active-bg1), var(--pill-active-bg2)) padding-box,
@@ -11659,13 +11552,11 @@ hr.my-4 {
 
 /* ===== WF Footer Socials — perfect purple hover ===== */
 .wf-socials { gap: 12px; }
-
 .wf-social{
   position: relative;
   display: inline-flex; align-items: center; justify-content: center;
   width: 44px; height: 44px; border-radius: 50%;
   text-decoration: none;
-  /* neutral base */
   border: 2px solid var(--pill-br, #d7dbe6);
   background: var(--pill-bg, #eef1f6);
   color: var(--pill-text, #2c3142);
@@ -11673,17 +11564,14 @@ hr.my-4 {
     inset 4px 4px 10px rgba(0,0,0,.10),
     inset -4px -4px 10px rgba(255,255,255,.85);
   transition: transform .16s ease, box-shadow .28s ease, background .28s ease, color .2s ease, border-color .2s ease;
-  /* iOS/Android shadow seam fix */
   overflow: visible;
   -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
-
 .wf-social i{ font-size: 1.1rem; line-height: 1; }
-
-/* Soft, even purple aura layer (keeps glow perfectly round) */
+/* Soft, even purple aura layer */
 .wf-social::after{
   content: "";
-  position: absolute; inset: -10px;       /* glow spread */
+  position: absolute; inset: -10px;
   border-radius: 50%;
   pointer-events: none;
   opacity: 0;
@@ -11692,51 +11580,37 @@ hr.my-4 {
       rgba(143,164,255,.28) 0%,
       rgba(125,90,220,.22) 45%,
       rgba(125,90,220,0) 72%);
-  filter: blur(6px);                       /* soft edge */
+  filter: blur(6px);
   transition: opacity .25s ease;
 }
-
-/* Hover: layered background (fill + neutral border), plus aura */
 .wf-social:hover,
 .wf-social:focus-visible{
   outline: none;
   transform: translateY(-1px);
-  border: 2px solid transparent; /* separate border via layers */
+  border: 2px solid transparent;
   background:
-    /* glossy highlight layer (very subtle) */
     radial-gradient(120% 120% at 30% 8%, rgba(255,255,255,.55) 0%, rgba(255,255,255,.10) 40%, rgba(255,255,255,0) 65%) padding-box,
-    /* purple fill */
     linear-gradient(180deg, var(--wf-accent-hover-start, #8fa4ff), var(--wf-accent-hover-end, #6d36b5)) padding-box,
-    /* neutral border */
     linear-gradient(var(--pill-br, #d7dbe6), var(--pill-br, #d7dbe6)) border-box !important;
   -webkit-background-clip: padding-box, padding-box, border-box;
   background-clip: padding-box, padding-box, border-box;
-
   color:#fff;
   box-shadow:
     inset 3px 3px 8px rgba(0,0,0,.10),
     inset -3px -3px 8px rgba(255,255,255,.85);
 }
-
 .wf-social:hover::after,
 .wf-social:focus-visible::after{ opacity: 1; }
-
 /* Keyboard focus ring (a11y) */
-.wf-social:focus-visible{
-  box-shadow: 0 0 0 3px rgba(143,164,255,.32);
-}
+.wf-social:focus-visible{ box-shadow: 0 0 0 3px rgba(143,164,255,.32); }
 
 /* ===== WF Post Page — soft glow typography ===== */
-
-/* Başlık (primary glow) */
 .post-heading h1 {
   color: #fff;
   text-shadow:
     0 0 6px rgba(143,164,255,0.35),
     0 0 18px rgba(109,54,181,0.25);
 }
-
-/* Subtitle (daha yumuşak mor ton, nazik parıltı) */
 .post-heading .subheading {
   color: rgba(235,225,255,0.95);
   text-shadow:
@@ -11744,33 +11618,13 @@ hr.my-4 {
     0 0 12px rgba(109,54,181,0.18);
   font-weight: 500;
 }
-
-/* Author + date (ince glow + daha soluk ton) */
 .post-heading .meta {
   color: rgba(240,235,255,0.92);
   text-shadow:
     0 0 4px rgba(143,164,255,0.25),
     0 0 10px rgba(109,54,181,0.15);
 }
-
-/* Author link (gradient text) */
-.post-heading .meta a {
-  font-weight: 600;
-  background: linear-gradient(90deg, var(--wf-accent-hover-start, #8fa4ff), var(--wf-accent-hover-end, #6d36b5));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-  text-decoration: none;
-  transition: opacity 0.25s ease, filter 0.25s ease;
-}
-
-.post-heading .meta a:hover {
-  opacity: 0.9;
-  filter: drop-shadow(0 0 6px rgba(125,90,220,0.4));
-}
-
-/* ===== Author Name (Nemere) — radiant gradient + subtle outline ===== */
+/* Author link (gradient text + glow) */
 .post-heading .meta a {
   font-weight: 600;
   background: linear-gradient(90deg, var(--wf-accent-hover-start, #8fa4ff), var(--wf-accent-hover-end, #6d36b5));
@@ -11782,29 +11636,21 @@ hr.my-4 {
   position: relative;
   transition: opacity 0.25s ease, filter 0.25s ease;
 }
-
-/* 🔮 subtle outer glow — helps readability on busy backgrounds */
+/* Subtle outer glow — improves readability on busy backgrounds */
 .post-heading .meta a::after {
   content: "Nemere";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  color: rgba(255,255,255,0.25); /* faint white halo */
+  position: absolute; left: 0; top: 0; width: 100%;
+  color: rgba(255,255,255,0.25);
   filter: blur(2px);
   z-index: -1;
   pointer-events: none;
 }
-
-/* hover: deepen the radiant effect */
 .post-heading .meta a:hover {
   opacity: 0.95;
   filter: drop-shadow(0 0 8px rgba(125,90,220,0.45));
 }
 
-
 /* ===== WF Masthead Titles — stronger cosmic glow ===== */
-/* Home (site-heading) + About/Contact (page-heading) */
 .masthead .site-heading h1,
 .masthead .page-heading h1 {
   color: #fff;
@@ -11812,8 +11658,6 @@ hr.my-4 {
     0 2px 6px rgba(143,164,255,0.35),
     0 6px 22px rgba(109,54,181,0.28);
 }
-
-/* Subtitles on masthead */
 .masthead .site-heading .subheading,
 .masthead .page-heading .subheading {
   color: rgba(235,225,255,0.96);
@@ -11822,8 +11666,7 @@ hr.my-4 {
     0 4px 16px rgba(109,54,181,0.22);
   font-weight: 500;
 }
-
-/* Bir tık daha “radiant” isteyenler için alternatif (opsiyonel) */
+/* Optional “radiant” alternates */
 .masthead .site-heading h1.wf-radiant,
 .masthead .page-heading h1.wf-radiant {
   background: linear-gradient(90deg, var(--wf-accent-hover-start,#8fa4ff), var(--wf-accent-hover-end,#6d36b5));
@@ -11831,13 +11674,11 @@ hr.my-4 {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
-  /* radiant + soft glow birlikte */
   text-shadow:
     0 2px 6px rgba(143,164,255,0.25),
     0 6px 18px rgba(109,54,181,0.22);
 }
-
-/* Küçük ekranlarda glow’u hafiflet (okunurluk için) */
+/* Soften glow on small screens */
 @media (max-width: 575.98px){
   .masthead .site-heading h1,
   .masthead .page-heading h1 {
@@ -11859,70 +11700,52 @@ hr.my-4 {
     opacity: 0;
     transform: translateY(8px);
     filter: blur(1.5px);
-    text-shadow:
-      0 0 0 rgba(143,164,255,0),
-      0 0 0 rgba(109,54,181,0);
+    text-shadow: 0 0 0 rgba(143,164,255,0), 0 0 0 rgba(109,54,181,0);
   }
   60% {
     opacity: 1;
     transform: translateY(0);
     filter: blur(0);
-    text-shadow:
-      0 2px 5px rgba(143,164,255,0.28),
-      0 6px 18px rgba(109,54,181,0.20);
+    text-shadow: 0 2px 5px rgba(143,164,255,0.28), 0 6px 18px rgba(109,54,181,0.20);
   }
   100% {
-    text-shadow:
-      0 2px 6px rgba(143,164,255,0.35),
-      0 6px 22px rgba(109,54,181,0.28);
+    text-shadow: 0 2px 6px rgba(143,164,255,0.35), 0 6px 22px rgba(109,54,181,0.28);
   }
 }
-
 @keyframes wfSubReveal {
   0% {
     opacity: 0;
     transform: translateY(6px);
     filter: blur(1px);
-    text-shadow:
-      0 0 0 rgba(143,164,255,0),
-      0 0 0 rgba(109,54,181,0);
+    text-shadow: 0 0 0 rgba(143,164,255,0), 0 0 0 rgba(109,54,181,0);
   }
   60% {
     opacity: 1;
     transform: translateY(0);
     filter: blur(0);
-    text-shadow:
-      0 1px 4px rgba(143,164,255,0.26),
-      0 4px 14px rgba(109,54,181,0.18);
+    text-shadow: 0 1px 4px rgba(143,164,255,0.26), 0 4px 14px rgba(109,54,181,0.18);
   }
   100% {
-    text-shadow:
-      0 1px 5px rgba(143,164,255,0.32),
-      0 4px 16px rgba(109,54,181,0.22);
+    text-shadow: 0 1px 5px rgba(143,164,255,0.32), 0 4px 16px rgba(109,54,181,0.22);
   }
 }
-
 /* Apply to Home (site-heading) + About/Contact (page-heading) */
 .masthead .site-heading h1,
 .masthead .page-heading h1 {
   animation: wfTitleReveal 0.9s cubic-bezier(.2,.65,.2,1) 120ms both;
   will-change: transform, filter, opacity, text-shadow;
 }
-
 .masthead .site-heading .subheading,
 .masthead .page-heading .subheading {
   animation: wfSubReveal 1.05s cubic-bezier(.2,.65,.2,1) 260ms both;
   will-change: transform, filter, opacity, text-shadow;
 }
-
 /* Respect user's motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .masthead .site-heading h1,
   .masthead .page-heading h1,
   .masthead .site-heading .subheading,
-  .masthead .page-heading .subheading {
-    animation: none;
-  }
+  .masthead .page-heading .subheading { animation: none; }
 }
 
 /* ===== WF Empty State (category with 0 posts) ===== */
@@ -11960,15 +11783,12 @@ hr.my-4 {
 
   animation: wfEmptyIn .35s ease-out both;
 }
-
 @keyframes wfEmptyIn {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
 .wf-empty-icon{
-  width: 44px; height: 44px;
-  border-radius: 50%;
+  width: 44px; height: 44px; border-radius: 50%;
   display: inline-flex; align-items: center; justify-content: center;
   color:#fff;
   background: linear-gradient(180deg,
@@ -11979,7 +11799,6 @@ hr.my-4 {
     inset 3px 3px 8px rgba(255,255,255,.45);
 }
 .wf-empty-icon i{ font-size: 1.05rem; line-height: 1; }
-
 /* Title: gradient text (brand) */
 .wf-empty-title{
   font-weight: 700;
@@ -11992,46 +11811,15 @@ hr.my-4 {
   background-clip: text; text-fill-color: transparent;
   text-shadow: 0 1px 6px rgba(109,54,181,.18);
 }
-
 /* Sub text: soft neutral */
 .wf-empty-sub{
   color: #5e6575;
   font-size: .95rem;
 }
-
 /* Compact on small screens */
 @media (max-width:575.98px){
   .wf-empty{ padding: 20px 16px; border-radius: 14px; }
   .wf-empty-icon{ width: 40px; height: 40px; }
-}
-
-/* ===== WF Post Reveal (softer, masthead vibe) ===== */
-@keyframes wfItemReveal {
-  0% {
-    opacity: 0;
-    transform: translateY(6px);
-    filter: blur(0.8px);
-  }
-  55% {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-#post-list article.wf-reveal,
-#post-list .wf-empty.wf-reveal {
-  animation: wfItemReveal 0.68s cubic-bezier(.15,.65,.2,1) both; /* daha soft süre + easing */
-  will-change: transform, opacity, filter;
-}
-
-@media (prefers-reduced-motion: reduce){
-  #post-list article.wf-reveal,
-  #post-list .wf-empty.wf-reveal { animation: none; }
 }
 
 /* ===== WF Post Reveal — scroll-triggered ===== */
@@ -12040,33 +11828,28 @@ hr.my-4 {
   55%  { opacity: 1; transform: translateY(0);   filter: blur(0); }
   100% { opacity: 1; transform: translateY(0); }
 }
-
 /* Start hidden until observed */
 #post-list article.wf-observe,
 #post-list .wf-empty.wf-observe {
   opacity: 0;
   transform: translateY(8px);
 }
-
 /* When revealed by IO */
 #post-list article.wf-reveal,
 #post-list .wf-empty.wf-reveal {
   animation: wfItemReveal 0.72s cubic-bezier(.18,.65,.2,1) both;
   will-change: transform, opacity, filter;
 }
-
 @media (prefers-reduced-motion: reduce){
   #post-list article.wf-reveal,
   #post-list .wf-empty.wf-reveal { animation: none; opacity: 1; transform: none; }
 }
-
 
 /* ===== WF About section titles ===== */
 .wf-section-title{
   position: relative;
   font-weight: 800;
   line-height: 1.15;
-  /* brand gradient text */
   background: linear-gradient(90deg,
               var(--wf-accent-hover-start, #8fa4ff),
               var(--wf-accent-hover-end,   #6d36b5));
@@ -12074,14 +11857,11 @@ hr.my-4 {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
-
-  /* soft cosmic glow */
   text-shadow:
     0 2px 6px rgba(143,164,255,.28),
     0 8px 20px rgba(109,54,181,.20);
 }
-
-/* smaller screens: soften the glow a bit */
+/* Smaller screens: soften the glow a bit */
 @media (max-width: 575.98px){
   .wf-section-title{
     text-shadow:
@@ -12092,26 +11872,18 @@ hr.my-4 {
     width: 110px; height: 3px; bottom:-8px;
   }
 }
-
 .wf-vision {
   font-style: italic;
   font-size: 1.07em;
   margin-top: 10px;
   margin-bottom: 10px;
 }
-
-/* Mobil ekranlar için boyutu küçült */
-@media (max-width: 600px) {
-  .wf-vision {
-    font-size: 1em;
-  }
-}
-
+/* Mobile tweak */
+@media (max-width: 600px) { .wf-vision { font-size: 1em; } }
 
 /* ================== WonderFloyd — Dark Theme Layer ================== */
-/* Yalnızca dark modda aktif olsun */
+/* Active only when data-theme="dark" on root */
 :root[data-theme="dark"] {
-  /* Core token’lar */
   --wf-bg: #0B0B12;
   --wf-surface-1: #111322;
   --wf-surface-2: #15182A;
@@ -12121,48 +11893,35 @@ hr.my-4 {
   --wf-hr: rgba(235,238,255,.10);
   --wf-focus: #CDA8FF;
 
-  /* Mevcut gradient paletin kalsın; istersen sonra ayarlarız */
-  /* --grad-start, --grad-mid, --grad-end zaten tanımlı */
-
-  /* Category pills / footer tokens */
+  /* Pills / footer tokens in dark */
   --pill-bg: rgba(255,255,255,.05);
   --pill-br: var(--wf-border);
   --pill-text: #E6E7F2;
-  --pill-active-bg1: rgba(158,123,255,.22);
+  --pill-active-bg1: rgba(158,123,255,.1);
   --pill-active-bg2: rgba(158,123,255,.12);
 }
-
-/* Body ve temel metinler */
+/* Body & base text */
 :root[data-theme="dark"] body {
   background-color: var(--wf-bg) !important;
   color: var(--wf-fg) !important;
 }
-
-/* Navbar (light temanın açık tonlarını koyulaştır) */
+/* Navbar (darker glass) */
 :root[data-theme="dark"] #mainNav.navbar {
   background: rgba(10,10,16,0.7);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--wf-border);
 }
-:root[data-theme="dark"] .navbar-nav .nav-link {
-  color: var(--wf-fg) !important;
-}
-
-/* Masthead overlay’i dark’ta bir tık daha derin yap */
+:root[data-theme="dark"] .navbar-nav .nav-link { color: var(--wf-fg) !important; }
+/* Darker masthead overlay */
 :root[data-theme="dark"] .masthead::before{
   background: linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,.22) 35%, rgba(0,0,0,.52));
 }
-
 /* Divider / hr */
-:root[data-theme="dark"] hr.my-4 {
-  border-top: 1px solid var(--wf-hr);
-}
-
-/* Liste kartı iç metin tonları */
+:root[data-theme="dark"] hr.my-4 { border-top: 1px solid var(--wf-hr); }
+/* List card inner tones */
 :root[data-theme="dark"] .wf-subtitle { color: #AEB4C4; }
 :root[data-theme="dark"] .wf-meta { color: #9197A6; }
-
-/* Post heading altındaki metinler zaten glow’lu; koyuda biraz daha sakin */
+/* Slightly calmer glow in dark */
 @media (prefers-reduced-motion: no-preference){
   :root[data-theme="dark"] .post-heading h1,
   :root[data-theme="dark"] .post-heading .subheading,
@@ -12172,8 +11931,7 @@ hr.my-4 {
       0 4px 14px rgba(109,54,181,0.18);
   }
 }
-
-/* Category pills */
+/* Category pills in dark */
 :root[data-theme="dark"] #category-buttons .btn{
   border-color: var(--pill-br) !important;
   background: var(--pill-bg) !important;
@@ -12191,8 +11949,7 @@ hr.my-4 {
     inset 7px 7px 14px rgba(0,0,0,.18),
     inset -7px -7px 14px rgba(255,255,255,.08);
 }
-
-/* Footer socials */
+/* Footer socials (dark) */
 :root[data-theme="dark"] .wf-social{
   border-color: var(--pill-br);
   background: var(--pill-bg);
@@ -12201,58 +11958,37 @@ hr.my-4 {
     inset 4px 4px 10px rgba(0,0,0,.16),
     inset -4px -4px 10px rgba(255,255,255,.06);
 }
-
-/* CKEditor içerik alanı / caption */
+/* CKEditor content in dark */
 :root[data-theme="dark"] .post-body { color: var(--wf-fg); }
 :root[data-theme="dark"] .post-body figure.image figcaption { color: var(--wf-muted); }
-
-/* Back to top butonu kontrast */
+/* Back to top contrast */
 :root[data-theme="dark"] .wf-top{
   background: #0f1120;
   color: #fff;
   border: 1px solid var(--wf-border);
 }
-
-/* Form focus ringler */
+/* Form focus rings */
 :root[data-theme="dark"] .wf-contact .form-control:focus{
   border-color: rgba(205,168,255,.45);
   box-shadow: 0 0 0 3px rgba(205,168,255,.25), 0 10px 22px rgba(109,54,181,.10);
 }
 
-/* === NAVBAR: dark modda ilk yükte transparan; scroll sonrası görünür === */
-:root[data-theme="dark"] #mainNav {
-  background: transparent !important;
-  border-bottom: 0 !important;
-  box-shadow: none !important;
-}
-
-/* Scroll sonrası JS'in eklediği sınıflar */
+/* === NAVBAR: dark mode initial transparent; visible after scroll === */
+:root[data-theme="dark"] #mainNav { background: transparent !important; border-bottom: 0 !important; box-shadow: none !important; }
 :root[data-theme="dark"] #mainNav.is-fixed {
   background: rgba(10,10,16,0.72) !important;
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--wf-border) !important;
 }
-:root[data-theme="dark"] #mainNav.is-fixed.is-visible {
-  background: rgba(10,10,16,0.82) !important; /* bir tık daha belirgin */
-}
+:root[data-theme="dark"] #mainNav.is-fixed.is-visible { background: rgba(10,10,16,0.82) !important; }
 
-/* === Category Pills: Dark seçili durumda mor->aydınlık geçiş === */
+/* === Category Pills: dark selected state (purple -> bright) === */
 :root[data-theme="dark"] #category-buttons .btn.active{
-  /* iki katman: iç fill + nötr border */
   border: 2px solid transparent !important;
   background:
-    /* yumuşak üst highlight */
-    radial-gradient(120% 120% at 30% 8%,
-       rgba(255,255,255,.10) 0%,
-       rgba(255,255,255,0) 60%) padding-box,
-    /* mor → açık fill */
-    linear-gradient(180deg,
-       rgba(158,123,255,.38) 0%,
-       rgba(158,123,255,.22) 48%,
-       rgba(235,238,255,.06) 100%) padding-box,
-    /* nötr border */
+    radial-gradient(120% 120% at 30% 8%, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 60%) padding-box,
+    linear-gradient(180deg, rgba(158,123,255,.38) 0%, rgba(158,123,255,.22) 48%, rgba(235,238,255,.06) 100%) padding-box,
     linear-gradient(var(--pill-br), var(--pill-br)) border-box !important;
-
   color: #F2F3FA !important;
   box-shadow:
     inset 6px 7px 14px rgba(0,0,0,.22),
@@ -12261,27 +11997,19 @@ hr.my-4 {
 }
 
 /* === Contact form fields — DARK === */
-:root[data-theme="dark"] .wf-contact .form-label{
-  color: var(--wf-fg);
-}
-
+:root[data-theme="dark"] .wf-contact .form-label{ color: var(--wf-fg); }
 :root[data-theme="dark"] .wf-contact .form-control{
-  background: #0f1120 !important;              /* koyu yüzey */
+  background: #0f1120 !important;
   color: var(--wf-fg) !important;
   border: 1px solid var(--wf-border) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.04);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
 }
-:root[data-theme="dark"] .wf-contact .form-control::placeholder{
-  color: rgba(235,238,255,.45);
-}
+:root[data-theme="dark"] .wf-contact .form-control::placeholder{ color: rgba(235,238,255,.45); }
 :root[data-theme="dark"] .wf-contact .form-control:focus{
   outline: 0;
   border-color: rgba(205,168,255,.55) !important;
-  box-shadow:
-    0 0 0 3px rgba(205,168,255,.28),
-    0 10px 22px rgba(109,54,181,.10) !important;
-  background: #121426 !important;              /* odakta hafif aç */
+  box-shadow: 0 0 0 3px rgba(205,168,255,.28), 0 10px 22px rgba(109,54,181,.10) !important;
+  background: #121426 !important;
 }
 
 /* === Contact Submit Button — DARK === */
@@ -12289,19 +12017,15 @@ hr.my-4 {
   border-radius: 9999px !important;
   border: 2px solid var(--pill-br) !important;
   color: #fff !important;
-
-  /* koyu mor cam benzeri */
   background:
     radial-gradient(120% 120% at 30% 8%, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 60%) padding-box,
     linear-gradient(180deg, #2a2240 0%, #1c1832 100%) padding-box !important;
-
   box-shadow:
-    0 0 26px 12px rgba(125, 90, 220, 0.25),       /* dış mor aura */
+    0 0 26px 12px rgba(125, 90, 220, 0.25),
     inset 4px 4px 10px rgba(0,0,0,.26),
     inset -4px -4px 10px rgba(255,255,255,.06);
   transition: transform .08s ease, box-shadow .25s ease, background .25s ease;
 }
-
 :root[data-theme="dark"] .wf-contact .btn-primary:hover,
 :root[data-theme="dark"] .wf-contact .btn-primary:focus-visible{
   transform: translateY(-1px);
@@ -12313,7 +12037,6 @@ hr.my-4 {
     inset 3px 3px 8px rgba(0,0,0,.26),
     inset -3px -3px 8px rgba(255,255,255,.06);
 }
-
 :root[data-theme="dark"] .wf-contact .btn-primary:active{
   background:
     linear-gradient(180deg, rgba(158,123,255,.30), rgba(158,123,255,.14)) padding-box,
@@ -12326,54 +12049,40 @@ hr.my-4 {
     0 0 22px 10px rgba(125, 90, 220, 0.28);
 }
 
-
-/* === NAVBAR — initial: fully transparent (no blur), scroll: solid === */
+/* === NAVBAR — initial transparent (no blur), scroll: solid === */
 #mainNav.navbar {
   background: transparent !important;
   border-bottom: 0 !important;
   box-shadow: none !important;
-  backdrop-filter: none !important;        /* 🔧 blur tamamen kapalı */
+  backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  z-index: 1030; /* masthead üstünde kalsın */
+  z-index: 1030;
 }
-
-/* Scroll sonrası görünür hale geldiğinde arka plan verelim */
 #mainNav.navbar.is-fixed {
-  border-bottom: 1px solid rgba(0,0,0,.10) !important; /* light için nötr */
-  background: rgba(255,255,255,.78) !important;        /* light: soft cam */
+  border-bottom: 1px solid rgba(0,0,0,.10) !important;
+  background: rgba(255,255,255,.78) !important;
   backdrop-filter: none !important;
 }
-#mainNav.navbar.is-fixed.is-visible {
-  background: rgba(255,255,255,.86) !important;
-}
-
-/* Dark için scroll sonrası arka plan */
+#mainNav.navbar.is-fixed.is-visible { background: rgba(255,255,255,.86) !important; }
+/* Dark scroll states */
 :root[data-theme="dark"] #mainNav.navbar.is-fixed {
   border-bottom: 1px solid var(--wf-border) !important;
-  background: rgba(10,10,16,.86) !important;   /* 🔧 blur yok */
+  background: rgba(10,10,16,.86) !important;
 }
-:root[data-theme="dark"] #mainNav.navbar.is-fixed.is-visible {
-  background: rgba(10,10,16,.92) !important;
-}
-
+:root[data-theme="dark"] #mainNav.navbar.is-fixed.is-visible { background: rgba(10,10,16,.92) !important; }
 
 /* === Empty state — dark version === */
 :root[data-theme="dark"] .wf-empty{
   --card-bg1: rgba(20,22,35,.70);
   --card-bg2: rgba(16,18,30,.70);
-
   border: 2px solid var(--wf-border);
   box-shadow:
     inset -6px -8px 18px rgba(255,255,255,.05),
     inset 6px 8px 16px rgba(0,0,0,.22),
     0 14px 28px rgba(5,6,12,.25);
 }
-:root[data-theme="dark"] .wf-empty-title{
-  text-shadow: 0 1px 6px rgba(109,54,181,.22);
-}
-:root[data-theme="dark"] .wf-empty-sub{
-  color: #AEB4C4;
-}
+:root[data-theme="dark"] .wf-empty-title{ text-shadow: 0 1px 6px rgba(109,54,181,.22); }
+:root[data-theme="dark"] .wf-empty-sub{ color: #AEB4C4; }
 :root[data-theme="dark"] .wf-empty-icon{
   background: linear-gradient(180deg,
              var(--wf-accent-hover-start,#8fa4ff),
@@ -12382,7 +12091,6 @@ hr.my-4 {
     0 10px 18px rgba(109,54,181,.18),
     inset 3px 3px 8px rgba(255,255,255,.18);
 }
-
 
 /* ============ NAV spacing (desktop) ============ */
 @media (min-width: 992px){
@@ -12394,13 +12102,11 @@ hr.my-4 {
   }
 }
 
-
-
 /* =========================
    WonderFloyd — NAV & TOGGLE (Mobile Popover Polished)
    ========================= */
 
-/* ——— Hamburger temiz ——— */
+/* Hamburger reset */
 .navbar-toggler,
 .navbar-toggler:focus,
 .navbar-toggler:active{
@@ -12409,46 +12115,33 @@ hr.my-4 {
   background:transparent !important;
 }
 
-/* ——— Mobile popover: sağda, ince, sabit dark-glass ——— */
+/* Mobile popover: right-aligned, slim, fixed dark-glass */
 @media (max-width: 991.98px){
-
-  /* Panel kutusu */
   #navbarResponsive.collapse.show,
   #navbarResponsive.collapsing{
     position:absolute;
     top: calc(100% - 6px);
     right: 12px; left: auto;
-
     display:inline-block;
-    width:max-content;
-    inline-size:max-content;
-    min-width:unset;
-    max-width:unset;
-
-    /* ÜST/ALT boşluğu bir tık kısalttık */
-    padding:4px 10px;                 /* was 6px 8px */
+    width:max-content; inline-size:max-content;
+    min-width:unset; max-width:unset;
+    padding:4px 10px;
     border-radius:14px;
     z-index:1040;
-
-    /* sabit dark-glass (tema bağımsız) */
     border:1px solid rgba(255,255,255,.08) !important;
     background: rgba(14,16,28,.70) !important;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow:0 18px 40px rgba(0,0,0,.55);
   }
-
-  /* Liste: daha sıkı aralık + çizgiler için alt yapı */
   #navbarResponsive .navbar-nav{
-    gap:0;                            /* was 2px */
-    align-items:stretch;              /* toggle’ı merkezlemek için kendi item’inde çalışacak */
+    gap:0;
+    align-items:stretch;
   }
-
-  /* Link görünümü (hover/active/focus aynı tutarlılıkta) */
   #navbarResponsive .nav-link{
     width:auto !important;
     white-space:nowrap;
-    padding:.44rem .68rem !important; /* hafif sıkı ama rahat tıklanır */
+    padding:.44rem .68rem !important;
     border-radius:10px;
     color: #cfc9ff !important;
   }
@@ -12456,7 +12149,6 @@ hr.my-4 {
     background: rgba(143,164,255,.10);
     color:#e8e4ff !important;
   }
-  /* Tıklanınca veya “active” sınıfı varken görünmezleşmeyi engelle */
   #navbarResponsive .nav-link:active,
   #navbarResponsive .nav-link:focus,
   #navbarResponsive .nav-link.active{
@@ -12465,105 +12157,59 @@ hr.my-4 {
     text-shadow: 0 0 1px rgba(0,0,0,.25);
     outline:0;
   }
-
-  /* ——— İNCE AYRAÇLAR (opsiyonel, estetik için açık) ——— */
-  /* Her item arasında çok hafif çizgi; istersen kapatmak için aşağıdaki bloğu yorumla. */
-  #navbarResponsive .navbar-nav .nav-item{
-    position:relative;
-  }
+  /* Optional thin separators */
+  #navbarResponsive .navbar-nav .nav-item{ position:relative; }
   #navbarResponsive .navbar-nav .nav-item + .nav-item::before{
     content:"";
     display:block;
     height:1px;
-    margin:4px 6px;                   /* üst/alt boşluk kısık */
+    margin:4px 6px;
     background: linear-gradient(90deg,
       rgba(235,238,255,.06), rgba(235,238,255,.14), rgba(235,238,255,.06));
     border-radius:1px;
   }
-
-  /* ——— Toggle butonu panel içinde optik merkez ——— */
-  /* Kendi <li> içinde hizalanır; genişliği auto olduğu için align-self + otomatik yatay margin ile tam ortaya gelir */
+  /* Toggle centering within the panel */
   #navbarResponsive .wf-theme-toggle{
     --h:26px; --w:52px;
     display:block;
     align-self: center;
-    margin:6px auto 4px;              /* üst/alt boşluk KISILDI ve yatayda ORTA */
+    margin:6px auto 4px;
   }
 }
 
-
-/* === WF Mobile popover — center only (safe overrides) === */
+/* Mobile popover — center everything safely */
 @media (max-width: 991.98px){
-
-  /* Tüm öğeleri panel içinde yatayda ortaya al */
-  #navbarResponsive .navbar-nav{
-    align-items: center !important;   /* was flex-start */
-  }
-
-  /* Link metinlerini ortala */
-  #navbarResponsive .nav-link{
-    text-align: center !important;
-  }
-
-  /* HOME üstündeki boşluğu hafif kıs */
-  #navbarResponsive .navbar-nav .nav-item:first-child{
-    margin-top: 2px !important;
-  }
-
-  /* Toggle'ı tam ortaya al ve alt boşluğu biraz kıs */
-  #navbarResponsive .wf-theme-toggle{
-    display: block !important;
-    margin: 6px auto 2px !important;  /* auto = yatay merkez; alt biraz daha kısa */
-  }
-
-  /* Eğer önceki denemelerden ayraç çizgisi kaldıysa kapat (zararsız) */
-  #navbarResponsive .navbar-nav .nav-item + .nav-item::before{
-    content: none !important;
-  }
+  #navbarResponsive .navbar-nav{ align-items: center !important; }
+  #navbarResponsive .nav-link{ text-align: center !important; }
+  #navbarResponsive .navbar-nav .nav-item:first-child{ margin-top: 2px !important; }
+  #navbarResponsive .wf-theme-toggle{ display: block !important; margin: 6px auto 2px !important; }
+  /* If a previous separator rule remains, disable it */
+  #navbarResponsive .navbar-nav .nav-item + .nav-item::before{ content: none !important; }
 }
 
-
-/* === WonderFloyd Glass Toggle — fresh from scratch === */
-/* Structure:
+/* === WonderFloyd Glass Toggle — from scratch ===
+   Structure:
    .wf-theme-toggle (state: .is-dark | .is-light)
      .track
      .knob
        .icon.sun
        .icon.moon
 */
-
 .wf-theme-toggle{
-  --h: 28px;          /* height */
-  --w: 56px;          /* width  */
-  --pad: 3px;         /* inner padding for knob travel */
-  --radius: 999px;
-
+  --h: 28px; --w: 56px; --pad: 3px; --radius: 999px;
   position: relative;
-  width: var(--w);
-  height: var(--h);
-  border: 0;
-  padding: 0;
-  background: transparent;
-  border-radius: var(--radius);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+  width: var(--w); height: var(--h);
+  border: 0; padding: 0; background: transparent; border-radius: var(--radius);
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
 }
-
-/* Track — neutral glass base (both modes), overridden per state */
+/* Track — neutral glass base (state overrides below) */
 .wf-theme-toggle .track{
   position: absolute; inset: 0;
   border-radius: var(--radius);
   border: 1.25px solid rgba(230,235,255,.55);
   background:
-    /* soft specular highlight */
-    radial-gradient(120% 140% at 28% 8%,
-      rgba(255,255,255,.50) 0%,
-      rgba(255,255,255,.16) 34%,
-      rgba(255,255,255,0)   64%) padding-box,
-    /* milky translucent body */
-    linear-gradient(180deg,
-      rgba(255,255,255,.36) 0%,
-      rgba(240,244,255,.26) 100%) padding-box;
+    radial-gradient(120% 140% at 28% 8%, rgba(255,255,255,.50) 0%, rgba(255,255,255,.16) 34%, rgba(255,255,255,0) 64%) padding-box,
+    linear-gradient(180deg, rgba(255,255,255,.36) 0%, rgba(240,244,255,.26) 100%) padding-box;
   backdrop-filter: blur(8px) saturate(120%);
   -webkit-backdrop-filter: blur(8px) saturate(120%);
   box-shadow:
@@ -12572,60 +12218,44 @@ hr.my-4 {
     0 10px 22px rgba(0,0,0,.10);
   transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
 }
-
-/* Track — DARK state: deeper, violet-tinted glass */
+/* Track — DARK */
 .wf-theme-toggle.is-dark .track{
   border-color: rgba(190,200,255,.18);
   background:
-    radial-gradient(120% 140% at 30% 10%,
-      rgba(255,255,255,.22) 0%,
-      rgba(255,255,255,0)   58%) padding-box,
-    linear-gradient(180deg,
-      rgba(48,42,78,.66) 0%,
-      rgba(26,22,45,.66) 100%) padding-box;
+    radial-gradient(120% 140% at 30% 10%, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 58%) padding-box,
+    linear-gradient(180deg, rgba(48,42,78,.66) 0%, rgba(26,22,45,.66) 100%) padding-box;
   box-shadow:
     0 0 28px 8px rgba(120,80,220,.20),
     inset 6px 6px 12px rgba(0,0,0,.30),
     inset -4px -4px 10px rgba(255,255,255,.06);
 }
-
-/* Track — LIGHT state: brighter, airy glass */
+/* Track — LIGHT */
 .wf-theme-toggle.is-light .track{
   border-color: rgba(210,216,235,.85);
   background:
-    radial-gradient(120% 140% at 30% 10%,
-      rgba(255,255,255,.42) 0%,
-      rgba(255,255,255,.12) 36%,
-      rgba(255,255,255,0)   64%) padding-box,
-    linear-gradient(180deg,
-      rgba(255,255,255,.38) 0%,
-      rgba(240,244,255,.28) 100%) padding-box;
+    radial-gradient(120% 140% at 30% 10%, rgba(255,255,255,.42) 0%, rgba(255,255,255,.12) 36%, rgba(255,255,255,0) 64%) padding-box,
+    linear-gradient(180deg, rgba(255,255,255,.38) 0%, rgba(240,244,255,.28) 100%) padding-box;
   box-shadow:
     inset 2px  2px  7px  rgba(255,255,255,.55),
     inset -5px -5px 12px rgba(0,0,0,.08),
     0 8px 18px rgba(0,0,0,.08);
 }
-
-/* Knob — glossy pill */
+/* Knob — glossy pill (state variables override at bottom) */
 .wf-theme-toggle .knob{
-  position: absolute;
-  top: var(--pad); left: var(--pad);
+  position: absolute; top: var(--pad); left: var(--pad);
   width: calc(var(--h) - var(--pad) * 2);
   height: calc(var(--h) - var(--pad) * 2);
   border-radius: 50%;
   display: grid; place-items: center;
   transform: translateX(0);
-  transition: transform .22s cubic-bezier(.2,.65,.2,1),
-              background .18s ease, box-shadow .18s ease;
+  transition: transform .22s cubic-bezier(.2,.65,.2,1), background .18s ease, box-shadow .18s ease;
   will-change: transform;
-  /* neutral glossy base; per state below */
   background: #fff;
   box-shadow:
     0 10px 16px rgba(0,0,0,.18),
     inset -2px -2px 6px rgba(0,0,0,.05),
     inset  3px  3px 8px rgba(255,255,255,.85);
 }
-
 /* Knob — DARK */
 .wf-theme-toggle.is-dark .knob{
   background: #1f2235;
@@ -12633,62 +12263,44 @@ hr.my-4 {
     0 12px 18px rgba(0,0,0,.35),
     inset 0 0 0 1px rgba(255,255,255,.05);
 }
-
-/* Knob — LIGHT (keep glossy white) */
-
-/* Icons — perfectly centered, no layout shift */
+/* Icons — centered, no layout shift */
 .wf-theme-toggle .icon{
   position: absolute; inset: 0; margin: auto;
-  width: 14px; height: 14px; line-height: 0;
-  display: block; pointer-events: none;
+  width: 14px; height: 14px; line-height: 0; display: block; pointer-events: none;
   opacity: 0; transition: opacity .18s ease;
 }
 .wf-theme-toggle .icon svg{ width: 100%; height: 100%; display: block; }
-
 .wf-theme-toggle.is-dark  .icon.moon{ opacity: .96; color: #e9ecff; }
 .wf-theme-toggle.is-dark  .icon.sun { opacity: 0;   color: #2b2e3a; }
 .wf-theme-toggle.is-light .icon.sun { opacity: .96; color: #2b2e3a; }
 .wf-theme-toggle.is-light .icon.moon{ opacity: 0;   color: #e9ecff; }
-
 /* State — knob travel */
-.wf-theme-toggle.is-light .knob{
-  transform: translateX(calc(var(--w) - var(--h)));
-}
-
+.wf-theme-toggle.is-light .knob{ transform: translateX(calc(var(--w) - var(--h))); }
 /* Focus ring (accessible) */
 .wf-theme-toggle:focus-visible{
   outline: 2px solid rgba(140,120,255,.65);
   outline-offset: 2px;
   border-radius: var(--radius);
 }
-
 /* Motion safety */
 @media (prefers-reduced-motion: reduce){
-  .wf-theme-toggle .knob{ transition: none; }
-  .wf-theme-toggle .icon{ transition: none; }
+  .wf-theme-toggle .knob,
+  .wf-theme-toggle .icon,
   .wf-theme-toggle .track{ transition: none; }
 }
-
 .wf-theme-toggle.is-light .knob::after{
-  content:'';
-  position:absolute; top:3px; left:3px;
-  width:5px; height:5px;
-  border-radius:50%;
-  background:rgba(255,255,255,.9);
+  content:''; position:absolute; top:3px; left:3px; width:5px; height:5px;
+  border-radius:50%; background:rgba(255,255,255,.9);
   box-shadow:0 0 6px rgba(255,255,255,.8);
 }
 
-/* === Fix: draw from [data-theme] to avoid flash; enable motion only after .wf-ready === */
-
-/* State derived from root attribute (paint-safe from <head> inline script) */
+/* === Paint from [data-theme]; enable motion only after .wf-ready === */
 :root[data-theme="dark"]  .wf-theme-toggle .knob { transform: translateX(0); }
 :root[data-theme="light"] .wf-theme-toggle .knob { transform: translateX(calc(var(--w) - var(--h))); }
-
 :root[data-theme="dark"]  .wf-theme-toggle .icon.moon{ opacity:.96; }
-:root[data-theme="dark"]  .wf-theme-toggle .icon.sun { opacity:0;   }
+:root[data-theme="dark"]  .wf-theme-toggle .icon.sun { opacity:0; }
 :root[data-theme="light"] .wf-theme-toggle .icon.sun { opacity:.96; }
-:root[data-theme="light"] .wf-theme-toggle .icon.moon{ opacity:0;   }
-
+:root[data-theme="light"] .wf-theme-toggle .icon.moon{ opacity:0; }
 /* Prevent the initial jump: disable transitions until .wf-ready is on <html> */
 :root:not(.wf-ready) .wf-theme-toggle .knob,
 :root:not(.wf-ready) .wf-theme-toggle .icon,
@@ -12698,14 +12310,12 @@ hr.my-4 {
 
 /* === Fix: dark-mode knob white flash on navigation === */
 /* Drive knob paint from [data-theme] variables so first paint is correct */
-
 :root[data-theme="dark"]{
   --wf-toggle-knob-bg: #1f2235;
   --wf-toggle-knob-shadow:
     0 12px 18px rgba(0,0,0,.35),
     inset 0 0 0 1px rgba(255,255,255,.05);
 }
-
 :root[data-theme="light"]{
   --wf-toggle-knob-bg: #ffffff;
   --wf-toggle-knob-shadow:
@@ -12713,11 +12323,77 @@ hr.my-4 {
     inset -2px -2px 6px rgba(0,0,0,.05),
     inset  3px  3px 8px rgba(255,255,255,.85);
 }
-
-/* Force knob to use the theme-driven variables (overrides base knob style) */
+/* Force knob to use theme-driven variables */
 .wf-theme-toggle .knob{
   background: var(--wf-toggle-knob-bg) !important;
   box-shadow: var(--wf-toggle-knob-shadow) !important;
 }
+
+/* --- Fix: descenders (j,y,g,…) clipping under subtitle on masthead --- */
+.masthead .site-heading .subheading {
+  display: block;
+  line-height: 1.4;          /* a touch higher for safe descenders */
+  padding-bottom: .35rem;     /* small breathing room below text */
+  margin-bottom: 0;
+  overflow: visible;          /* ensure glow/shadow never clips */
+}
+
+/* --- Fix: allow vertical scroll when touching the masthead titles on mobile --- */
+.masthead .site-heading,
+.masthead .site-heading * {
+  -webkit-user-select: none;
+  user-select: none;            /* prevent text selection while scrolling */
+  -webkit-touch-callout: none;  /* no callout on long-press */
+  touch-action: pan-y;          /* prioritize vertical scrolling */
+}
+
+/* Make sure nothing shifts on :active */
+.masthead .site-heading h1:active,
+.masthead .site-heading .subheading:active {
+  transform: none !important;
+}
+
+
+/* ===== (A) Re-enable text selection on homepage title/subtitle ===== */
+/* Desktop & general: allow selection */
+.masthead .site-heading,
+.masthead .site-heading * {
+  -webkit-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: default;
+}
+
+/* Mobile only: keep vertical scroll priority WITHOUT disabling selection everywhere */
+@media (hover: none) and (pointer: coarse) {
+  .masthead .site-heading a,
+  .masthead .site-heading h1,
+  .masthead .site-heading .subheading {
+    touch-action: pan-y;           /* scroll wins */
+  }
+  /* don’t forbid selection anymore */
+}
+
+/* Prevent tiny jiggle on tap */
+.masthead .site-heading h1:active,
+.masthead .site-heading .subheading:active {
+  transform: none !important;
+}
+
+/* === Dark mode: masthead’ı sakinleştir === */
+:root[data-theme="dark"] .masthead::before{
+  /* daha koyu, ama boğmadan */
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,.50),
+    rgba(0,0,0,.30) 35%,
+    rgba(0,0,0,.58)
+  );
+  /* görsel canlılığını azıcık kır */
+  backdrop-filter: saturate(0.60) brightness(0.60);
+  -webkit-backdrop-filter: saturate(0.92) brightness(0.92);
+}
+
+
+
 
 
