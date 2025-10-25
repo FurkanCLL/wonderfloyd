@@ -12396,9 +12396,8 @@ hr.my-4 {
 
 
 
-
 /* =========================
-   WonderFloyd — NAV & TOGGLE (Final)
+   WonderFloyd — NAV & TOGGLE (Mobile Popover Polished)
    ========================= */
 
 /* ——— Hamburger temiz ——— */
@@ -12412,6 +12411,8 @@ hr.my-4 {
 
 /* ——— Mobile popover: sağda, ince, sabit dark-glass ——— */
 @media (max-width: 991.98px){
+
+  /* Panel kutusu */
   #navbarResponsive.collapse.show,
   #navbarResponsive.collapsing{
     position:absolute;
@@ -12421,10 +12422,11 @@ hr.my-4 {
     display:inline-block;
     width:max-content;
     inline-size:max-content;
-    min-width:unset;                 /* genişlemeyi kilitleme */
+    min-width:unset;
     max-width:unset;
 
-    padding:6px 8px;                 /* gereksiz boşluk yok */
+    /* ÜST/ALT boşluğu bir tık kısalttık */
+    padding:4px 10px;                 /* was 6px 8px */
     border-radius:14px;
     z-index:1040;
 
@@ -12436,170 +12438,246 @@ hr.my-4 {
     box-shadow:0 18px 40px rgba(0,0,0,.55);
   }
 
-  /* satırlar: yakın ve sola hizalı, içerik kadar */
-  #navbarResponsive .navbar-nav{ gap:2px; align-items:flex-start; }
+  /* Liste: daha sıkı aralık + çizgiler için alt yapı */
+  #navbarResponsive .navbar-nav{
+    gap:0;                            /* was 2px */
+    align-items:stretch;              /* toggle’ı merkezlemek için kendi item’inde çalışacak */
+  }
+
+  /* Link görünümü (hover/active/focus aynı tutarlılıkta) */
   #navbarResponsive .nav-link{
     width:auto !important;
     white-space:nowrap;
-    padding:.40rem .52rem !important;
+    padding:.44rem .68rem !important; /* hafif sıkı ama rahat tıklanır */
     border-radius:10px;
+    color: #cfc9ff !important;
   }
   #navbarResponsive .nav-link:hover{
     background: rgba(143,164,255,.10);
+    color:#e8e4ff !important;
+  }
+  /* Tıklanınca veya “active” sınıfı varken görünmezleşmeyi engelle */
+  #navbarResponsive .nav-link:active,
+  #navbarResponsive .nav-link:focus,
+  #navbarResponsive .nav-link.active{
+    background: rgba(143,164,255,.16) !important;
+    color:#ffffff !important;
+    text-shadow: 0 0 1px rgba(0,0,0,.25);
+    outline:0;
   }
 
-  /* toggle panel içinde ufak */
-  #navbarResponsive .wf-theme-toggle{ --h:26px; --w:52px; margin:6px 4px 4px; }
+  /* ——— İNCE AYRAÇLAR (opsiyonel, estetik için açık) ——— */
+  /* Her item arasında çok hafif çizgi; istersen kapatmak için aşağıdaki bloğu yorumla. */
+  #navbarResponsive .navbar-nav .nav-item{
+    position:relative;
+  }
+  #navbarResponsive .navbar-nav .nav-item + .nav-item::before{
+    content:"";
+    display:block;
+    height:1px;
+    margin:4px 6px;                   /* üst/alt boşluk kısık */
+    background: linear-gradient(90deg,
+      rgba(235,238,255,.06), rgba(235,238,255,.14), rgba(235,238,255,.06));
+    border-radius:1px;
+  }
+
+  /* ——— Toggle butonu panel içinde optik merkez ——— */
+  /* Kendi <li> içinde hizalanır; genişliği auto olduğu için align-self + otomatik yatay margin ile tam ortaya gelir */
+  #navbarResponsive .wf-theme-toggle{
+    --h:26px; --w:52px;
+    display:block;
+    align-self: center;
+    margin:6px auto 4px;              /* üst/alt boşluk KISILDI ve yatayda ORTA */
+  }
 }
 
-/* ——— Theme Toggle — eski cam tasarım + ikonlar merkez ——— */
-/* Yapı: .wf-theme-toggle > .track + .knob > .icon.sun/.icon.moon
-   State: .is-dark (solda, default) / .is-light (sağda) */
+
+/* === WF Mobile popover — center only (safe overrides) === */
+@media (max-width: 991.98px){
+
+  /* Tüm öğeleri panel içinde yatayda ortaya al */
+  #navbarResponsive .navbar-nav{
+    align-items: center !important;   /* was flex-start */
+  }
+
+  /* Link metinlerini ortala */
+  #navbarResponsive .nav-link{
+    text-align: center !important;
+  }
+
+  /* HOME üstündeki boşluğu hafif kıs */
+  #navbarResponsive .navbar-nav .nav-item:first-child{
+    margin-top: 2px !important;
+  }
+
+  /* Toggle'ı tam ortaya al ve alt boşluğu biraz kıs */
+  #navbarResponsive .wf-theme-toggle{
+    display: block !important;
+    margin: 6px auto 2px !important;  /* auto = yatay merkez; alt biraz daha kısa */
+  }
+
+  /* Eğer önceki denemelerden ayraç çizgisi kaldıysa kapat (zararsız) */
+  #navbarResponsive .navbar-nav .nav-item + .nav-item::before{
+    content: none !important;
+  }
+}
+
+
+/* === WonderFloyd Glass Toggle — fresh from scratch === */
+/* Structure:
+   .wf-theme-toggle (state: .is-dark | .is-light)
+     .track
+     .knob
+       .icon.sun
+       .icon.moon
+*/
 
 .wf-theme-toggle{
-  --h: 28px; --w: 56px; --pad: 3px;
-  position:relative; width:var(--w); height:var(--h);
-  display:inline-block; padding:0; border:0; background:transparent; cursor:pointer;
-  border-radius:999px;
+  --h: 28px;          /* height */
+  --w: 56px;          /* width  */
+  --pad: 3px;         /* inner padding for knob travel */
+  --radius: 999px;
+
+  position: relative;
+  width: var(--w);
+  height: var(--h);
+  border: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* TRACK — Light: camsı görünüm (bembeyaz değil) */
+/* Track — neutral glass base (both modes), overridden per state */
 .wf-theme-toggle .track{
-  position:absolute; inset:0; border-radius:999px; border:1px solid transparent;
+  position: absolute; inset: 0;
+  border-radius: var(--radius);
+  border: 1.25px solid rgba(230,235,255,.55);
   background:
-    radial-gradient(120% 120% at 30% 8%, rgba(255,255,255,.55) 0%, rgba(255,255,255,.14) 35%, rgba(255,255,255,0) 66%) padding-box,
-    linear-gradient(180deg, #f5f7ff 0%, #ecf0fb 60%, #e6eaf7 100%) padding-box,
-    linear-gradient(180deg, #d7dbe6, #d7dbe6) border-box;
-  -webkit-background-clip: padding-box, padding-box, border-box;
-  background-clip: padding-box, padding-box, border-box;
+    /* soft specular highlight */
+    radial-gradient(120% 140% at 28% 8%,
+      rgba(255,255,255,.50) 0%,
+      rgba(255,255,255,.16) 34%,
+      rgba(255,255,255,0)   64%) padding-box,
+    /* milky translucent body */
+    linear-gradient(180deg,
+      rgba(255,255,255,.36) 0%,
+      rgba(240,244,255,.26) 100%) padding-box;
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
   box-shadow:
-    inset 2px 2px 6px rgba(255,255,255,.65),
-    inset -4px -4px 12px rgba(0,0,0,.06),
-    0 8px 18px rgba(0,0,0,.10);
+    inset 2px 2px 6px rgba(255,255,255,.55),
+    inset -6px -6px 12px rgba(0,0,0,.10),
+    0 10px 22px rgba(0,0,0,.10);
+  transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
 }
 
-/* TRACK — Dark: mor cam hissi */
-:root[data-theme="dark"] .wf-theme-toggle .track{
+/* Track — DARK state: deeper, violet-tinted glass */
+.wf-theme-toggle.is-dark .track{
+  border-color: rgba(190,200,255,.18);
   background:
-    radial-gradient(110% 120% at 30% 8%, rgba(255,255,255,.20) 0%, rgba(255,255,255,0) 60%) padding-box,
-    linear-gradient(180deg, #2b2544 0%, #1b1732 100%) padding-box,
-    linear-gradient(180deg, rgba(235,238,255,.12), rgba(235,238,255,.12)) border-box;
+    radial-gradient(120% 140% at 30% 10%,
+      rgba(255,255,255,.22) 0%,
+      rgba(255,255,255,0)   58%) padding-box,
+    linear-gradient(180deg,
+      rgba(48,42,78,.66) 0%,
+      rgba(26,22,45,.66) 100%) padding-box;
   box-shadow:
-    0 0 28px 10px rgba(135,80,230,.18),
-    inset 4px 4px 10px rgba(0,0,0,.26),
+    0 0 28px 8px rgba(120,80,220,.20),
+    inset 6px 6px 12px rgba(0,0,0,.30),
     inset -4px -4px 10px rgba(255,255,255,.06);
 }
 
-/* KNOB */
-.wf-theme-toggle .knob{
-  position:absolute; top:var(--pad); left:var(--pad);
-  width:calc(var(--h) - var(--pad)*2); height:calc(var(--h) - var(--pad)*2);
-  border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  transform: translateX(0);
-  background:#ffffff;
-  box-shadow:
-    0 8px 14px rgba(0,0,0,.16),
-    inset -2px -2px 6px rgba(0,0,0,.04),
-    inset 3px 3px 8px rgba(255,255,255,.85);
-  transition: transform .22s cubic-bezier(.2,.65,.2,1), background .18s ease, box-shadow .18s ease;
-}
-:root[data-theme="dark"] .wf-theme-toggle .knob{
-  background:#1f2235;
-  box-shadow: 0 10px 16px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.04);
-}
-
-/* ICONS — tam merkez, sabit boyut */
-.wf-theme-toggle .icon{
-  position:absolute; inset:0; margin:auto;
-  width:14px; height:14px; line-height:0;
-  opacity:0; transition:opacity .18s ease;
-  pointer-events:none;
-}
-.wf-theme-toggle .icon svg{ width:100%; height:100%; display:block; }
-.wf-theme-toggle .sun{  color:#2b2e3a; }
-.wf-theme-toggle .moon{ color:#e9ecff; }
-
-/* STATE */
-.wf-theme-toggle.is-dark  .knob{ transform: translateX(0); }
-.wf-theme-toggle.is-light .knob{ transform: translateX(calc(var(--w) - var(--h))); }
-
-.wf-theme-toggle.is-dark  .moon{ opacity:.95; }
-.wf-theme-toggle.is-dark  .sun { opacity:0;   }
-.wf-theme-toggle.is-light .sun { opacity:.95; }
-.wf-theme-toggle.is-light .moon{ opacity:0;   }
-
-.wf-theme-toggle:focus-visible{ outline:2px solid var(--wf-focus); outline-offset:2px; }
-
-/* NAV aralığı */
-.navbar-nav{ gap:12px; }
-.navbar-nav .wf-theme-toggle{ margin-left:4px; }
-
-
-/* === WF Toggle — LIGHT mode glass track & glossy knob (restore) === */
-:root:not([data-theme="dark"]) .wf-theme-toggle .track{
-  /* layered glass fill + neutral border */
-  border: 1px solid transparent;
+/* Track — LIGHT state: brighter, airy glass */
+.wf-theme-toggle.is-light .track{
+  border-color: rgba(210,216,235,.85);
   background:
-    radial-gradient(120% 120% at 30% 8%, rgba(255,255,255,.58) 0%, rgba(255,255,255,.18) 32%, rgba(255,255,255,0) 64%) padding-box,
-    linear-gradient(180deg, #f5f7ff 0%, #e9ecf8 100%) padding-box,
-    linear-gradient(180deg, #d7dbe6, #d7dbe6) border-box !important;
-  -webkit-background-clip: padding-box, padding-box, border-box;
-  background-clip: padding-box, padding-box, border-box;
-  box-shadow:
-    inset 2px 2px 6px rgba(255,255,255,.65),
-    inset -4px -4px 12px rgba(0,0,0,.06),
-    0 8px 18px rgba(0,0,0,.10) !important;
-}
-
-:root:not([data-theme="dark"]) .wf-theme-toggle .knob{
-  background: #ffffff;
-  box-shadow:
-    0 8px 14px rgba(0,0,0,.16),
-    inset -2px -2px 6px rgba(0,0,0,.04),
-    inset 3px 3px 8px rgba(255,255,255,.85);
-}
-
-/* === WF Toggle — LIGHT mode glass track (semi-transparent + blur) === */
-:root:not([data-theme="dark"]) .wf-theme-toggle .track{
-  /* translucent glass fill */
-  border: 1.5px solid rgba(210,216,235,.85);
-  background:
-    /* soft specular highlight */
-    radial-gradient(120% 120% at 30% 10%,
+    radial-gradient(120% 140% at 30% 10%,
       rgba(255,255,255,.42) 0%,
       rgba(255,255,255,.12) 36%,
       rgba(255,255,255,0)   64%) padding-box,
-    /* milky glass body (translucent!) */
     linear-gradient(180deg,
       rgba(255,255,255,.38) 0%,
-      rgba(240,244,255,.28) 100%) padding-box,
-    /* neutral border layer */
-    linear-gradient(180deg,
-      rgba(215,219,230,1),
-      rgba(215,219,230,1)) border-box;
-  -webkit-background-clip: padding-box, padding-box, border-box;
-  background-clip:        padding-box, padding-box, border-box;
-
-  /* glass shadows (NO !important needed once resets are gone) */
+      rgba(240,244,255,.28) 100%) padding-box;
   box-shadow:
     inset 2px  2px  7px  rgba(255,255,255,.55),
     inset -5px -5px 12px rgba(0,0,0,.08),
     0 8px 18px rgba(0,0,0,.08);
-
-  /* the “glass” */
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
 }
 
-/* Light knob hafif parlak — camın üstünde “buton” hissi */
-:root:not([data-theme="dark"]) .wf-theme-toggle .knob{
+/* Knob — glossy pill */
+.wf-theme-toggle .knob{
+  position: absolute;
+  top: var(--pad); left: var(--pad);
+  width: calc(var(--h) - var(--pad) * 2);
+  height: calc(var(--h) - var(--pad) * 2);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  transform: translateX(0);
+  transition: transform .22s cubic-bezier(.2,.65,.2,1),
+              background .18s ease, box-shadow .18s ease;
+  will-change: transform;
+  /* neutral glossy base; per state below */
   background: #fff;
   box-shadow:
-    0 8px 14px rgba(0,0,0,.16),
-    inset -2px -2px 6px rgba(0,0,0,.04),
+    0 10px 16px rgba(0,0,0,.18),
+    inset -2px -2px 6px rgba(0,0,0,.05),
     inset  3px  3px 8px rgba(255,255,255,.85);
 }
+
+/* Knob — DARK */
+.wf-theme-toggle.is-dark .knob{
+  background: #1f2235;
+  box-shadow:
+    0 12px 18px rgba(0,0,0,.35),
+    inset 0 0 0 1px rgba(255,255,255,.05);
+}
+
+/* Knob — LIGHT (keep glossy white) */
+
+/* Icons — perfectly centered, no layout shift */
+.wf-theme-toggle .icon{
+  position: absolute; inset: 0; margin: auto;
+  width: 14px; height: 14px; line-height: 0;
+  display: block; pointer-events: none;
+  opacity: 0; transition: opacity .18s ease;
+}
+.wf-theme-toggle .icon svg{ width: 100%; height: 100%; display: block; }
+
+.wf-theme-toggle.is-dark  .icon.moon{ opacity: .96; color: #e9ecff; }
+.wf-theme-toggle.is-dark  .icon.sun { opacity: 0;   color: #2b2e3a; }
+.wf-theme-toggle.is-light .icon.sun { opacity: .96; color: #2b2e3a; }
+.wf-theme-toggle.is-light .icon.moon{ opacity: 0;   color: #e9ecff; }
+
+/* State — knob travel */
+.wf-theme-toggle.is-light .knob{
+  transform: translateX(calc(var(--w) - var(--h)));
+}
+
+/* Focus ring (accessible) */
+.wf-theme-toggle:focus-visible{
+  outline: 2px solid rgba(140,120,255,.65);
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
+
+/* Motion safety */
+@media (prefers-reduced-motion: reduce){
+  .wf-theme-toggle .knob{ transition: none; }
+  .wf-theme-toggle .icon{ transition: none; }
+  .wf-theme-toggle .track{ transition: none; }
+}
+
+.wf-theme-toggle.is-light .knob::after{
+  content:'';
+  position:absolute; top:3px; left:3px;
+  width:5px; height:5px;
+  border-radius:50%;
+  background:rgba(255,255,255,.9);
+  box-shadow:0 0 6px rgba(255,255,255,.8);
+}
+
 
 
 

@@ -1,4 +1,4 @@
-// ====================== NAVBAR SCROLL BEHAVIOR (UNCHANGED) ======================
+// ====================== NAVBAR SCROLL BEHAVIOR ======================
 window.addEventListener('DOMContentLoaded', () => {
   let scrollPos = 0;
   const mainNav = document.getElementById('mainNav');
@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ====================== CATEGORY FILTER + LOAD MORE (MINIMAL CHANGES) ======================
+// ====================== CATEGORY FILTER + LOAD MORE ======================
 document.addEventListener('DOMContentLoaded', function () {
   const buttons = document.querySelectorAll('#category-buttons button');
   const postList = document.getElementById('post-list');
@@ -33,12 +33,10 @@ document.addEventListener('DOMContentLoaded', function () {
   let currentCategory = 0;   // 0 = All
   let currentOffset = PAGE_SIZE;
 
-  // Kategori seçiminde ilk sayfayı çek
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       const categoryId = parseInt(btn.dataset.category, 10);
 
-      // aktif görsel değişim
       buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
@@ -50,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
           postList.innerHTML = data.html;
 
-          // ADDED: freshly swapped içeriklere soft reveal
           wfRevealPosts(postList.querySelectorAll('article, .wf-empty'));
           window._wfObservePosts(postList.querySelectorAll('article, .wf-empty'));
 
@@ -70,11 +67,10 @@ document.addEventListener('DOMContentLoaded', function () {
       fetch(`/filter-posts/${currentCategory}?offset=${currentOffset}&limit=${PAGE_SIZE}`)
         .then(res => res.json())
         .then(data => {
-          // ekle (append)
+
           const tmp = document.createElement('div');
           tmp.innerHTML = data.html;
 
-          // ADDED: yeni gelen düğümleri topla -> sonra animasyon uygula
           const newNodes = [];
           while (tmp.firstChild) {
             const n = tmp.firstChild;
@@ -94,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-// ====================== BACK TO TOP (UNCHANGED) ======================
+// ====================== BACK TO TOP ======================
 (function () {
   const btn = document.getElementById('backToTop');
   if (!btn) return;
@@ -134,7 +130,7 @@ function wfRevealPosts(nodeList) {
   nodes.forEach((el, i) => {
     el.classList.remove('wf-reveal'); // reset
     void el.offsetWidth;              // reflow to restart reliably
-    const delay = reduce ? 0 : i * 60; // daha soft için 60ms (önceden 70ms idi)
+    const delay = reduce ? 0 : i * 60;
     setTimeout(() => el.classList.add('wf-reveal'), delay);
   });
 }
@@ -145,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
   wfRevealPosts(initial);
 });
 
-// ===== WF Post Reveal — scroll-triggered with IntersectionObserver =====
+// ===== WF Post Reveal — scroll triggered with IntersectionObserver =====
 (function () {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -165,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }, {
         root: null,
-        rootMargin: '0px 0px -10% 0px', // biraz erken tetikleme
+        rootMargin: '0px 0px -10% 0px',
         threshold: 0.12
       })
     : null;
@@ -179,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (io) {
         io.observe(el);
       } else {
-        // Fallback (no IO or reduced motion): görünür yap
+        // Fallback
         el.classList.add('wf-reveal');
         el.classList.remove('wf-observe');
       }
@@ -267,13 +263,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // bfcache'den dönerken tetiklenir
   window.addEventListener('pageshow', function (evt) {
-    // evt.persisted: true ise bfcache; ama her durumda senkronize etmek güvenli
+    // if evt.persisted: true then bfcache;
     syncThemeFromStorage(true);
   });
 
-  // Bazı tarayıcılarda popstate ile de güvenceye alalım
   window.addEventListener('popstate', function () {
     syncThemeFromStorage(true);
   });
