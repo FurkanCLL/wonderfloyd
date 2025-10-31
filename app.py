@@ -118,8 +118,8 @@ def _resize_thumb(pil_img: Image.Image, max_w=600, max_h=400) -> Image.Image:
 
 def save_post_images(file_storage, slug: str) -> dict:
     """
-    Verilen dosyadan hero.webp ve thumb.webp üretir.
-    Dönüş: {'hero': '/static/uploads/<slug>/hero.webp', 'thumb': '/static/uploads/<slug>/thumb.webp'}
+    It creates hero.webp and thumb.webp from the giving file.
+    Return: {'hero': '/static/uploads/<slug>/hero.webp', 'thumb': '/static/uploads/<slug>/thumb.webp'}
     """
     if not file_storage or file_storage.filename == '':
         return {}
