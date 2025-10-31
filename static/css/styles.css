@@ -11387,6 +11387,46 @@ hr.my-4 {
   .navbar-brand{ margin-left: -0.7rem; }
 }
 
+/* Desktop: logo slightly larger */
+.wf-brand .wf-seed {
+  width: 2.8em;
+  height: 2.8em;
+}
+
+/* Mobile: logo slightly larger and perfectly aligned */
+@media (max-width: 576px) {
+  .wf-brand {
+    padding-left: 1rem;  /* equal left spacing */
+    margin-left: 0;      /* reset any collapse offset */
+  }
+  .wf-brand .wf-seed {
+    width: 2.3em;
+    height: 2.3em;
+    transform: translateY(-0.02em);
+  }
+}
+
+@media (max-width: 576px) {
+  #mainNav .container {
+    padding-left: 0.9rem !important;  /* was 0.6rem */
+    padding-right: 0.6rem !important;
+    padding-top: 0.3rem !important;   /* tiny top space */
+  }
+
+  .wf-brand {
+    margin-left: 0.1rem !important;   /* micro left offset */
+    padding-left: 0.1rem !important;
+  }
+
+  .wf-brand .wf-seed {
+    width: 2.5em;
+    height: 2.5em;
+    transform: translateY(-0.02em);
+  }
+}
+
+
+
 /* =============== WF Category Pills — neutral border, premium pressed =============== */
 
 /* Row */
