@@ -11400,7 +11400,7 @@ hr.my-4 {
   }
 
   /* Phones: base stroke */
-  .wf-brand .wf-seed g{ stroke-width:1.05 !important; }
+  .wf-brand .wf-seed g{ stroke-width:1.10 !important; }
 
   /* DPR≥3 phones (e.g., iPhone 13): a bit thicker */
   @media (-webkit-min-device-pixel-ratio:3), (min-resolution:3dppx){
