@@ -1,4 +1,4 @@
-{% from "bootstrap5/form.html" import render_form %}
+{% from "bootstrap5/form.html" import render_field %}
 {% include "header.html" %}
 
 <header class="masthead" style="background-image: url('../static/assets/img/wf-bg-v5.png')">
@@ -22,7 +22,49 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        {{ render_form(form, novalidate=True, enctype="multipart/form-data", button_map={"submit": "primary"}) }}
+
+        <!-- Manual form layout for full control -->
+        <form method="POST" enctype="multipart/form-data" novalidate>
+          {{ form.hidden_tag() }}
+
+          {{ render_field(form.title) }}
+          {{ render_field(form.subtitle) }}
+          {{ render_field(form.img_url) }}
+          {{ render_field(form.cover_image) }}
+          {{ render_field(form.body) }}
+          {{ render_field(form.categories) }}
+
+          <!-- COMPACT SOURCES CARD -->
+          <div class="card wf-admin-sources my-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <strong>Sources</strong>
+              <small class="text-muted">Label only is fine, add URL to make it clickable</small>
+            </div>
+            <div class="card-body">
+              {% for sf in form.sources %}
+                <div class="row g-2 align-items-center mb-2">
+                  <div class="col-12 col-md-6">
+                    {# use subform field; render input with placeholder #}
+                    {{ sf.form.label(
+                         class="form-control form-control-sm",
+                         placeholder="Source material..") }}
+                  </div>
+                  <div class="col-12 col-md-6">
+                    {{ sf.form.url(
+                         class="form-control form-control-sm",
+                         placeholder="https://example.com/...") }}
+                  </div>
+                </div>
+              {% endfor %}
+              <div class="form-text">Empty rows are ignored on save.</div>
+            </div>
+          </div>
+
+          <div class="d-flex">
+            {{ render_field(form.submit, button_style="primary") }}
+          </div>
+        </form>
+
       </div>
     </div>
   </div>
@@ -84,9 +126,5 @@
     }
   })();
 </script>
-
-
-
-
 
 {% include "footer.html" %}

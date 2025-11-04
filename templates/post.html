@@ -29,6 +29,39 @@
         <div class="post-body ck-content">
           {{ post.body|safe }}
         </div>
+
+        <!-- Minimal Sources (collapsible) -->
+        <div class="wf-sources my-5">
+          <button
+            class="btn btn-outline-secondary w-100 d-flex justify-content-between align-items-center"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#sources-{{ post.id }}"
+            aria-expanded="false"
+            aria-controls="sources-{{ post.id }}">
+            <span>🔗 Sources{% if post.sources %} ({{ post.sources|length }}){% endif %}</span>
+            <span class="small">▼</span>
+          </button>
+
+          <div id="sources-{{ post.id }}" class="collapse mt-3">
+            {% if post.sources and post.sources|length > 0 %}
+              <ul class="list-unstyled mb-0 small">
+                {% for s in post.sources %}
+                  <li class="mb-2">
+                    {% if s.url %}
+                      <a href="{{ s.url }}" target="_blank" rel="nofollow noopener">{{ s.label }}</a>
+                    {% else %}
+                      {{ s.label }}
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <div class="text-muted small">No sources provided for this article.</div>
+            {% endif %}
+          </div>
+        </div>
+
         {% if current_user.id == 1 %}
         <div class="d-flex justify-content-end mb-4">
           <a class="btn btn-primary float-right" href="{{ url_for('edit_post', post_id=post.id) }}">Edit Post</a>

@@ -4,7 +4,7 @@ from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column, joinedload
-from sqlalchemy import Integer, String, Text, func
+from sqlalchemy import Integer, String, Text, func, Boolean
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 from functools import wraps
 from dotenv import load_dotenv
@@ -76,6 +76,26 @@ class BlogPost(db.Model):
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
     slug: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
     categories = relationship("Category", secondary=post_categories, back_populates="posts")
+
+    sources = relationship(
+        "PostSource",
+        back_populates="post",
+        cascade="all, delete-orphan",
+        order_by="PostSource.order"
+    )
+
+class PostSource(db.Model):
+    __tablename__ = "post_sources"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    post_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("blog_posts.id"), nullable=False)
+
+    # simple & flexible
+    order: Mapped[int] = mapped_column(Integer, default=0)  # display order
+    label: Mapped[str] = mapped_column(String(500), nullable=False)
+    url: Mapped[str] = mapped_column(String(1000), nullable=True)    # optional link
+
+    post = relationship("BlogPost", back_populates="sources")
+
 
 # Admin User table
 class User(UserMixin, db.Model):
@@ -303,10 +323,16 @@ def get_all_posts():
 
 @app.route("/<string:slug>")
 def show_post(slug):
-    requested_post = db.session.execute(
-        db.select(BlogPost).where(BlogPost.slug == slug)
-    ).scalar_one_or_none()
-
+    requested_post = (
+        db.session.query(BlogPost)
+        .options(
+            joinedload(BlogPost.author),
+            joinedload(BlogPost.categories),
+            joinedload(BlogPost.sources)   # <-- eklendi
+        )
+        .filter(BlogPost.slug == slug)
+        .first()
+    )
     if not requested_post:
         abort(404)
 
@@ -376,15 +402,17 @@ def add_new_post():
     form.categories.choices = [(cat.id, cat.name) for cat in db.session.query(Category).all()]
 
     if form.validate_on_submit():
+        # Fetch selected categories
         selected_categories = (
             db.session.query(Category)
             .filter(Category.id.in_(form.categories.data))
             .all()
         )
 
+        # Generate slug from title
         post_slug = generate_slug(form.title.data)
 
-        # Cover image (hero/thumb)
+        # Cover image (hero/thumb) handling
         img_url_value = form.img_url.data or ""
         file_storage: FileStorage = request.files.get('cover_image')
         if file_storage and file_storage.filename:
@@ -399,6 +427,7 @@ def add_new_post():
         # Convert any base64 inline images to files
         cleaned_body = replace_base64_images_with_files(form.body.data)
 
+        # Create the post
         new_post = BlogPost(
             title=form.title.data,
             subtitle=form.subtitle.data,
@@ -409,16 +438,30 @@ def add_new_post():
             slug=post_slug,
             categories=selected_categories
         )
+
+        # Build sources from FieldList (label required to persist; URL optional)
+        order_idx = 0
+        for subform in form.sources.entries:
+            lbl = (subform.form.label.data or "").strip()
+            url = (subform.form.url.data or "").strip()
+            if not lbl:
+                continue
+            new_post.sources.append(PostSource(order=order_idx, label=lbl, url=(url or None)))
+            order_idx += 1
+
         db.session.add(new_post)
         db.session.commit()
         return redirect(url_for("get_all_posts"))
 
     return render_template("make-post.html", form=form, current_user=current_user)
 
+
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
 @admin_only
 def edit_post(post_id):
     post = db.get_or_404(BlogPost, post_id)
+
+    # Pre-fill base fields
     form = CreatePostForm(
         title=post.title,
         subtitle=post.subtitle,
@@ -428,14 +471,25 @@ def edit_post(post_id):
     )
     form.categories.choices = [(cat.id, cat.name) for cat in db.session.query(Category).all()]
 
+    # On GET: prefill FieldList with existing sources (show existing + pad to min_entries)
+    if request.method == "GET":
+        # Clear auto-created empty entries
+        form.sources.entries = []
+        for s in (post.sources or []):
+            form.sources.append_entry({"label": s.label or "", "url": s.url or ""})
+        while len(form.sources.entries) < form.sources.min_entries:
+            form.sources.append_entry()
+
     if form.validate_on_submit():
+        # Update basic fields
         post.title = form.title.data
         post.subtitle = form.subtitle.data
         post.img_url = form.img_url.data or post.img_url
 
-        # Convert any base64 inline images to files on edit as well
+        # Convert any base64 inline images to files as well on edit
         post.body = replace_base64_images_with_files(form.body.data)
 
+        # Update categories
         post.categories = (
             db.session.query(Category)
             .filter(Category.id.in_(form.categories.data))
@@ -453,10 +507,22 @@ def edit_post(post_id):
                 flash(f"Image upload failed: {e}")
                 return redirect(url_for("edit_post", post_id=post.id))
 
+        # Replace sources atomically (clear + rebuild)
+        post.sources.clear()
+        order_idx = 0
+        for subform in form.sources.entries:
+            lbl = (subform.form.label.data or "").strip()
+            url = (subform.form.url.data or "").strip()
+            if not lbl:
+                continue
+            post.sources.append(PostSource(order=order_idx, label=lbl, url=(url or None)))
+            order_idx += 1
+
         db.session.commit()
         return redirect(url_for("show_post", slug=post.slug))
 
     return render_template("make-post.html", form=form, is_edit=True, current_user=current_user)
+
 
 @app.route("/upload-image", methods=["POST"])
 @admin_only

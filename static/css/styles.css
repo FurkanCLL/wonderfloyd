@@ -12678,3 +12678,63 @@ hr.my-4 {
   border-color: rgba(205,168,255,.45) !important;
 }
 
+/* Admin: Sources compact polish */
+.wf-admin-sources .card-header {
+  padding: .6rem .9rem;
+}
+.wf-admin-sources .card-body {
+  padding: .9rem;
+}
+.wf-admin-sources .form-control-sm {
+  /* keep inputs compact */
+  padding-top: .35rem;
+  padding-bottom: .35rem;
+}
+.wf-admin-sources .form-text {
+  margin-top: .25rem;
+}
+
+/* WonderFloyd – Admin Sources Cosmic Theme */
+.wf-admin-sources.card {
+  background-color: rgba(24, 24, 35, 0.75) !important; /* deep night tone */
+  border: 1px solid rgba(165, 105, 255, 0.35) !important; /* soft purple border */
+  border-radius: .7rem;
+  box-shadow: 0 0 18px rgba(165, 105, 255, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.wf-admin-sources .card-header {
+  background: rgba(40, 30, 60, 0.8) !important; /* cosmic purple-blue */
+  color: #eae6ff !important;
+  font-weight: 600;
+  padding: .7rem .9rem;
+  border-bottom: 1px solid rgba(165, 105, 255, 0.35) !important;
+}
+
+.wf-admin-sources .card-body {
+  background: transparent !important;
+  padding: 1rem;
+}
+
+.wf-admin-sources .form-control {
+  background-color: rgba(15, 15, 25, 0.85) !important;
+  border-color: rgba(165, 105, 255, 0.3) !important;
+  color: #e8e8f8 !important;
+  transition: 0.2s ease;
+}
+.wf-admin-sources .form-control:focus {
+  border-color: rgba(165, 105, 255, 0.6) !important;
+  box-shadow: 0 0 0 0.15rem rgba(165, 105, 255, 0.25);
+}
+
+.wf-admin-sources .form-control::placeholder {
+  color: rgba(230, 230, 255, 0.5);
+}
+
+.wf-admin-sources .form-text {
+  margin-top: .4rem;
+  color: rgba(220, 210, 255, 0.65);
+}
+
+
+
