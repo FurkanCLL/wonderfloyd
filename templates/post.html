@@ -31,27 +31,29 @@
         </div>
 
         <!-- Minimal Sources (collapsible) -->
-        <div class="wf-sources my-5">
+        <div class="wf-sources my-4">
           <button
-            class="btn btn-outline-secondary w-100 d-flex justify-content-between align-items-center"
+            class="wf-sources-toggle"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#sources-{{ post.id }}"
             aria-expanded="false"
             aria-controls="sources-{{ post.id }}">
-            <span>🔗 Sources{% if post.sources %} ({{ post.sources|length }}){% endif %}</span>
-            <span class="small">▼</span>
+            <span class="label">🔗 Sources</span>
+            <span class="chev" aria-hidden="true">▾</span>
           </button>
 
-          <div id="sources-{{ post.id }}" class="collapse mt-3">
+          <div id="sources-{{ post.id }}" class="collapse mt-2">
             {% if post.sources and post.sources|length > 0 %}
-              <ul class="list-unstyled mb-0 small">
+              <ul class="wf-sources-list mb-0">
                 {% for s in post.sources %}
-                  <li class="mb-2">
+                  <li>
                     {% if s.url %}
-                      <a href="{{ s.url }}" target="_blank" rel="nofollow noopener">{{ s.label }}</a>
+                      <a class="wf-source-link" href="{{ s.url }}" target="_blank" rel="nofollow noopener">
+                        {{ s.label }}
+                      </a>
                     {% else %}
-                      {{ s.label }}
+                      <span class="wf-source-plain">{{ s.label }}</span>
                     {% endif %}
                   </li>
                 {% endfor %}
@@ -61,6 +63,8 @@
             {% endif %}
           </div>
         </div>
+
+
 
         {% if current_user.id == 1 %}
         <div class="d-flex justify-content-end mb-4">
