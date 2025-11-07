@@ -12756,7 +12756,6 @@ html.light{ --wf-surface: var(--wf-surface-light); }
 
 /* =============== Sources =============== */
 
-/* paragrafla aradaki boşluk daha kısa */
 .wf-sources{ margin-top:.60rem !important; }
 .wf-sources > .collapse{ margin-top:.26rem; }
 
@@ -12865,69 +12864,49 @@ html.light{ --wf-surface: var(--wf-surface-light); }
 }
 
 
-/* Post içeriğinin son elemanındaki trailing margin'i kaldır */
 .post-body.ck-content > :last-child{
   margin-bottom: 0 !important;
 }
 
-/* Artık boşluğu buradan kontrol et */
+
 .wf-sources{ margin-top: 4rem !important; }   /* .55rem / .65rem vs. */
 @media (max-width:576px){
   .wf-sources{ margin-top: 3rem !important; }
 }
 
-/* Navbar adjustment */
-html, body { margin:0; }
+
+/* ===== Navbar (no first-flash, smooth hide) ===== */
+html, body { margin: 0; }
 
 #mainNav {
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: translate3d(0,0,0);
-  transition: transform .24s ease;
-}
-
-#mainNav.is-fixed {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-}
-
-
-#mainNav.is-fixed:not(.is-visible) {
-  transform: translate3d(0,-100%,0);
-  opacity: 0;
-  pointer-events: none;
-}
-
-#mainNav.is-fixed.is-visible {
-  transform: translate3d(0,0,0);
-  opacity: 1;
-  pointer-events: auto;
-}
-
-
-#mainNav {
-  transition: transform .25s ease, opacity .25s ease;
   backface-visibility: hidden;
   will-change: transform, opacity;
+  transform: translate3d(0,0,0);
 }
 
+/* fixed scaffold */
 #mainNav.is-fixed { position: fixed; top:0; left:0; right:0; }
 
+/* hidden (no transition = prevents first-time flash) */
 #mainNav.is-fixed:not(.is-visible) {
   transform: translate3d(0,-100%,0);
   opacity: 0;
   pointer-events: none;
+  transition: none;
 }
 
+/* visible (animate in) */
 #mainNav.is-fixed.is-visible {
   transform: translate3d(0,0,0);
   opacity: 1;
   pointer-events: auto;
+  transition: transform .35s ease, opacity .35s ease;
 }
 
-
-#mainNav {
-  transition: transform 0.35s ease, opacity 0.35s ease;
-  backface-visibility: hidden;
-  will-change: transform, opacity;
+/* HIDE ANIMATION helper: override visible values and animate out */
+#mainNav.is-fixed.hiding {
+  transform: translate3d(0,-100%,0);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .35s ease, opacity .35s ease;
 }

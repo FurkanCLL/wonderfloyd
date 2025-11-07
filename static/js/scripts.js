@@ -31,7 +31,25 @@ window.addEventListener('DOMContentLoaded', () => {
 
       // hide only after a bit of downward travel (smooth-out)
       if (downAccum >= downThreshold) {
-        mainNav.classList.remove('is-visible');
+          if (mainNav.classList.contains('is-visible') && !mainNav.classList.contains('hiding')) {
+            // start smooth hide
+            mainNav.classList.add('hiding');
+
+            // wait a frame so CSS can pick up .hiding, then drop is-visible
+            requestAnimationFrame(() => {
+              mainNav.classList.remove('is-visible');
+            });
+
+            // clean up after transition ends
+            const onEnd = (e) => {
+              if (e.propertyName === 'transform' || e.propertyName === 'opacity') {
+                mainNav.removeEventListener('transitionend', onEnd, true);
+                // now we are fully hidden; drop the helper class
+                mainNav.classList.remove('hiding');
+              }
+            };
+            mainNav.addEventListener('transitionend', onEnd, true);
+          }
       }
 
       // ensure fixed after passing header height
