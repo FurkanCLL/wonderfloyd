@@ -328,7 +328,7 @@ def show_post(slug):
         .options(
             joinedload(BlogPost.author),
             joinedload(BlogPost.categories),
-            joinedload(BlogPost.sources)   # <-- eklendi
+            joinedload(BlogPost.sources)
         )
         .filter(BlogPost.slug == slug)
         .first()

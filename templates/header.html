@@ -8,11 +8,11 @@
     <title>WonderFloyd</title>
     <script>
       (function () {
-        // Default = dark.
+        // Default = dark
         var saved = localStorage.getItem('wf-theme') || 'dark';
         var root = document.documentElement;
         root.setAttribute('data-theme', saved);
-        // Bootstrap 5.3 rengi için
+        // For Bootstrap 5.3 color
         if (saved === 'dark') {
           root.setAttribute('data-bs-theme', 'dark');
         } else {

@@ -12876,3 +12876,58 @@ html.light{ --wf-surface: var(--wf-surface-light); }
   .wf-sources{ margin-top: 3rem !important; }
 }
 
+/* Navbar adjustment */
+html, body { margin:0; }
+
+#mainNav {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0,0,0);
+  transition: transform .24s ease;
+}
+
+#mainNav.is-fixed {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+}
+
+
+#mainNav.is-fixed:not(.is-visible) {
+  transform: translate3d(0,-100%,0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+#mainNav.is-fixed.is-visible {
+  transform: translate3d(0,0,0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+#mainNav {
+  transition: transform .25s ease, opacity .25s ease;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+#mainNav.is-fixed { position: fixed; top:0; left:0; right:0; }
+
+#mainNav.is-fixed:not(.is-visible) {
+  transform: translate3d(0,-100%,0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+#mainNav.is-fixed.is-visible {
+  transform: translate3d(0,0,0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+#mainNav {
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}

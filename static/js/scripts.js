@@ -1,27 +1,61 @@
 // ====================== NAVBAR SCROLL BEHAVIOR ======================
 window.addEventListener('DOMContentLoaded', () => {
   let scrollPos = 0;
+  let upAccum = 0;
+  let downAccum = 0;
+
+  const upThreshold = 110;    // show after scrolling up this much
+  const downThreshold = 24;  // hide only after scrolling down this much
   const mainNav = document.getElementById('mainNav');
   const headerHeight = mainNav.clientHeight;
 
-  window.addEventListener('scroll', function () {
-    const currentTop = document.body.getBoundingClientRect().top * -1;
+  const getScrollTop = () =>
+    window.pageYOffset ||
+    document.documentElement.scrollTop ||
+    (document.body.getBoundingClientRect().top * -1);
 
-    if (currentTop < scrollPos) {
-      if (currentTop > 0 && mainNav.classList.contains('is-fixed')) {
-        mainNav.classList.add('is-visible');
-      } else {
-        mainNav.classList.remove('is-visible', 'is-fixed');
+  window.addEventListener('scroll', () => {
+    const currentTop = getScrollTop();
+
+    // top of page
+    if (currentTop <= 0) {
+      mainNav.classList.remove('is-fixed', 'is-visible');
+      scrollPos = 0; upAccum = 0; downAccum = 0;
+      return;
+    }
+
+    if (currentTop > scrollPos) {
+      // scrolling down
+      downAccum += (currentTop - scrollPos);
+      upAccum = 0;
+
+      // hide only after a bit of downward travel (smooth-out)
+      if (downAccum >= downThreshold) {
+        mainNav.classList.remove('is-visible');
       }
-    } else {
-      mainNav.classList.remove('is-visible');
+
+      // ensure fixed after passing header height
       if (currentTop > headerHeight && !mainNav.classList.contains('is-fixed')) {
         mainNav.classList.add('is-fixed');
       }
+    } else {
+      // scrolling up
+      upAccum += (scrollPos - currentTop);
+      downAccum = 0;
+
+      if (currentTop <= headerHeight) {
+        mainNav.classList.remove('is-fixed', 'is-visible');
+        upAccum = 0;
+      } else if (upAccum >= upThreshold) {
+        mainNav.classList.add('is-fixed', 'is-visible');
+      }
     }
+
     scrollPos = currentTop;
   });
 });
+
+
 
 // ====================== CATEGORY FILTER + LOAD MORE ======================
 document.addEventListener('DOMContentLoaded', function () {
@@ -277,3 +311,4 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   document.documentElement.classList.add('wf-ready');
 });
+
