@@ -12910,3 +12910,44 @@ html, body { margin: 0; }
   pointer-events: none;
   transition: transform .35s ease, opacity .35s ease;
 }
+
+/* Tablet-only optical alignment (768–992px) */
+@media (min-width: 768px) and (max-width: 992px) {
+
+  /* Make sure we can transform children predictably */
+  #mainNav .container { position: relative; }
+
+  /* Shift the MENU label + hamburger slightly to the RIGHT */
+  #mainNav .navbar-toggler {
+    transform: translateX(14px);          /* try 12–18px */
+  }
+
+  /* Shift the Seed of Life logo slightly to the LEFT */
+  #mainNav .wf-brand {
+    transform: translateX(-10px);         /* try -8 to -14px */
+  }
+
+  /* Optional: tiny spacing polish for MENU text */
+  #mainNav .menu-label {
+    margin-right: 4px;
+    letter-spacing: 0.04em;
+  }
+}
+
+
+/* <=381px: keep subtitle on one line and make it slightly smaller */
+@media (max-width: 381px) {
+  header.masthead .site-heading .subheading {
+    font-size: 1.4rem !important;  /* try 0.88–0.94 if needed */
+    line-height: 1.2;
+    white-space: nowrap;           /* force single-line */
+    letter-spacing: 0;             /* reduce width a touch */
+  }
+
+  /* give the text a little more horizontal room */
+  header.masthead .container {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+}
+
