@@ -6,6 +6,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>WonderFloyd</title>
+
     <script>
       (function () {
         // Default = dark
@@ -20,9 +21,28 @@
         }
       })();
     </script>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon"
+          href="{{ url_for('static', filename='assets/favicons/favicon.ico') }}?v=1">
+    <link rel="icon" type="image/png" sizes="32x32"
+          href="{{ url_for('static', filename='assets/favicons/favicon-32x32.png') }}?v=1">
+    <link rel="icon" type="image/png" sizes="16x16"
+          href="{{ url_for('static', filename='assets/favicons/favicon-16x16.png') }}?v=1">
+    <link rel="apple-touch-icon" sizes="180x180"
+          href="{{ url_for('static', filename='assets/favicons/apple-touch-icon.png') }}?v=1">
+    <link rel="manifest"
+          href="{{ url_for('static', filename='assets/favicons/site.webmanifest') }}?v=1">
+    <!-- Android specific sizes -->
+    <link rel="icon" type="image/png" sizes="192x192"
+          href="{{ url_for('static', filename='assets/favicons/android-chrome-192x192.png') }}?v=1">
+    <link rel="icon" type="image/png" sizes="512x512"
+          href="{{ url_for('static', filename='assets/favicons/android-chrome-512x512.png') }}?v=1">
+    <!-- Brand color for some UAs -->
+    <meta name="theme-color" content="#0a0018" />
+
     {% block styles %}
     {{ bootstrap.load_css() }}
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/favicon.ico') }}" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
