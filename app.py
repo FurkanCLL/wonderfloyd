@@ -248,39 +248,85 @@ def replace_base64_images_with_files(html: str) -> str:
 
     return pattern.sub(_save_and_replace, html)
 
+
+def _smtp_send(msg, host, port, user, pwd, security):
+    if str(security).upper() == "SSL" or str(port) == "465":
+        with smtplib.SMTP_SSL(host, int(port), timeout=20) as s:
+            s.login(user, pwd)
+            s.send_message(msg)
+    else:
+        with smtplib.SMTP(host, int(port), timeout=20) as s:
+            s.ehlo()
+            s.starttls()
+            s.login(user, pwd)
+            s.send_message(msg)
+
 def send_contact_mail(name: str, email: str, subject: str, message: str):
-    """Send email via SMTP (TLS). Reply-To will be the sender's email."""
-    smtp_host = os.environ.get("SMTP_SERVER", "smtp.gmail.com")
-    smtp_port = int(os.environ.get("SMTP_PORT", "587"))
+    # SMTP config
+    smtp_host = os.environ["SMTP_SERVER"]
+    smtp_port = int(os.environ["SMTP_PORT"])
     smtp_user = os.environ.get("SMTP_USER")
     smtp_pass = os.environ.get("SMTP_PASSWORD")
-    admin_to = os.environ.get("ADMIN_EMAIL", smtp_user)
+    security = os.environ["SMTP_SECURITY"]
+    admin_to  = os.environ.get("ADMIN_EMAIL", smtp_user)
+    from_name = os.environ["FROM_NAME"]
 
     if not (smtp_user and smtp_pass and admin_to):
-        raise RuntimeError("SMTP configuration is missing. Check your .env variables.")
+        raise RuntimeError("SMTP configuration is missing.")
 
-    msg = EmailMessage()
-    title = subject.strip() if subject else f"New message from {name}"
-    msg["Subject"] = f"[WonderFloyd • Contact] {title}"
-    msg["From"] = smtp_user
-    msg["To"] = admin_to
-    msg["Reply-To"] = email
+    # Admin notification
+    admin_subj = (subject.strip() if subject else "New Contact Message")
+    admin_msg = EmailMessage()
+    admin_msg["Subject"] = admin_subj
+    admin_msg["From"] = f"{from_name} <{smtp_user}>"
+    admin_msg["To"]   = admin_to
+    admin_msg["Reply-To"] = email
 
-    body = (
-        f"New contact message from WonderFloyd:\n\n"
-        f"Name   : {name}\n"
-        f"Email  : {email}\n"
-        f"Subject: {subject or '-'}\n"
-        f"Date   : {datetime.now().isoformat(timespec='seconds')}\n\n"
-        f"Message:\n{message}\n"
+    text_body = (
+        f"Name: {name}\n"
+        f"Email: {email}\n\n"
+        f"{message}\n"
     )
-    msg.set_content(body)
+    admin_msg.set_content(text_body)
 
-    with smtplib.SMTP(smtp_host, smtp_port, timeout=20) as server:
-        server.ehlo()
-        server.starttls()
-        server.login(smtp_user, smtp_pass)
-        server.send_message(msg)
+    html_admin = f"""
+    <div style="font:14px/1.6 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Inter,Arial;">
+      <h2 style="margin:0 0 12px;color:#9aa4ff;">New contact message</h2>
+      <p><strong>Name:</strong> {name}<br>
+         <strong>Email:</strong> <a href="mailto:{email}">{email}</a></p>
+      <div style="padding:12px 14px;border:1px solid #2b2f3a;border-radius:10px;background:#0d0f15;color:#e9ecff;">
+        <pre style="white-space:pre-wrap;margin:0">{message}</pre>
+      </div>
+      <p style="margin-top:12px;color:#8b90a6">Sent via WonderFloyd • contact form</p>
+    </div>
+    """
+    admin_msg.add_alternative(html_admin, subtype="html")
+    _smtp_send(admin_msg, smtp_host, smtp_port, smtp_user, smtp_pass, security)
+
+    # User auto-ack
+    if os.environ.get("ACK_ENABLED", "true").lower() == "true":
+        ack_subj = os.environ.get("ACK_SUBJECT", "Thanks — we received your message")
+        ack_intro = os.environ.get("ACK_INTRO", "Hey, I've received your message. Thank you for contacting me!")
+
+        ack = EmailMessage()
+        ack["Subject"] = ack_subj
+        ack["From"]    = f"{from_name} <{smtp_user}>"
+        ack["To"]      = email
+
+        ack_text = (
+            f"{ack_intro}\n\n"
+            f"— WonderFloyd"
+        )
+        ack.set_content(ack_text)
+
+        ack_html = f"""
+        <div style="font:14px/1.6 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Inter,Arial;">
+          <p style="margin:0 0 10px">{ack_intro}</p>
+          <p style="margin:0;color:#8b90a6">— WonderFloyd</p>
+        </div>
+        """
+        ack.add_alternative(ack_html, subtype="html")
+        _smtp_send(ack, smtp_host, smtp_port, smtp_user, smtp_pass, security)
 
 # Admin-only decorator
 def admin_only(f):
@@ -576,7 +622,7 @@ def contact():
                 subject=(form.subject.data or "").strip(),
                 message=form.message.data.strip(),
             )
-            flash("Message sent successfully. We’ll get back to you soon ✨", "success")
+            flash("Message sent successfully. I’ll get back to you soon ✨", "success")
             return redirect(url_for("contact"))  # PRG pattern
         except Exception as e:
             # Optionally log e
