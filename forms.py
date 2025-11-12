@@ -37,7 +37,7 @@ class ContactForm(FlaskForm):
 
 class SourceItemForm(FlaskForm):
     class Meta:
-        csrf = False  # <-- nested forms must disable CSRF
+        csrf = False  # nested forms must disable CSRF
     # Simple pair: label (required), url (optional)
     label = StringField("Label", validators=[Optional(), Length(max=500)])
     url   = StringField("URL",   validators=[Optional(), URL(), Length(max=1000)])
@@ -53,7 +53,7 @@ class CreatePostForm(FlaskForm):
     body = CKEditorField("Blog Content", validators=[DataRequired()])
     categories = MultiCheckboxField("Categories", coerce=int)
 
-    # NEW: a dynamic list of sources (label + optional url)
+    # A dynamic list of sources
     sources = FieldList(FormField(SourceItemForm), min_entries=10, max_entries=50)
 
     submit = SubmitField("Submit Post")

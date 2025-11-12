@@ -174,8 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
   onScroll();
 })();
 
-// ====================== WF POST REVEAL (MASTHEAD-LIKE, SOFTER) ======================
-// Soft, yumuşak blur + fade + çok hafif gecikme (stagger). Daha “patlamasın” diye easing yumuşak.
+// ====================== WF POST REVEAL ======================
 function wfRevealPosts(nodeList) {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const nodes = Array.from(nodeList || []);
@@ -187,7 +186,7 @@ function wfRevealPosts(nodeList) {
   });
 }
 
-// İlk yüklemede uygula
+// Apply on first load
 document.addEventListener('DOMContentLoaded', () => {
   const initial = document.querySelectorAll('#post-list article, #post-list .wf-empty');
   wfRevealPosts(initial);
@@ -245,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 
-// ===== WonderFloyd Theme Toggle (switch UI + persist) =====
+// ===== WonderFloyd Theme Toggle  =====
 (function () {
   const btn = document.getElementById('wfThemeToggle');
   if (!btn) return;
@@ -280,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-// ===== WonderFloyd Theme Resync (back/forward navigation) =====
+// ===== WonderFloyd Theme Resync  =====
 (function () {
   function syncThemeFromStorage(updateButtonUI = false) {
     var root = document.documentElement;
@@ -296,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // update toggle button label/icon if present (optional)
+    // update toggle button label/icon
     if (updateButtonUI) {
       var btn = document.getElementById('wfThemeToggle');
       if (btn) {

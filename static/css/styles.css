@@ -1,14 +1,16 @@
 @charset "UTF-8";
 /*!
-* Start Bootstrap - Clean Blog v6.0.9 (https://startbootstrap.com/theme/clean-blog)
-* Copyright 2013-2023 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-clean-blog/blob/master/LICENSE)
-*/
-/*!
- * Bootstrap  v5.2.3 (https://getbootstrap.com/)
- * Copyright 2011-2022 The Bootstrap Authors
- * Copyright 2011-2022 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ * WonderFloyd Styles
+ * (c) 2025 Furkan Ciloglu & WonderFloyd. All rights reserved.
+ *
+ * Includes portions of:
+ * - Start Bootstrap - Clean Blog v6.0.9 (MIT)
+ *   https://startbootstrap.com/theme/clean-blog
+ * - Bootstrap v5.2.3 (MIT)
+ *   https://getbootstrap.com/
+ *
+ * This project retains the original MIT copyright and license notices
+ * for any included third-party code, see LICENSE.
  */
 :root {
   --bs-blue: #0d6efd;
@@ -11079,7 +11081,7 @@ hr.my-4 {
   .wf-meta { font-size: .75rem; color:#6c757d; }
 }
 
-/* ===== Back to Top (Floating) ===== */
+/* ===== Back to Top  ===== */
 .wf-top{
   position: fixed;
   right: 30px;
@@ -11150,7 +11152,7 @@ hr.my-4 {
   color: transparent;
 }
 
-/* ===== Mobile toggle (MENU + 3 bars) ===== */
+/* ===== Mobile toggle  ===== */
 .navbar-toggler{
   display:inline-flex;
   align-items:center;
@@ -11439,9 +11441,7 @@ hr.my-4 {
 }
 
 
-
-
-/* =============== WF Category Pills — neutral border, premium pressed =============== */
+/* =============== WF Category Pills  =============== */
 
 /* Row */
 #category-buttons{
@@ -11566,7 +11566,7 @@ hr.my-4 {
 }
 #wonderfloyd, #author{ scroll-margin-top: 96px; } /* tune to header height */
 
-/* 💜 WF Contact Submit Button — soft external purple aura */
+/* WF Contact Submit Button */
 .wf-contact .btn-primary {
   border-radius: 9999px !important;
   border: 2px solid var(--pill-br) !important;
@@ -11604,7 +11604,7 @@ hr.my-4 {
   color: #1a1f2b !important;
 }
 
-/* ===== WF Footer Socials — perfect purple hover ===== */
+/* ===== WF Footer Socials ===== */
 .wf-socials { gap: 12px; }
 .wf-social{
   position: relative;
@@ -12149,7 +12149,7 @@ hr.my-4 {
 }
 
 /* =========================
-   WonderFloyd — NAV & TOGGLE (Mobile Popover Polished)
+   WonderFloyd — NAV & TOGGLE (Mobile Popover, Glass Toggle)
    ========================= */
 
 /* Hamburger reset */
@@ -12161,7 +12161,7 @@ hr.my-4 {
   background:transparent !important;
 }
 
-/* Mobile popover: right-aligned, slim, fixed dark-glass */
+/* Mobile popover: right-aligned, slim, fixed dark-glass + centered items */
 @media (max-width: 991.98px){
   #navbarResponsive.collapse.show,
   #navbarResponsive.collapsing{
@@ -12182,14 +12182,15 @@ hr.my-4 {
   }
   #navbarResponsive .navbar-nav{
     gap:0;
-    align-items:stretch;
+    align-items:center !important;
   }
   #navbarResponsive .nav-link{
     width:auto !important;
     white-space:nowrap;
     padding:.44rem .68rem !important;
     border-radius:10px;
-    color: #cfc9ff !important;
+    color:#cfc9ff !important;
+    text-align:center !important;
   }
   #navbarResponsive .nav-link:hover{
     background: rgba(143,164,255,.10);
@@ -12203,7 +12204,7 @@ hr.my-4 {
     text-shadow: 0 0 1px rgba(0,0,0,.25);
     outline:0;
   }
-  /* Optional thin separators */
+  /* Optional thin separators (disabled by default below) */
   #navbarResponsive .navbar-nav .nav-item{ position:relative; }
   #navbarResponsive .navbar-nav .nav-item + .nav-item::before{
     content:"";
@@ -12214,26 +12215,22 @@ hr.my-4 {
       rgba(235,238,255,.06), rgba(235,238,255,.14), rgba(235,238,255,.06));
     border-radius:1px;
   }
-  /* Toggle centering within the panel */
+  /* Center the theme toggle inside the panel */
   #navbarResponsive .wf-theme-toggle{
     --h:26px; --w:52px;
-    display:block;
-    align-self: center;
-    margin:6px auto 4px;
+    display:block !important;
+    align-self:center;
+    margin:6px auto 2px !important;
   }
+  /* Ensure separators are off in the centered variant */
+  #navbarResponsive .navbar-nav .nav-item + .nav-item::before{
+    content:none !important;
+  }
+  /* Nudge first item for breathing room */
+  #navbarResponsive .navbar-nav .nav-item:first-child{ margin-top:2px !important; }
 }
 
-/* Mobile popover — center everything safely */
-@media (max-width: 991.98px){
-  #navbarResponsive .navbar-nav{ align-items: center !important; }
-  #navbarResponsive .nav-link{ text-align: center !important; }
-  #navbarResponsive .navbar-nav .nav-item:first-child{ margin-top: 2px !important; }
-  #navbarResponsive .wf-theme-toggle{ display: block !important; margin: 6px auto 2px !important; }
-  /* If a previous separator rule remains, disable it */
-  #navbarResponsive .navbar-nav .nav-item + .nav-item::before{ content: none !important; }
-}
-
-/* === WonderFloyd Glass Toggle — from scratch ===
+/* === WonderFloyd Glass Toggle
    Structure:
    .wf-theme-toggle (state: .is-dark | .is-light)
      .track
@@ -12248,6 +12245,7 @@ hr.my-4 {
   border: 0; padding: 0; background: transparent; border-radius: var(--radius);
   cursor: pointer; -webkit-tap-highlight-color: transparent;
 }
+
 /* Track — neutral glass base (state overrides below) */
 .wf-theme-toggle .track{
   position: absolute; inset: 0;
@@ -12264,6 +12262,7 @@ hr.my-4 {
     0 10px 22px rgba(0,0,0,.10);
   transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
 }
+
 /* Track — DARK */
 .wf-theme-toggle.is-dark .track{
   border-color: rgba(190,200,255,.18);
@@ -12275,6 +12274,7 @@ hr.my-4 {
     inset 6px 6px 12px rgba(0,0,0,.30),
     inset -4px -4px 10px rgba(255,255,255,.06);
 }
+
 /* Track — LIGHT */
 .wf-theme-toggle.is-light .track{
   border-color: rgba(210,216,235,.85);
@@ -12286,6 +12286,7 @@ hr.my-4 {
     inset -5px -5px 12px rgba(0,0,0,.08),
     0 8px 18px rgba(0,0,0,.08);
 }
+
 /* Knob — glossy pill (state variables override at bottom) */
 .wf-theme-toggle .knob{
   position: absolute; top: var(--pad); left: var(--pad);
@@ -12302,6 +12303,7 @@ hr.my-4 {
     inset -2px -2px 6px rgba(0,0,0,.05),
     inset  3px  3px 8px rgba(255,255,255,.85);
 }
+
 /* Knob — DARK */
 .wf-theme-toggle.is-dark .knob{
   background: #1f2235;
@@ -12309,6 +12311,7 @@ hr.my-4 {
     0 12px 18px rgba(0,0,0,.35),
     inset 0 0 0 1px rgba(255,255,255,.05);
 }
+
 /* Icons — centered, no layout shift */
 .wf-theme-toggle .icon{
   position: absolute; inset: 0; margin: auto;
@@ -12320,42 +12323,46 @@ hr.my-4 {
 .wf-theme-toggle.is-dark  .icon.sun { opacity: 0;   color: #2b2e3a; }
 .wf-theme-toggle.is-light .icon.sun { opacity: .96; color: #2b2e3a; }
 .wf-theme-toggle.is-light .icon.moon{ opacity: 0;   color: #e9ecff; }
+
 /* State — knob travel */
 .wf-theme-toggle.is-light .knob{ transform: translateX(calc(var(--w) - var(--h))); }
+
 /* Focus ring (accessible) */
 .wf-theme-toggle:focus-visible{
   outline: 2px solid rgba(140,120,255,.65);
   outline-offset: 2px;
   border-radius: var(--radius);
 }
+
 /* Motion safety */
 @media (prefers-reduced-motion: reduce){
   .wf-theme-toggle .knob,
   .wf-theme-toggle .icon,
   .wf-theme-toggle .track{ transition: none; }
 }
+
 .wf-theme-toggle.is-light .knob::after{
   content:''; position:absolute; top:3px; left:3px; width:5px; height:5px;
   border-radius:50%; background:rgba(255,255,255,.9);
   box-shadow:0 0 6px rgba(255,255,255,.8);
 }
 
-/* === Paint from [data-theme]; enable motion only after .wf-ready === */
+/* Paint from [data-theme]; enable motion only after .wf-ready */
 :root[data-theme="dark"]  .wf-theme-toggle .knob { transform: translateX(0); }
 :root[data-theme="light"] .wf-theme-toggle .knob { transform: translateX(calc(var(--w) - var(--h))); }
 :root[data-theme="dark"]  .wf-theme-toggle .icon.moon{ opacity:.96; }
 :root[data-theme="dark"]  .wf-theme-toggle .icon.sun { opacity:0; }
 :root[data-theme="light"] .wf-theme-toggle .icon.sun { opacity:.96; }
 :root[data-theme="light"] .wf-theme-toggle .icon.moon{ opacity:0; }
-/* Prevent the initial jump: disable transitions until .wf-ready is on <html> */
+
+/* Prevent initial jump: disable transitions until .wf-ready is on <html> */
 :root:not(.wf-ready) .wf-theme-toggle .knob,
 :root:not(.wf-ready) .wf-theme-toggle .icon,
 :root:not(.wf-ready) .wf-theme-toggle .track{
   transition: none !important;
 }
 
-/* === Fix: dark-mode knob white flash on navigation === */
-/* Drive knob paint from [data-theme] variables so first paint is correct */
+/* Fixing the dark-mode knob white flash on navigation (drive from variables) */
 :root[data-theme="dark"]{
   --wf-toggle-knob-bg: #1f2235;
   --wf-toggle-knob-shadow:
@@ -12369,54 +12376,33 @@ hr.my-4 {
     inset -2px -2px 6px rgba(0,0,0,.05),
     inset  3px  3px 8px rgba(255,255,255,.85);
 }
-/* Force knob to use theme-driven variables */
 .wf-theme-toggle .knob{
   background: var(--wf-toggle-knob-bg) !important;
   box-shadow: var(--wf-toggle-knob-shadow) !important;
 }
 
-/* --- Fix: descenders (j,y,g,…) clipping under subtitle on masthead --- */
+/* --- Masthead subtitle safety (descenders, glow, selection) --- */
 .masthead .site-heading .subheading {
   display: block;
-  line-height: 1.4;          /* a touch higher for safe descenders */
-  padding-bottom: .35rem;     /* small breathing room below text */
+  line-height: 1.4;
+  padding-bottom: .35rem;
   margin-bottom: 0;
-  overflow: visible;          /* ensure glow/shadow never clips */
+  overflow: visible;
 }
 
-/* --- Fix: allow vertical scroll when touching the masthead titles on mobile --- */
-.masthead .site-heading,
-.masthead .site-heading * {
-  -webkit-user-select: none;
-  user-select: none;            /* prevent text selection while scrolling */
-  -webkit-touch-callout: none;  /* no callout on long-press */
-  touch-action: pan-y;          /* prioritize vertical scrolling */
-}
-
-/* Make sure nothing shifts on :active */
-.masthead .site-heading h1:active,
-.masthead .site-heading .subheading:active {
-  transform: none !important;
-}
-
-
-/* ===== (A) Re-enable text selection on homepage title/subtitle ===== */
-/* Desktop & general: allow selection */
+/* Allow text selection, prefer vertical scroll on coarse pointers */
 .masthead .site-heading,
 .masthead .site-heading * {
   -webkit-user-select: text;
   user-select: text;
   -webkit-touch-callout: default;
 }
-
-/* Mobile only: keep vertical scroll priority WITHOUT disabling selection everywhere */
 @media (hover: none) and (pointer: coarse) {
   .masthead .site-heading a,
   .masthead .site-heading h1,
   .masthead .site-heading .subheading {
-    touch-action: pan-y;           /* scroll wins */
+    touch-action: pan-y; /* vertical scroll wins */
   }
-  /* don’t forbid selection anymore */
 }
 
 /* Prevent tiny jiggle on tap */
@@ -12425,47 +12411,38 @@ hr.my-4 {
   transform: none !important;
 }
 
-/* === Dark mode: masthead’ı sakinleştir === */
+/* Dark mode: calm the masthead overlay */
 :root[data-theme="dark"] .masthead::before{
-  /* daha koyu, ama boğmadan */
   background: linear-gradient(
     180deg,
     rgba(0,0,0,.50),
     rgba(0,0,0,.30) 35%,
     rgba(0,0,0,.58)
   );
-
   backdrop-filter: saturate(0.60) brightness(0.60);
   -webkit-backdrop-filter: saturate(0.92) brightness(0.92);
 }
 
-
-/* === Unified author link: RGB by default, glow on hover === */
+/* === Unified author link: gradient by default, glow on hover === */
 .wf-author{
   position: relative;
   font-weight: 600;
   text-decoration: none;
-  /* brand gradient as text color */
   background: linear-gradient(90deg, var(--wf-accent-hover-start, #8fa4ff), var(--wf-accent-hover-end, #6d36b5));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: transparent; /* fallback */
+  color: transparent;
   transition: opacity .25s ease, filter .25s ease;
 }
-
-/* Soft outer glow via a duplicated text layer (no hard-coded name) */
 .wf-author::after{
   content: attr(data-author);
   position: absolute; inset: 0;
   pointer-events: none;
-  /* subtle light layer for readability on busy headers */
   color: rgba(255,255,255,.28);
   filter: blur(2px);
   z-index: -1;
 }
-
-/* Hover/focus: brighten the glow a touch */
 .wf-author:hover,
 .wf-author:focus-visible{
   opacity: .96;
@@ -12479,8 +12456,6 @@ hr.my-4 {
   max-width: 460px;
   padding: 22px 22px 18px;
   border-radius: 18px;
-
-  /* layered glass background with subtle border */
   border: 1.6px solid rgba(0,0,0,.10);
   background:
     radial-gradient(120% 140% at 30% 8%, rgba(255,255,255,.42) 0%, rgba(255,255,255,.10) 38%, rgba(255,255,255,0) 64%) padding-box,
@@ -12492,7 +12467,6 @@ hr.my-4 {
   backdrop-filter: blur(10px) saturate(120%);
   -webkit-backdrop-filter: blur(10px) saturate(120%);
 }
-
 .wf-auth-head{ margin-bottom: 10px; }
 .wf-auth-seed{ width: 36px; height: 36px; display: block; margin: 2px auto 8px; }
 .wf-auth-title{
@@ -12541,7 +12515,7 @@ hr.my-4 {
 /* Footer note */
 .wf-auth-foot{ margin-top: 10px; text-align: center; }
 
-/* Title/sub muted on dark masthead area below */
+/* Title/subtle text on dark masthead */
 :root[data-theme="dark"] .wf-auth-title{ color: #EAEAF3; }
 :root[data-theme="dark"] .wf-auth-sub{ color: #AEB4C4; }
 
@@ -12570,7 +12544,7 @@ hr.my-4 {
   box-shadow: 0 0 0 3px rgba(205,168,255,.28), 0 10px 22px rgba(109,54,181,.10) !important;
 }
 
-/* Keep primary button already themed; just add slight rounding */
+/* Keep primary button themed; add rounding */
 .wf-auth-card .btn-primary{ border-radius: 12px; }
 
 /* Small screens */
@@ -12579,13 +12553,11 @@ hr.my-4 {
   .wf-auth-seed{ width: 32px; height: 32px; }
 }
 
-
 /* ===== Make Post (Dark mode polish) ===== */
 :root[data-theme="dark"] .wf-makepost .form-label{
   color: var(--wf-fg);
   font-weight: 700;
 }
-
 :root[data-theme="dark"] .wf-makepost .form-control{
   background: #0f1120 !important;
   color: var(--wf-fg) !important;
@@ -12602,12 +12574,12 @@ hr.my-4 {
   background: #121426 !important;
 }
 
-/* File input da aynı görünsün */
+/* File input should match look */
 :root[data-theme="dark"] .wf-makepost input[type="file"].form-control{
   color: var(--wf-muted) !important;
 }
 
-/* Checkboxes / multi-select okunaklı olsun */
+/* Checkboxes / multi-select readability */
 :root[data-theme="dark"] .wf-makepost .form-check-label{ color: var(--wf-fg); }
 :root[data-theme="dark"] .wf-makepost .form-check-input{
   background-color: #121426; border-color: var(--wf-border);
@@ -12616,7 +12588,7 @@ hr.my-4 {
   background-color: #6d36b5; border-color: #6d36b5;
 }
 
-/* ===== CKEditor — Dark skin (toolbar + editable) ===== */
+/* ===== CKEditor — Dark tone ===== */
 :root[data-theme="dark"] .wf-makepost .ck.ck-toolbar{
   border: 1px solid var(--wf-border) !important;
   border-bottom: 0 !important;
@@ -12636,21 +12608,22 @@ hr.my-4 {
 
 /* Editable area */
 :root[data-theme="dark"] .wf-makepost .ck-content{
-  background: #0f1120 !important;          /* KOYU ZEMİN */
-  color: var(--wf-fg) !important;           /* METİN = BEYAZIMSI */
+  background: #0f1120 !important;          /* dark surface */
+  color: var(--wf-fg) !important;           /* light foreground */
   border: 1px solid var(--wf-border) !important;
   border-top: 0 !important;
   border-radius: 0 0 12px 12px !important;
   min-height: 220px;
   line-height: 1.6;
 }
-/* CKEditor bazen paragrafa #333 verir; hepsini miras aldır */
+
+/* Ensure children inherit color */
 :root[data-theme="dark"] .wf-makepost .ck-content,
 :root[data-theme="dark"] .wf-makepost .ck-content *{
   color: inherit !important;
 }
 
-/* İçerideki görsel & alıntılar da koyu temaya uysun */
+/* Blockquotes and links inside editor */
 :root[data-theme="dark"] .wf-makepost .ck-content blockquote{
   border-left: 3px solid rgba(143,164,255,.35);
   background: rgba(255,255,255,.03);
@@ -12661,38 +12634,31 @@ hr.my-4 {
   color: transparent;
 }
 
-/* CK editor container gölgesi */
+/* Editor container shadow */
 :root[data-theme="dark"] .wf-makepost .ck.ck-editor{
   box-shadow: 0 14px 28px rgba(5,6,12,.25);
   border-radius: 12px;
 }
 
-/* Primary buton zaten marka uyumlu; sadece köşe eşitle */
+/* Primary button rounding to match */
 .wf-makepost .btn-primary{ border-radius: 12px; }
 
 :root[data-theme="dark"] .wf-makepost .ck-content .ck-placeholder {
   color: rgba(235,238,255,.55) !important;
 }
-
 :root[data-theme="dark"] .wf-makepost input[type="file"].form-control:hover{
   border-color: rgba(205,168,255,.45) !important;
 }
 
-/* Admin: Sources compact polish */
-.wf-admin-sources .card-header {
-  padding: .6rem .9rem;
-}
-.wf-admin-sources .card-body {
-  padding: .9rem;
-}
+/* ===== Admin: Sources compact polish ===== */
+.wf-admin-sources .card-header { padding: .6rem .9rem; }
+.wf-admin-sources .card-body { padding: .9rem; }
 .wf-admin-sources .form-control-sm {
   /* keep inputs compact */
   padding-top: .35rem;
   padding-bottom: .35rem;
 }
-.wf-admin-sources .form-text {
-  margin-top: .25rem;
-}
+.wf-admin-sources .form-text { margin-top: .25rem; }
 
 /* WonderFloyd – Admin Sources Cosmic Theme */
 .wf-admin-sources.card {
@@ -12702,7 +12668,6 @@ hr.my-4 {
   box-shadow: 0 0 18px rgba(165, 105, 255, 0.08);
   backdrop-filter: blur(8px);
 }
-
 .wf-admin-sources .card-header {
   background: rgba(40, 30, 60, 0.8) !important; /* cosmic purple-blue */
   color: #eae6ff !important;
@@ -12710,12 +12675,10 @@ hr.my-4 {
   padding: .7rem .9rem;
   border-bottom: 1px solid rgba(165, 105, 255, 0.35) !important;
 }
-
 .wf-admin-sources .card-body {
   background: transparent !important;
   padding: 1rem;
 }
-
 .wf-admin-sources .form-control {
   background-color: rgba(15, 15, 25, 0.85) !important;
   border-color: rgba(165, 105, 255, 0.3) !important;
@@ -12726,17 +12689,15 @@ hr.my-4 {
   border-color: rgba(165, 105, 255, 0.6) !important;
   box-shadow: 0 0 0 0.15rem rgba(165, 105, 255, 0.25);
 }
-
 .wf-admin-sources .form-control::placeholder {
   color: rgba(230, 230, 255, 0.5);
 }
-
 .wf-admin-sources .form-text {
   margin-top: .4rem;
   color: rgba(220, 210, 255, 0.65);
 }
 
-
+/* ===== Tokens & Surfaces ===== */
 :root{
   --wf-accent: #5c6670;
   --wf-accent-hover-start: #8fa4ff;
@@ -12755,21 +12716,15 @@ hr.my-4 {
 html.light{ --wf-surface: var(--wf-surface-light); }
 
 /* =============== Sources =============== */
-
-.wf-sources{ margin-top:.60rem !important; }
 .wf-sources > .collapse{ margin-top:.26rem; }
-
 
 .wf-sources-toggle{
   position: relative;
   display:inline-flex; align-items:center; justify-content:space-between; gap:.65rem;
-
   width:max-content; max-width:100%;
   padding:.46rem .78rem;
   border-radius:var(--wf-rad);
-
   font:inherit; color:inherit; line-height:1.15;
-
   background-color: var(--wf-surface) !important;
   border:0;
   outline:1px solid transparent;
@@ -12783,7 +12738,6 @@ html.light{ --wf-surface: var(--wf-surface-light); }
   box-shadow:0 0 0 .14rem color-mix(in oklab, var(--wf-accent-hover-start) 35%, transparent),
              0 2px 10px rgba(0,0,0,.15);
 }
-
 .wf-sources-toggle::before{
   content:"";
   position:absolute; inset:0;
@@ -12841,16 +12795,14 @@ html.light{ --wf-surface: var(--wf-surface-light); }
   -webkit-text-fill-color:var(--wf-accent-hover-end);
   opacity:.65; transform:translateY(-1px);
 }
-
 .wf-sources .wf-source-link:hover,
 .wf-sources .wf-source-link:focus,
 .wf-sources .wf-source-link:active{
   background-color:transparent !important;
 }
 
-/* ---------- Mobile ---------- */
+/* Mobile */
 @media (max-width:576px){
-  .wf-sources{ margin-top:.52rem !important; }
   .wf-sources-toggle{
     width:100%;
     padding:.40rem .64rem;
@@ -12863,19 +12815,16 @@ html.light{ --wf-surface: var(--wf-surface-light); }
   }
 }
 
+/* Ensure last child has no extra bottom gap in post body */
+.post-body.ck-content > :last-child{ margin-bottom: 0 !important; }
 
-.post-body.ck-content > :last-child{
-  margin-bottom: 0 !important;
-}
-
-
-.wf-sources{ margin-top: 4rem !important; }   /* .55rem / .65rem vs. */
+/* Final spacing for Sources block  */
+.wf-sources{ margin-top: 4rem !important; }
 @media (max-width:576px){
   .wf-sources{ margin-top: 3rem !important; }
 }
 
-
-/* ===== Navbar (no first-flash, smooth hide) ===== */
+/* ===== Navbar (no first flash, smooth hide) ===== */
 html, body { margin: 0; }
 
 #mainNav {
@@ -12887,7 +12836,7 @@ html, body { margin: 0; }
 /* fixed scaffold */
 #mainNav.is-fixed { position: fixed; top:0; left:0; right:0; }
 
-/* hidden (no transition = prevents first-time flash) */
+/* hidden (no transition = prevents first time flash) */
 #mainNav.is-fixed:not(.is-visible) {
   transform: translate3d(0,-100%,0);
   opacity: 0;
@@ -12903,7 +12852,7 @@ html, body { margin: 0; }
   transition: transform .35s ease, opacity .35s ease;
 }
 
-/* HIDE ANIMATION helper: override visible values and animate out */
+/* animate out */
 #mainNav.is-fixed.hiding {
   transform: translate3d(0,-100%,0);
   opacity: 0;
@@ -12913,41 +12862,27 @@ html, body { margin: 0; }
 
 /* Tablet-only optical alignment (768–992px) */
 @media (min-width: 768px) and (max-width: 992px) {
-
-  /* Make sure we can transform children predictably */
   #mainNav .container { position: relative; }
-
-  /* Shift the MENU label + hamburger slightly to the RIGHT */
-  #mainNav .navbar-toggler {
-    transform: translateX(14px);          /* try 12–18px */
-  }
-
-  /* Shift the Seed of Life logo slightly to the LEFT */
-  #mainNav .wf-brand {
-    transform: translateX(-10px);         /* try -8 to -14px */
-  }
-
-  /* Optional: tiny spacing polish for MENU text */
+  #mainNav .navbar-toggler { transform: translateX(14px); }
+  #mainNav .wf-brand { transform: translateX(-10px); }
   #mainNav .menu-label {
     margin-right: 4px;
     letter-spacing: 0.04em;
   }
 }
 
-
-/* <=381px: keep subtitle on one line and make it slightly smaller */
+/* Keep subtitle on one line and slightly smaller */
 @media (max-width: 381px) {
   header.masthead .site-heading .subheading {
-    font-size: 1.4rem !important;  /* try 0.88–0.94 if needed */
+    font-size: 1.4rem !important;
     line-height: 1.2;
-    white-space: nowrap;           /* force single-line */
-    letter-spacing: 0;             /* reduce width a touch */
+    white-space: nowrap;
+    letter-spacing: 0;
   }
-
-  /* give the text a little more horizontal room */
   header.masthead .container {
     padding-left: 0.75rem !important;
     padding-right: 0.75rem !important;
   }
 }
+
 

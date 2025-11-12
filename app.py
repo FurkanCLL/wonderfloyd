@@ -194,14 +194,14 @@ def save_inline_image(file_storage: FileStorage) -> str:
     folder = os.path.join(UPLOADS_DIR, "inline")
     os.makedirs(folder, exist_ok=True)
 
-    # 2) Read & validate
+    # 2) Read and validate
     file_storage.stream.seek(0)
     img = Image.open(file_storage.stream)
     img.verify()
     file_storage.stream.seek(0)
     img = Image.open(file_storage.stream).convert("RGB")
 
-    # 3) Resize to fit (max 1600px edge) + save webp
+    # 3) Resize to fit (max 1600px edge) and save webp
     out_img = _resize_inline(img, 1600, 1600)
     fname = f"{uuid.uuid4().hex}.webp"
     fpath = os.path.join(folder, fname)
@@ -496,7 +496,7 @@ def edit_post(post_id):
             .all()
         )
 
-        # Optional: replace hero if a new cover uploaded
+        # Replace hero if a new cover uploaded
         file_storage: FileStorage = request.files.get('cover_image')
         if file_storage and file_storage.filename:
             try:
