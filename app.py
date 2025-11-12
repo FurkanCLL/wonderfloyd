@@ -305,8 +305,8 @@ def send_contact_mail(name: str, email: str, subject: str, message: str):
 
     # User auto-ack
     if os.environ.get("ACK_ENABLED", "true").lower() == "true":
-        ack_subj = os.environ.get("ACK_SUBJECT", "Thanks — we received your message")
-        ack_intro = os.environ.get("ACK_INTRO", "Hey, I've received your message. Thank you for contacting me!")
+        ack_subj = os.environ.get("ACK_SUBJECT", "Your message has been received")
+        ack_intro = os.environ.get("ACK_INTRO", "").replace("\\n", "\n")
 
         ack = EmailMessage()
         ack["Subject"] = ack_subj
