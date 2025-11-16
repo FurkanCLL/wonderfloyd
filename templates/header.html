@@ -3,10 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>WonderFloyd</title>
-
+    <title>
+      {% if page_title %}
+        {{ page_title }}
+      {% else %}
+        WonderFloyd
+      {% endif %}
+    </title>
+    <meta name="description"
+          content="{{ meta_description or 'WonderFloyd explores science, consciousness, and the wonders of reality with reliable, informative, and enjoyable content.' }}">
     <script>
       (function () {
         // Default = dark
