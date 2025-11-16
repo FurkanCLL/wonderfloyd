@@ -1,5 +1,5 @@
 from datetime import date, datetime
-from flask import Flask, render_template, redirect, url_for, abort, request, flash, jsonify
+from flask import Flask, render_template, redirect, url_for, abort, request, flash, jsonify, Response
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
@@ -629,6 +629,54 @@ def contact():
             flash("Oops, message could not be sent. Please try again later.", "danger")
 
     return render_template("contact.html", form=form, current_user=current_user)
+
+@app.route("/sitemap.xml")
+def sitemap():
+    """Return a simple XML sitemap for search engines."""
+    today = date.today().isoformat()
+    urls = []
+
+    # Static pages
+    static_urls = [
+        url_for("get_all_posts", _external=True),
+        url_for("about", _external=True),
+        url_for("contact", _external=True),
+    ]
+    for u in static_urls:
+        urls.append(f"""  <url>
+    <loc>{u}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>{today}</lastmod>
+  </url>""")
+
+    # Blog posts
+    posts = db.session.query(BlogPost).all()
+    for post in posts:
+        loc = url_for("show_post", slug=post.slug, _external=True)
+        urls.append(f"""  <url>
+    <loc>{loc}</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <lastmod>{today}</lastmod>
+  </url>""")
+
+    xml = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{chr(10).join(urls)}
+</urlset>"""
+
+    return Response(xml, mimetype="application/xml")
+
+@app.route("/robots.txt")
+def robots_txt():
+    """Basic robots.txt that allows all and points to sitemap."""
+    lines = [
+        "User-agent: *",
+        "Disallow:",
+        f"Sitemap: {url_for('sitemap', _external=True)}",
+    ]
+    return Response("\n".join(lines), mimetype="text/plain")
 
 @app.context_processor
 def inject_year():

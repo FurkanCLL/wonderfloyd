@@ -1,5 +1,13 @@
 {% set page_title = "WonderFloyd  - " ~ post.title %}
 {% set meta_description = post.subtitle %}
+
+{# Open Graph specific for posts #}
+{% set og_title = post.title %}
+{% set og_description = post.subtitle %}
+{% set og_image = post.img_url %}
+{% set og_type = "article" %}
+{% set og_url = url_for('show_post', slug=post.slug, _external=True) %}
+
 {% include "header.html" %}
 
 <!-- Page Header -->
