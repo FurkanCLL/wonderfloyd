@@ -12896,4 +12896,42 @@ html, body { margin: 0; }
   text-decoration: underline;
 }
 
+/* Reading time under post meta */
+header.masthead .post-heading .wf-reading-time {
+  margin-top: 12px; /* Margin between meta section */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 1.05rem;
+  font-weight: 300;
+  font-style: italic;
+  font-family: "Lora", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+               "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  /* Same color as author meta  */
+  color: rgba(240,235,255,0.92);
+  text-shadow:
+    0 0 4px rgba(143,164,255,0.25),
+    0 0 10px rgba(109,54,181,0.15);
+}
+
+/* Hourglass icon */
+header.masthead .post-heading .wf-reading-hourglass {
+  width: 22px;
+  height: 22px;
+  display: block;
+  color: inherit;
+}
+
+header.masthead .post-heading .wf-reading-hourglass g {
+  stroke: currentColor;
+}
+
+header.masthead .post-heading .wf-reading-text {
+  letter-spacing: 0.02em;
+}
+
+
 

@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectMultipleField, HiddenField, TextAreaField, FieldList, FormField
+from wtforms import StringField, SubmitField, SelectMultipleField, HiddenField, TextAreaField, FieldList, FormField, IntegerField
 from wtforms.validators import DataRequired, URL, Optional
-from wtforms.validators import Email, Length
+from wtforms.validators import Email, Length, NumberRange
 from flask_ckeditor import CKEditorField
 from wtforms.widgets import ListWidget, CheckboxInput
 from flask_wtf.file import FileField, FileAllowed
@@ -38,6 +38,14 @@ class CreatePostForm(FlaskForm):
         Optional(),
         FileAllowed(['jpg', 'jpeg', 'png', 'webp'], "Only image files are allowed.")
     ])
+
+    # Estimated reading time in minutes
+    reading_time = IntegerField(
+        "Estimated reading time (minutes)",
+        validators=[Optional(), NumberRange(min=1, max=180)],
+        description="Shown as “X min read” under the author name."
+    )
+
     body = CKEditorField("Blog Content", validators=[DataRequired()])
     categories = MultiCheckboxField("Categories", coerce=int)
 

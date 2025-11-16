@@ -89,6 +89,8 @@ class BlogPost(db.Model):
     body: Mapped[str] = mapped_column(Text, nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
     slug: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
+    reading_time: Mapped[int] = mapped_column(Integer, nullable=True)
+
     categories = relationship("Category", secondary=post_categories, back_populates="posts")
 
     sources = relationship(
@@ -496,7 +498,8 @@ def add_new_post():
             author=current_user,
             date=date.today().strftime("%b %d, %Y"),
             slug=post_slug,
-            categories=selected_categories
+            categories=selected_categories,
+            reading_time = form.reading_time.data
         )
 
         # Build sources from FieldList (label required to persist; URL optional)
@@ -527,7 +530,8 @@ def edit_post(post_id):
         subtitle=post.subtitle,
         img_url=post.img_url,
         body=post.body,
-        categories=[cat.id for cat in post.categories]
+        categories=[cat.id for cat in post.categories],
+        reading_time=post.reading_time
     )
     form.categories.choices = [(cat.id, cat.name) for cat in db.session.query(Category).all()]
 
@@ -545,6 +549,7 @@ def edit_post(post_id):
         post.title = form.title.data
         post.subtitle = form.subtitle.data
         post.img_url = form.img_url.data or post.img_url
+        post.reading_time = form.reading_time.data
 
         # Convert any base64 inline images to files as well on edit
         post.body = replace_base64_images_with_files(form.body.data)
