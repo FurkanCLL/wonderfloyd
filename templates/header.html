@@ -14,12 +14,16 @@
     <meta name="description"
           content="{{ meta_description or 'WonderFloyd explores science, consciousness, and the wonders of reality with reliable, informative, and enjoyable content.' }}">
 
+    {# Canonical URL #}
+    {% set canonical_url = canonical_url or request.url %}
+    <link rel="canonical" href="{{ canonical_url }}">
+
     {# -- Open Graph defaults -- #}
     {% set og_title = og_title or page_title or "WonderFloyd" %}
     {% set og_description = og_description or meta_description or "WonderFloyd explores science, consciousness, technology, and the wonders of reality." %}
     {% set og_image = og_image or url_for('static', filename='assets/img/wf-og-default.png') %}
     {% set og_type = og_type or 'website' %}
-    {% set og_url = og_url or request.url %}
+    {% set og_url = og_url or canonical_url %}
 
     <meta property="og:title" content="{{ og_title }}">
     <meta property="og:description" content="{{ og_description }}">

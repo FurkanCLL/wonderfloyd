@@ -1,6 +1,9 @@
 {% set page_title = "WonderFloyd  - " ~ post.title %}
 {% set meta_description = post.subtitle %}
 
+{# Canonical link for this article #}
+{% set canonical_url = url_for('show_post', slug=post.slug, _external=True) %}
+
 {# Open Graph specific for posts #}
 {% set og_title = post.title %}
 {% set og_description = post.subtitle %}
