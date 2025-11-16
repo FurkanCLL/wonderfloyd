@@ -4,7 +4,7 @@ from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column, joinedload
-from sqlalchemy import Integer, String, Text, func, Boolean
+from sqlalchemy import Integer, String, Text
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 from functools import wraps
 from dotenv import load_dotenv
@@ -604,7 +604,7 @@ def upload_image():
 
     except ValueError as ve:
         return jsonify({"error": {"message": str(ve)}}), 400
-    except Exception as e:
+    except Exception:
         # Log e if you have logging
         return jsonify({"error": {"message": "Upload failed"}}), 500
 
@@ -643,7 +643,7 @@ def contact():
             )
             flash("Message sent successfully. I’ll get back to you soon ✨", "success")
             return redirect(url_for("contact"))  # PRG pattern
-        except Exception as e:
+        except Exception:
             # Optionally log e
             flash("Oops, message could not be sent. Please try again later.", "danger")
 
