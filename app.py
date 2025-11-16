@@ -644,6 +644,14 @@ def contact():
 
     return render_template("contact.html", form=form, current_user=current_user)
 
+@app.route("/terms")
+def terms():
+    return render_template("terms.html")
+
+@app.route("/privacy")
+def privacy():
+    return render_template("privacy.html")
+
 @app.route("/sitemap.xml")
 def sitemap():
     """Return a simple XML sitemap for search engines."""
@@ -655,7 +663,10 @@ def sitemap():
         url_for("get_all_posts", _external=True),
         url_for("about", _external=True),
         url_for("contact", _external=True),
+        url_for("terms", _external=True),
+        url_for("privacy", _external=True),
     ]
+
     for u in static_urls:
         urls.append(f"""  <url>
     <loc>{u}</loc>

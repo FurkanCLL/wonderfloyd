@@ -2,6 +2,8 @@
   <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
+
+        <!-- Social icons -->
         <ul class="list-inline text-center wf-socials">
           <li class="list-inline-item">
             <a class="wf-social"
@@ -31,14 +33,24 @@
             </a>
           </li>
         </ul>
-        <div class="small text-center text-muted fst-italic">
+
+        <div class="text-center text-muted fst-italic mt-2 fs-9">
           © {{ current_year }} WonderFloyd
         </div>
+
+        <div class="small text-center text-muted d-block mt-2">
+          <a href="{{ url_for('terms') }}" class="wf-footer-link text-muted text-decoration-none d-block mb-1">
+            Terms of Use
+          </a>
+          <a href="{{ url_for('privacy') }}" class="wf-footer-link text-muted text-decoration-none d-block">
+            Privacy Policy
+          </a>
+        </div>
+
       </div>
     </div>
   </div>
 </footer>
-
 
 <button id="backToTop" class="wf-top" aria-label="Back to top" title="Back to top">
   <i class="fas fa-chevron-up" aria-hidden="true"></i>
