@@ -61,4 +61,6 @@ package-lock.json
 docker-compose.override.yml
 .dockerignore
 
+static/uploads/
+
 
