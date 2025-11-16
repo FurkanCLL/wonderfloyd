@@ -1,11 +1,12 @@
 # WonderFloyd
 
-WonderFloyd is a digital space built for people who enjoy learning, questioning and exploring.
-It brings together science, technology, consciousness and curiosity in a clean, modern and reliable format.
+WonderFloyd is a digital space designed for those who never stop asking questions about science, life, technology, and the wonders that connect them all. It is a platform designed to share timeless, engaging, and engrossing ideas with the world.
 
-The project combines long form articles with short visual content, aiming to present ideas that are both informative and enjoyable. Every piece is researched, structured and edited with care before it goes live.
+WonderFloyd’s vision rises from the intersection of scientific curiosity, philosophical depth, and artistic expression.
 
-WonderFloyd is built as a full production blog platform using Flask and SQLAlchemy, designed with a custom dark theme and a responsive layout that adapts naturally to different screens.
+The goal is simple: to produce content that is reliable, informative and enjoyable. Every piece aims to be clear, accurate and inspiring.
+
+Long form writing is paired with short visual content, offering a smooth and modern reading experience across devices.
 
 ## Features
 - Full blog platform powered by Flask
