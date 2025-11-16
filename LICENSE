@@ -1,0 +1,68 @@
+WonderFloyd Project License
+
+Copyright © 2025 Furkan Ciloglu
+All rights reserved.
+
+This repository contains original software code, design elements, visual assets,
+layout structures, text content, images, scripts, and configuration files
+created specifically for the WonderFloyd project. All of these original
+components are fully owned by the author and are protected under applicable
+copyright laws.
+
+No part of this project may be copied, reproduced, modified, distributed,
+published, or reused in any form without prior written permission from the
+copyright holder. This includes but is not limited to:
+
+- HTML templates written for WonderFloyd
+- Python backend code
+- Database models
+- Image processing utilities
+- JavaScript functionality
+- Custom CSS and theme logic
+- WonderFloyd brand elements, visuals, and Seed of Life variations
+- All written content, descriptions, and UI text
+
+Use of the WonderFloyd name, logo, color palette, brand identity, or visual
+themes is strictly prohibited unless explicit permission is granted.
+
+Unauthorized use of any portion of this work is not allowed for commercial
+or noncommercial purposes.
+
+
+
+Third Party Components
+
+This project incorporates portions of third party software licensed under the
+MIT License. These components remain under their respective licenses and may
+be used according to their terms.
+
+
+
+Start Bootstrap Clean Blog Template
+
+Portions of CSS, HTML structure, and styling originate from:
+Start Bootstrap - Clean Blog v6.0.9
+https://startbootstrap.com/theme/clean-blog
+
+Copyright (c) Start Bootstrap
+Licensed under the MIT License.
+
+
+
+Bootstrap Framework
+
+Bootstrap v5.2.3
+https://getbootstrap.com/
+Licensed under the MIT License.
+
+
+
+Summary
+
+- Everything developed specifically for WonderFloyd is fully protected under
+  All Rights Reserved.
+- Third party dependencies retain their MIT License.
+- Users may not reuse or modify WonderFloyd’s original code, design, content,
+  logo, or branding.
+- MIT licensed components remain MIT licensed and independent of WonderFloyd’s
+  copyright.
