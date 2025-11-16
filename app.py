@@ -24,8 +24,22 @@ import base64
 load_dotenv()
 
 app = Flask(__name__)
+
 app.config['SECRET_KEY'] = os.environ.get('FLASK_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI", "sqlite:///posts.db")
+
+# Basic security hardening for cookies
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['REMEMBER_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = "Lax"
+app.config['REMEMBER_COOKIE_DURATION'] = 60 * 60 * 24 * 30  # 30 days in seconds
+
+# In production behind HTTPS
+if os.environ.get("WF_ENV") == "production":
+    app.config['SESSION_COOKIE_SECURE'] = True
+    app.config['REMEMBER_COOKIE_SECURE'] = True
+
+
 ckeditor = CKEditor(app)
 Bootstrap5(app)
 
@@ -683,4 +697,6 @@ def inject_year():
     return {"current_year": datetime.now().year}
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    # Local development only
+    debug_mode = os.environ.get("FLASK_DEBUG", "1") == "1"
+    app.run(debug=debug_mode, port=5001)
