@@ -7,9 +7,7 @@ The project combines long form articles with short visual content, aiming to pre
 
 WonderFloyd is built as a full production blog platform using Flask and SQLAlchemy, designed with a custom dark theme and a responsive layout that adapts naturally to different screens.
 
----
-
-<h2>Installation</h2>
+## Features
 - Full blog platform powered by Flask
 - Dynamic post system with slugs
 - Category filtering
@@ -24,9 +22,7 @@ WonderFloyd is built as a full production blog platform using Flask and SQLAlche
 - Fully responsive layout
 - Custom design and brand identity
 
----
-
-<h2>Tech Stack</h2>
+## Tech Stack
 - Python
 - Flask
 - SQLAlchemy
@@ -38,9 +34,7 @@ WonderFloyd is built as a full production blog platform using Flask and SQLAlche
 - HTML / Jinja
 - CSS
 
----
-
-<h2>Project Structure</h2>
+## Project Structure
 ```
 WonderFloyd/
 │
@@ -75,9 +69,7 @@ WonderFloyd/
 └── .env
 ```
 
----
-
-<h2>Installation</h2>
+## Installation
 ```
 git clone <repo-url>
 cd wonderfloyd
@@ -85,9 +77,7 @@ pip install -r requirements.txt
 python app.py
 ```
 
----
-
-<h2>Deployment</h2>
+## Deployment
 WonderFloyd deployed using:
 
 - Gunicorn
@@ -97,15 +87,11 @@ WonderFloyd deployed using:
 
 This setup works well on DigitalOcean, Linode, Hetzner and similar providers.
 
----
-
-<h2>Notes</h2>
+## Notes
 This documentation explains how the project works for development and learning purposes.
 The source code, design, visual identity and written content are fully owned by the author and cannot be reused without permission.
 
----
-
-<h2>License</h2>
+## License
 All original work within this repository is protected under All Rights Reserved.
 Third party dependencies such as Bootstrap and Clean Blog remain under their MIT License.
 See the LICENSE file for full details.
