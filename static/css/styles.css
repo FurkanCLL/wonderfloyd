@@ -12934,4 +12934,21 @@ header.masthead .post-heading .wf-reading-text {
 }
 
 
+/* Mobile-specific reduction (to match About page exactly) */
+@media (max-width: 768px) {
+  .wf-static-page h1 {
+    font-size: 1.6rem;
+  }
+  .wf-static-page h2 {
+    font-size: 1.25rem;
+  }
+  .wf-static-page h3 {
+    font-size: 1.05rem;
+  }
+  .wf-static-page p,
+  .wf-static-page ul li {
+    font-size: 0.9rem;
+  }
+}
+
 
