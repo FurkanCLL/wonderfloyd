@@ -1,5 +1,7 @@
 # WonderFloyd
 
+**Current version:** `1.0.0`
+
 WonderFloyd is a digital space designed for those who never stop asking questions about science, life, technology, and the wonders that connect them all. It is a platform designed to share timeless, engaging, and engrossing ideas with the world.
 
 WonderFloyd’s vision rises from the intersection of scientific curiosity, philosophical depth, and artistic expression.

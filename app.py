@@ -708,9 +708,15 @@ def robots_txt():
     ]
     return Response("\n".join(lines), mimetype="text/plain")
 
+
+from version import __version__
+
 @app.context_processor
 def inject_year():
-    return {"current_year": datetime.now().year}
+    return {
+        "current_year": datetime.now().year,
+        "app_version": __version__,
+    }
 
 if __name__ == "__main__":
     # Local development only
