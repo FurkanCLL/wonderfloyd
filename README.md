@@ -22,6 +22,7 @@ Long form writing is paired with short visual content, offering a smooth and mod
 - Smooth animations and reveal effects
 - Fully responsive layout
 - Custom design and brand identity
+- Fully user-friendly
 
 ## Tech Stack
 - Python

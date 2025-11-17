@@ -1,4 +1,4 @@
-# 🚀 Python'un otomatik oluşturduğu gereksiz dosyalar
+# Python's automatic creation of unnecessary files
 *.pyc
 *.pyo
 *.pyd
@@ -15,30 +15,30 @@ __pycache__/
 pip-log.txt
 pip-delete-this-directory.txt
 
-# 🚀 Sanal ortam klasörleri
+# Virtual environment folders
 venv/
 .venv/
 
-# 🚀 PyCharm Proje Ayarları
+# PyCharm Project Settings
 .idea/
 
-# 🚀 Git Tarafından İzlenmemesi Gereken Python Paketleri
+# Python Packages That Should Not Be Tracked by Git
 Pipfile
 Pipfile.lock
 poetry.lock
 
-# 🚀 Çevresel Değişkenler (API anahtarları, veritabanı bilgileri)
+# Environmental Variables (API keys, database information)
 .env
 *.env
 *.secrets
 
-# 🚀 SQLite ve Diğer Veritabanı Dosyaları
+# SQLite and Other Database Files
 *.sqlite3
 *.db
 *.db-journal
 instance/
 
-# 🚀 Flask Cache ve Logs
+#  Flask Cache and Logs
 *.log
 logs/
 flask_session/
@@ -46,21 +46,22 @@ flask_cache/
 *.pid
 nohup.out
 
-# 🚀 Debug ve Temp Dosyalar
+# Debug and Temp Files
 debug.log
 *.tmp
 *.bak
 
-# 🚀 Node.js ve Frontend Kullanıyorsan
+# Node.js and Frontend
 node_modules/
 npm-debug.log
 yarn-error.log
 package-lock.json
 
-# 🚀 Docker Kullanıyorsan (Eğer yoksa, eklemene gerek yok)
+# Docker
 docker-compose.override.yml
 .dockerignore
 
+# Ignoring uploads
 static/uploads/
 
 
