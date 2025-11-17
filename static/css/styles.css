@@ -12,6 +12,19 @@
  * This project retains the original MIT copyright and license notices
  * for any included third-party code, see LICENSE.
  */
+
+ /*!
+  This file contains two main sections:
+  1. Bootstrap 5 core styles (lines 1 to 10800)
+     These styles come from the original Clean Blog template
+     and include the full Bootstrap framework utilities, components
+     and defaults.
+
+  2. WonderFloyd custom styles (starting from line 10800)
+     All custom design, layout adjustments and theme overrides
+     created specifically for WonderFloyd start here.
+*/
+
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -6651,35 +6664,27 @@ textarea.form-control-lg {
 .align-baseline {
   vertical-align: baseline !important;
 }
-
 .align-top {
   vertical-align: top !important;
 }
-
 .align-middle {
   vertical-align: middle !important;
 }
-
 .align-bottom {
   vertical-align: bottom !important;
 }
-
 .align-text-bottom {
   vertical-align: text-bottom !important;
 }
-
 .align-text-top {
   vertical-align: text-top !important;
 }
-
 .float-start {
   float: left !important;
 }
-
 .float-end {
   float: right !important;
 }
-
 .float-none {
   float: none !important;
 }
@@ -7762,67 +7767,54 @@ textarea.form-control-lg {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-primary-rgb), var(--bs-text-opacity)) !important;
 }
-
 .text-secondary {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-secondary-rgb), var(--bs-text-opacity)) !important;
 }
-
 .text-success {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-success-rgb), var(--bs-text-opacity)) !important;
 }
-
 .text-info {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-info-rgb), var(--bs-text-opacity)) !important;
 }
-
 .text-warning {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-warning-rgb), var(--bs-text-opacity)) !important;
 }
-
 .text-danger {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-danger-rgb), var(--bs-text-opacity)) !important;
 }
-
 .text-light {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-light-rgb), var(--bs-text-opacity)) !important;
 }
-
 .text-dark {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-dark-rgb), var(--bs-text-opacity)) !important;
 }
-
 .text-black {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-black-rgb), var(--bs-text-opacity)) !important;
 }
-
 .text-white {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
 }
-
 .text-body {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-body-color-rgb), var(--bs-text-opacity)) !important;
 }
-
 .text-muted {
   --bs-text-opacity: 1;
   color: #6c757d !important;
 }
-
 .text-black-50 {
   --bs-text-opacity: 1;
   color: rgba(0, 0, 0, 0.5) !important;
 }
-
 .text-white-50 {
   --bs-text-opacity: 1;
   color: rgba(255, 255, 255, 0.5) !important;
@@ -10587,7 +10579,6 @@ blockquote {
   color: #6c757d;
 }
 
-/* ======== WONDERFLOYD ======== */
 
 #mainNav {
   position: absolute;
@@ -10802,54 +10793,12 @@ header.masthead .post-heading .meta a {
 }
 
 
-/* Comment Styling */
-.commentBox {
-  padding:10px;
-  border-top:1px dotted #bbb;
-}
-.commentBox .form-group:first-child, .actionBox .form-group:first-child {
-  width:80%;
-}
-.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
-  width:18%;
-}
 
 
-.comment {
-  padding-top: 20px;
-}
-.commentList {
-  padding:0;
-  list-style:none;
-  max-height:200px;
-  overflow:auto;
-}
-.commentList li {
-  margin:0;
-  margin-top:10px;
-}
-.commentList li > div {
-  display:table-cell;
-}
-.commenterImage {
-  width:30px;
-  margin-right:5px;
-  height:100%;
-  float:left;
-}
-.commenterImage img {
-  width:100%;
-  border-radius:50%;
-}
-.commentText p {
-  margin:0;
-}
 
-.sub-text {
-    color:#aaa;
-    font-family:verdana;
-    font-size:13px;
-}
+
+/* ========== WONDERFLOYD ========== */
+
 
 /* Flash Message Styling */
 .flash {
