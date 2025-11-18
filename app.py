@@ -140,7 +140,7 @@ def _resize_cover(pil_img: Image.Image, target_w=1920, target_h=1080) -> Image.I
     img = pil_img.convert('RGB')
     ratio = max(target_w / img.width, target_h / img.height)
     new_size = (int(img.width * ratio), int(img.height * ratio))
-    img = img.resize(new_size, Image.LANCZOS)
+    img = img.resize(new_size, Image.LANCZOS) # type: ignore[attr-defined]
     left = (img.width - target_w) // 2
     top = (img.height - target_h) // 2
     right = left + target_w
@@ -149,7 +149,7 @@ def _resize_cover(pil_img: Image.Image, target_w=1920, target_h=1080) -> Image.I
 
 def _resize_thumb(pil_img: Image.Image, max_w=600, max_h=400) -> Image.Image:
     img = pil_img.convert('RGB')
-    img.thumbnail((max_w, max_h), Image.LANCZOS)
+    img.thumbnail((max_w, max_h), Image.LANCZOS) # type: ignore[attr-defined]
     return img
 
 def save_post_images(file_storage, slug: str) -> dict:
@@ -196,7 +196,7 @@ def save_post_images(file_storage, slug: str) -> dict:
 def _resize_inline(img: Image.Image, max_w=1600, max_h=1600) -> Image.Image:
     """Keep aspect ratio, fit into max box, no crop."""
     im = img.convert("RGB")
-    im.thumbnail((max_w, max_h), Image.LANCZOS)
+    im.thumbnail((max_w, max_h), Image.LANCZOS) # type: ignore[attr-defined]
     return im
 
 def save_inline_image(file_storage: FileStorage) -> str:

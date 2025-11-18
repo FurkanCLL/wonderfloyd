@@ -69,7 +69,10 @@ WonderFloyd/
 ├── app.py
 ├── forms.py
 ├── LICENSE
+├── README.md
 ├── requirements.txt
+├── version.py
+├── wsgi.py
 └── .env
 ```
 
