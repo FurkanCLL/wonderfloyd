@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
+import shutil
 import smtplib
 from email.message import EmailMessage
 from PIL import Image
@@ -44,7 +45,7 @@ ckeditor = CKEditor(app)
 Bootstrap5(app)
 
 # Image Upload Config
-app.config['MAX_CONTENT_LENGTH'] = 12 * 1024 * 1024  # 12 MB limit
+app.config['MAX_CONTENT_LENGTH'] = 36 * 1024 * 1024  # 36 MB limit
 UPLOADS_DIR = os.path.join(app.root_path, 'static', 'uploads')
 os.makedirs(UPLOADS_DIR, exist_ok=True)
 
@@ -192,6 +193,50 @@ def save_post_images(file_storage, slug: str) -> dict:
         "hero": f"{public_folder}/hero.webp",
         "thumb": f"{public_folder}/thumb.webp",
     }
+
+def delete_post_files(post: BlogPost) -> None:
+    """
+    Remove files that belong to a single post:
+    - Cover folder: /static/uploads/<slug>/
+    - Inline images that are not used by any other post.
+    """
+    # Remove cover folder for this post slug
+    if post.slug:
+        folder_name = secure_filename(post.slug)
+        folder_path = os.path.join(UPLOADS_DIR, folder_name)
+        if os.path.isdir(folder_path):
+            try:
+                shutil.rmtree(folder_path)
+            except OSError:
+                # If something goes wrong, ignore silently
+                pass
+
+    # Remove inline images that are only used in this post
+    body_html = post.body or ""
+    inline_pattern = re.compile(
+        r'src=["\'](/static/uploads/inline/([^"\']+))["\']',
+        re.IGNORECASE
+    )
+
+    for match in inline_pattern.finditer(body_html):
+        url_path = match.group(1)  # like /static/uploads/inline/123abc.webp
+        # Check if this exact src appears in any other post
+        still_used = (
+            db.session.query(BlogPost)
+            .filter(BlogPost.id != post.id)
+            .filter(BlogPost.body.contains(url_path))
+            .first()
+        )
+        if still_used:
+            continue
+
+        # Map URL to filesystem path
+        fs_path = os.path.join(app.root_path, url_path.lstrip("/"))
+        if os.path.isfile(fs_path):
+            try:
+                os.remove(fs_path)
+            except OSError:
+                pass
 
 def _resize_inline(img: Image.Image, max_w=1600, max_h=1600) -> Image.Image:
     """Keep aspect ratio, fit into max box, no crop."""
@@ -612,8 +657,14 @@ def upload_image():
 @admin_only
 def delete_post(post_id):
     post_to_delete = db.get_or_404(BlogPost, post_id)
+
+    # First remove files that belong to this post
+    delete_post_files(post_to_delete)
+
+    # Then remove from database
     db.session.delete(post_to_delete)
     db.session.commit()
+
     return redirect(url_for('get_all_posts'))
 
 @app.route("/logout")
