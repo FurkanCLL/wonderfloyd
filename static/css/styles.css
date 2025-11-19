@@ -12956,12 +12956,12 @@ header.masthead .post-heading .wf-reading-text {
 /* Footer typography - mobile adjusments */
 @media (max-width: 575.98px) {
   footer .fs-9 {
-    font-size: 1.1rem;
+    font-size: 1.02rem;
   }
 
   footer .small.text-center.text-muted,
   footer .wf-footer-link {
-    font-size: 0.90rem;
+    font-size: 0.87rem;
   }
 }
 
@@ -12979,4 +12979,11 @@ header.masthead .post-heading .wf-reading-text {
 footer {
   padding-top: 1.8rem;
   padding-bottom: 1.8rem;
+}
+
+@media (max-width: 575.98px) {
+    footer {
+      padding-top: 1.55rem;
+      padding-bottom: 1.55rem;
+    }
 }
