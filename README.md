@@ -1,10 +1,10 @@
 # WonderFloyd
 
-<img src="static/assets/img/wf-preview.png" width="650">
-
 **Discover:** [wonderfloyd.com](https://wonderfloyd.com)
 
-**Current version:** `1.0.0`
+**Current version:** `1.0.1`
+
+<img src="static/assets/img/wf-preview.png" width="850">
 
 WonderFloyd is a digital space designed for those who never stop asking questions about science, life, technology, and the wonders that connect them all. It is a platform designed to share timeless, engaging, and engrossing ideas with the world.
 
@@ -17,7 +17,8 @@ Long form writing is paired with short visual content, offering a smooth and mod
 ## Features
 - Full blog platform powered by Flask
 - Dynamic post system with slugs
-- Category filtering
+- Many-to-many category system
+- Dynamic filtering with fetch-based partial updates
 - CKEditor 5 integration
 - Inline image upload with automatic WebP conversion
 - Hero and thumbnail image processing
@@ -26,6 +27,7 @@ Long form writing is paired with short visual content, offering a smooth and mod
 - Admin panel for creating and editing posts
 - SEO friendly structure
 - Smooth animations and reveal effects
+- Optimized rendering with staggered animations
 - Fully responsive layout
 - Custom design and brand identity
 - Fully user-friendly
