@@ -1,5 +1,9 @@
 # WonderFloyd
 
+<img src="static/assets/img/wf-preview.png" width="650">
+
+**Discover:** [wonderfloyd.com](https://wonderfloyd.com)
+
 **Current version:** `1.0.0`
 
 WonderFloyd is a digital space designed for those who never stop asking questions about science, life, technology, and the wonders that connect them all. It is a platform designed to share timeless, engaging, and engrossing ideas with the world.
@@ -85,14 +89,21 @@ python app.py
 ```
 
 ## Deployment
-WonderFloyd deployed using:
+WonderFloyd is deployed using:
 
-- Gunicorn
-- Nginx reverse proxy
-- SSL certificates
-- Optional CDN for assets
+- Gunicorn as the WSGI application server
+- Nginx as a reverse proxy
+- Let’s Encrypt SSL certificates for HTTPS
+- Cloudflare for DNS, security and global asset delivery
+- A lightweight VPS environment running a Linux-based OS
 
-This setup works well on DigitalOcean, Linode, Hetzner and similar providers.
+The project uses:
+
+- A dedicated virtual environment
+- Environment variables for secrets and configuration
+- A system service to keep the application running continuously 
+
+This setup works reliably on providers like Vultr, DigitalOcean, Linode, Hetzner and other similar VPS platforms.
 
 ## Notes
 This documentation explains how the project works for development and learning purposes.
