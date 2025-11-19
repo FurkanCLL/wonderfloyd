@@ -12910,7 +12910,7 @@ header.masthead .post-heading .wf-reading-text {
     .wf-static-page li,
     #wonderfloyd p,
     #author p {
-      font-size: 1.05rem;
+      font-size: 1.035rem;
       line-height: 1.50;
     }
 
@@ -12956,23 +12956,27 @@ header.masthead .post-heading .wf-reading-text {
 /* Footer typography - mobile adjusments */
 @media (max-width: 575.98px) {
   footer .fs-9 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   footer .small.text-center.text-muted,
   footer .wf-footer-link {
-    font-size: 0.98rem;
+    font-size: 0.90rem;
   }
 }
 
 @media (min-width: 576px) and (max-width: 991.98px) {
   footer .fs-9 {
-    font-size: 1.35rem;
+    font-size: 1.24rem;
   }
 
   footer .small.text-center.text-muted,
   footer .wf-footer-link {
-    font-size: 1.1rem;
+    font-size: 1.03rem;
   }
 }
 
+footer {
+  padding-top: 1.8rem;
+  padding-bottom: 1.8rem;
+}
