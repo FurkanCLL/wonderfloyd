@@ -329,18 +329,26 @@ def send_contact_mail(name: str, email: str, subject: str, message: str):
     smtp_user = os.environ.get("SMTP_USER")
     smtp_pass = os.environ.get("SMTP_PASSWORD")
     security = os.environ["SMTP_SECURITY"]
+
     admin_to  = os.environ.get("ADMIN_EMAIL", smtp_user)
     from_name = os.environ["FROM_NAME"]
+    no_reply  = os.environ.get("NO_REPLY_EMAIL", smtp_user)
 
     if not (smtp_user and smtp_pass and admin_to):
         raise RuntimeError("SMTP configuration is missing.")
 
-    # Admin notification
+    # ---------- Admin notification ----------
     admin_subj = (subject.strip() if subject else "New Contact Message")
     admin_msg = EmailMessage()
+
     admin_msg["Subject"] = admin_subj
-    admin_msg["From"] = f"{from_name} <{smtp_user}>"
-    admin_msg["To"]   = admin_to
+
+    # IMPORTANT: From = no-reply
+    admin_msg["From"] = f"{from_name} <{no_reply}>"
+
+    admin_msg["To"] = admin_to
+
+    # Reply goes to user
     admin_msg["Reply-To"] = email
 
     text_body = (
@@ -362,17 +370,20 @@ def send_contact_mail(name: str, email: str, subject: str, message: str):
     </div>
     """
     admin_msg.add_alternative(html_admin, subtype="html")
+
     _smtp_send(admin_msg, smtp_host, smtp_port, smtp_user, smtp_pass, security)
 
-    # User auto-ack
+    # ---------- User auto-ack ----------
     if os.environ.get("ACK_ENABLED", "true").lower() == "true":
         ack_subj = os.environ.get("ACK_SUBJECT", "Your message has been received")
         ack_intro = os.environ.get("ACK_INTRO", "").replace("\\n", "\n")
 
         ack = EmailMessage()
         ack["Subject"] = ack_subj
-        ack["From"]    = f"{from_name} <{smtp_user}>"
-        ack["To"]      = email
+
+        # Ack mail user’a contact adresinden gider (normal)
+        ack["From"] = f"{from_name} <{smtp_user}>"
+        ack["To"] = email
 
         ack_text = (
             f"{ack_intro}\n\n"
@@ -387,7 +398,9 @@ def send_contact_mail(name: str, email: str, subject: str, message: str):
         </div>
         """
         ack.add_alternative(ack_html, subtype="html")
+
         _smtp_send(ack, smtp_host, smtp_port, smtp_user, smtp_pass, security)
+
 
 # Admin-only decorator
 def admin_only(f):
