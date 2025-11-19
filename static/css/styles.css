@@ -12901,4 +12901,78 @@ header.masthead .post-heading .wf-reading-text {
   }
 }
 
+/* WonderFloyd content typography - mobile adjusments */
+@media (max-width: 575.98px) {
+    .post-body,
+    .post-body p,
+    .post-body li,
+    .wf-static-page p,
+    .wf-static-page li,
+    #wonderfloyd p,
+    #author p {
+      font-size: 1.05rem;
+      line-height: 1.50;
+    }
+
+
+    .post-body h2,
+    .wf-static-page h2,
+    .wf-section-title {
+      font-size: 1.42rem;
+      line-height: 1.25;
+      margin-top: 1.6rem;
+      margin-bottom: 0.8rem;
+    }
+
+
+    .post-body h3,
+    .wf-static-page h3 {
+      font-size: 1.3rem;
+      line-height: 1.25;
+      margin-top: 1.4rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .post-body h4,
+    .wf-static-page h4 {
+      font-size: 1.18rem;
+      line-height: 1.25;
+      margin-top: 1.4rem;
+      margin-bottom: 0.6rem;
+    }
+
+    #wonderfloyd h2 {
+      font-size: 1.5rem;
+    }
+
+    #author h2 {
+      font-size: 1.5rem;
+    }
+}
+
+
+
+
+/* Footer typography - mobile adjusments */
+@media (max-width: 575.98px) {
+  footer .fs-9 {
+    font-size: 1.2rem;
+  }
+
+  footer .small.text-center.text-muted,
+  footer .wf-footer-link {
+    font-size: 0.98rem;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+  footer .fs-9 {
+    font-size: 1.35rem;
+  }
+
+  footer .small.text-center.text-muted,
+  footer .wf-footer-link {
+    font-size: 1.1rem;
+  }
+}
 
