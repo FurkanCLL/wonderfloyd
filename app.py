@@ -659,23 +659,20 @@ def edit_post(post_id):
 @admin_only
 def upload_image():
     try:
-        # CKEditor simpleUpload 'upload' alanı ile gönderiyor
+        # CKEditor simpleUpload sends with 'upload' field
         fs = request.files.get("upload") or request.files.get("file")
         if not fs:
             return jsonify({"error": {"message": "No file part"}}), 400
 
-        # Burada zaten boyut limitini Flask ve Nginx tarafında ayarladık
+        # Here we have already set the size limit on Flask and Nginx side
         url = save_inline_image(fs)
 
-        # CKEditor simpleUpload tam olarak bunu bekliyor
         return jsonify({"url": url})
         # status code default 200
 
     except ValueError as ve:
-        # Örn unsupported file type
         return jsonify({"error": {"message": str(ve)}}), 400
     except Exception as e:
-        # Debug için istersen log da alabilirsin
         print("UPLOAD ERROR:", repr(e))
         return jsonify({"error": {"message": "Upload failed"}}), 500
 

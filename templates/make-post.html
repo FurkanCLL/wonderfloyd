@@ -84,9 +84,7 @@
     const el = document.querySelector('textarea[name="body"]');
     if (!el) return;
 
-    // =========================
     // Custom upload adapter
-    // =========================
     function MyUploadAdapter(loader) {
       this.loader = loader;
     }
@@ -94,7 +92,7 @@
     MyUploadAdapter.prototype.upload = function () {
       return this.loader.file.then(function (file) {
         const data = new FormData();
-        // CKEditor simple upload genelde "upload" alanını kullanıyor
+        // CKEditor simple upload normally uses the "upload" button
         data.append('upload', file);
 
         return fetch('{{ url_for("upload_image") }}', {
@@ -104,7 +102,7 @@
         })
           .then(function (response) {
             if (!response.ok) {
-              // Sunucu hata dönerse
+              // If the server returns an error
               return response.json().then(function (err) {
                 console.error('Upload error response:', err);
                 throw new Error('Upload failed');
@@ -119,14 +117,14 @@
             if (!result.url) {
               throw new Error('Invalid upload response');
             }
-            // CKEditor bu formatı bekliyor
+            // CKEditor expects this format
             return { default: result.url };
           });
       });
     };
 
     MyUploadAdapter.prototype.abort = function () {
-      // Gerekirse iptal işlemi
+      // Cancellation if necessary
     };
 
     function MyUploadAdapterPlugin(editor) {
@@ -147,7 +145,6 @@
       Editor.create(el, {
         extraPlugins: [ MyUploadAdapterPlugin ],
 
-        // Artık base64 kullanmıyoruz
         removePlugins: [
           'Base64UploadAdapter',
           'CloudServices','EasyImage','ExportPdf','ExportWord','WProofreader','AIAssistant',
@@ -189,7 +186,7 @@
       });
     }
 
-    // CKEditor scriptini lazy load et
+    // Lazy load CKEditor script
     if (!window.CKEDITOR && !window.ClassicEditor) {
       const s = document.createElement('script');
       s.src = 'https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js';
@@ -200,7 +197,7 @@
       initEditor();
     }
 
-    // Base64 güvenlik kontrolü (ekstra önlem, artık normalde gerekmez ama kalsın)
+    // Base64 security check (extra precaution)
     document.addEventListener('DOMContentLoaded', function () {
       const form = document.getElementById('post-form');
       if (!form) return;
