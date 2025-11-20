@@ -2,7 +2,7 @@
 
 **Discover:** [wonderfloyd.com](https://wonderfloyd.com)
 
-**Current version:** `1.0.1`
+**Current version:** `1.1.0`
 
 <img src="static/assets/img/wf-preview.png" width="850">
 
