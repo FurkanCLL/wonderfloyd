@@ -30,7 +30,7 @@
       <div class="col-lg-8 col-md-10 mx-auto">
 
         <!-- Manual form layout for full control -->
-        <form method="POST" enctype="multipart/form-data" novalidate>
+        <form id="post-form" method="POST" enctype="multipart/form-data" novalidate>
           {{ form.hidden_tag() }}
 
           {{ render_field(form.title) }}
@@ -54,7 +54,6 @@
               {% for sf in form.sources %}
                 <div class="row g-2 align-items-center mb-2">
                   <div class="col-12 col-md-6">
-                    {# use subform field; render input with placeholder #}
                     {{ sf.form.label(
                          class="form-control form-control-sm",
                          placeholder="Source material..") }}
@@ -85,13 +84,72 @@
     const el = document.querySelector('textarea[name="body"]');
     if (!el) return;
 
+    // =========================
+    // Custom upload adapter
+    // =========================
+    function MyUploadAdapter(loader) {
+      this.loader = loader;
+    }
+
+    MyUploadAdapter.prototype.upload = function () {
+      return this.loader.file.then(function (file) {
+        const data = new FormData();
+        // CKEditor simple upload genelde "upload" alanını kullanıyor
+        data.append('upload', file);
+
+        return fetch('{{ url_for("upload_image") }}', {
+          method: 'POST',
+          body: data,
+          credentials: 'same-origin'
+        })
+          .then(function (response) {
+            if (!response.ok) {
+              // Sunucu hata dönerse
+              return response.json().then(function (err) {
+                console.error('Upload error response:', err);
+                throw new Error('Upload failed');
+              }).catch(function () {
+                throw new Error('Upload failed');
+              });
+            }
+            return response.json();
+          })
+          .then(function (result) {
+            console.log('Upload result:', result);
+            if (!result.url) {
+              throw new Error('Invalid upload response');
+            }
+            // CKEditor bu formatı bekliyor
+            return { default: result.url };
+          });
+      });
+    };
+
+    MyUploadAdapter.prototype.abort = function () {
+      // Gerekirse iptal işlemi
+    };
+
+    function MyUploadAdapterPlugin(editor) {
+      editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
+        return new MyUploadAdapter(loader);
+      };
+    }
+
+    let wfEditorInstance = null;
+
     function initEditor() {
       const Editor = (window.CKEDITOR && CKEDITOR.ClassicEditor) || window.ClassicEditor;
-      if (!Editor) { console.error('CKEditor not found after load'); return; }
+      if (!Editor) {
+        console.error('CKEditor not found after load');
+        return;
+      }
 
       Editor.create(el, {
-        // Keep Base64UploadAdapter (we convert on save in backend)
+        extraPlugins: [ MyUploadAdapterPlugin ],
+
+        // Artık base64 kullanmıyoruz
         removePlugins: [
+          'Base64UploadAdapter',
           'CloudServices','EasyImage','ExportPdf','ExportWord','WProofreader','AIAssistant',
           'CKBox','CKBoxUtils','CKBoxImageEdit',
           'CKFinder','CKFinderUploadAdapter',
@@ -102,6 +160,7 @@
           'SlashCommand','PasteFromOfficeEnhanced','CaseChange',
           'Pagination','DocumentOutline'
         ],
+
         toolbar: {
           items: [
             'undo','redo','|',
@@ -120,11 +179,17 @@
           styles: [ 'alignLeft','alignCenter','alignRight' ]
         }
       })
-      .then(() => console.log('CKEditor ready ✅'))
-      .catch(err => console.error('CKEditor init error:', err));
+      .then(function (editor) {
+        wfEditorInstance = editor;
+        window.wfEditor = editor;
+        console.log('CKEditor ready');
+      })
+      .catch(function (err) {
+        console.error('CKEditor init error:', err);
+      });
     }
 
-    // Lazy-load only on this page
+    // CKEditor scriptini lazy load et
     if (!window.CKEDITOR && !window.ClassicEditor) {
       const s = document.createElement('script');
       s.src = 'https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js';
@@ -134,7 +199,31 @@
     } else {
       initEditor();
     }
+
+    // Base64 güvenlik kontrolü (ekstra önlem, artık normalde gerekmez ama kalsın)
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('post-form');
+      if (!form) return;
+
+      form.addEventListener('submit', function (e) {
+        if (!wfEditorInstance) return;
+
+        const data = wfEditorInstance.getData() || '';
+
+        if (data.includes('src="data:') || data.includes("src='data:")) {
+          e.preventDefault();
+          alert(
+            'One or more images are embedded as base64.\n\n' +
+            'Please remove them and reinsert using the image upload button so they are stored as files.'
+          );
+        }
+      });
+    });
   })();
 </script>
+
+
+{% include "footer.html" %}
+
 
 {% include "footer.html" %}

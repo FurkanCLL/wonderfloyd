@@ -45,7 +45,7 @@ ckeditor = CKEditor(app)
 Bootstrap5(app)
 
 # Image Upload Config
-app.config['MAX_CONTENT_LENGTH'] = 99 * 1024 * 1024  # 99 MB limit
+app.config['MAX_CONTENT_LENGTH'] = 72 * 1024 * 1024  # 72 MB limit
 UPLOADS_DIR = os.path.join(app.root_path, 'static', 'uploads')
 os.makedirs(UPLOADS_DIR, exist_ok=True)
 
@@ -250,6 +250,14 @@ def save_inline_image(file_storage: FileStorage) -> str:
         raise ValueError("No file provided")
     if not _allowed(file_storage.filename):
         raise ValueError("Unsupported file type")
+
+    # Per-image size limit (10 MB)
+    file_storage.stream.seek(0, os.SEEK_END)
+    size = file_storage.stream.tell()
+    file_storage.stream.seek(0)
+
+    if size > 10 * 1024 * 1024:
+        raise ValueError("Image is too large. Please upload an image under 10 MB.")
 
     # 1) Target folder: /static/uploads/inline
     folder = os.path.join(UPLOADS_DIR, "inline")
@@ -651,19 +659,24 @@ def edit_post(post_id):
 @admin_only
 def upload_image():
     try:
-        # CKEditor 5 may send under 'upload' (SimpleUpload) or 'file'
+        # CKEditor simpleUpload 'upload' alanı ile gönderiyor
         fs = request.files.get("upload") or request.files.get("file")
         if not fs:
             return jsonify({"error": {"message": "No file part"}}), 400
 
-        # Basic size check (uses app.config['MAX_CONTENT_LENGTH'] globally)
+        # Burada zaten boyut limitini Flask ve Nginx tarafında ayarladık
         url = save_inline_image(fs)
-        return jsonify({"url": url}), 201
+
+        # CKEditor simpleUpload tam olarak bunu bekliyor
+        return jsonify({"url": url})
+        # status code default 200
 
     except ValueError as ve:
+        # Örn unsupported file type
         return jsonify({"error": {"message": str(ve)}}), 400
-    except Exception:
-        # Log e if you have logging
+    except Exception as e:
+        # Debug için istersen log da alabilirsin
+        print("UPLOAD ERROR:", repr(e))
         return jsonify({"error": {"message": "Upload failed"}}), 500
 
 @app.route("/delete/<int:post_id>")
