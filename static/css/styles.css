@@ -12987,3 +12987,8 @@ footer {
       padding-bottom: 1.55rem;
     }
 }
+
+.ck-content p {
+  margin-top: 0.4em !important;
+  margin-bottom: 0.7em !important;
+}
