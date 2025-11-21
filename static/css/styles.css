@@ -13044,10 +13044,7 @@ footer {
   }
 }
 
-
-
-
-
+/* Dark mode masthead contrast */
 :root[data-theme="dark"] .masthead::before{
   background: linear-gradient(
     180deg,
