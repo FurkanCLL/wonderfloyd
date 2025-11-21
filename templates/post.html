@@ -1,5 +1,5 @@
 {% set page_title = post.title ~ " - WonderFloyd" %}
-{% set meta_description = post.subtitle %}
+{% set meta_description = post.body | striptags | truncate(160) %}
 
 {# Canonical link for this article #}
 {% set canonical_url = url_for('show_post', slug=post.slug, _external=True) %}

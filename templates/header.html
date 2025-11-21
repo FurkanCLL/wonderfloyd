@@ -67,8 +67,18 @@
           href="{{ url_for('static', filename='assets/favicons/android-chrome-192x192.png') }}?v=1">
     <link rel="icon" type="image/png" sizes="512x512"
           href="{{ url_for('static', filename='assets/favicons/android-chrome-512x512.png') }}?v=1">
+
     <!-- Brand color for some UAs -->
     <meta name="theme-color" content="#0a0018" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PK112TLF7X"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-PK112TLF7X');
+    </script>
 
     {% block styles %}
     {{ bootstrap.load_css() }}
