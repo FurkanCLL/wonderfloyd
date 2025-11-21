@@ -13043,3 +13043,17 @@ footer {
     font-size: 1rem;
   }
 }
+
+
+
+
+
+:root[data-theme="dark"] .masthead::before{
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,.94),
+    rgba(0,0,0,.82) 38%,
+    rgba(0,0,0,.96)
+  );
+  backdrop-filter: none !important;
+}
