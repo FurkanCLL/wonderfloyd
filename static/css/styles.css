@@ -12990,5 +12990,12 @@ footer {
 
 .ck-content p {
   margin-top: 0.4em !important;
+}
+
+.wf-section-title {
   margin-bottom: 0.7em !important;
+}
+
+.first-pg {
+  margin-top: 0.6em !important;
 }
