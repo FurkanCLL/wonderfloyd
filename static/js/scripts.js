@@ -4,7 +4,7 @@ window.addEventListener('DOMContentLoaded', () => {
   let upAccum = 0;
   let downAccum = 0;
 
-  const upThreshold = 110;    // show after scrolling up this much
+  const upThreshold = 95;    // show after scrolling up this much
   const downThreshold = 24;  // hide only after scrolling down this much
   const mainNav = document.getElementById('mainNav');
   const headerHeight = mainNav.clientHeight;
