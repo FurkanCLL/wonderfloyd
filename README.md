@@ -2,7 +2,7 @@
 
 **Discover:** [wonderfloyd.com](https://wonderfloyd.com)
 
-**Current version:** `1.1.2`
+**Current version:** `1.1.3`
 
 <img src="static/assets/img/wf-preview.png" width="850">
 
@@ -91,7 +91,7 @@ python app.py
 ```
 
 ## Deployment
-WonderFloyd is deployed using:
+WonderFloyd deployed using:
 
 - Gunicorn as the WSGI application server
 - Nginx as a reverse proxy
